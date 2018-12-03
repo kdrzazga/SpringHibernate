@@ -23,8 +23,8 @@
         </property>
         <property name="annotatedClasses">
             <list>
-                <value>org.kd.entities.Fund</value>
                 <value>org.kd.entities.Counterparty</value>
+                <value>org.kd.entities.Fund</value>
                 <value>org.kd.entities.Team</value>
             </list>
         </property>
@@ -36,11 +36,11 @@
     </bean>
 
     <!-- DAOs under test -->
-    <bean class="org.kd.dao.hibernate.FundDaoImpl">
+    <bean class="org.kd.dao.CounterpartyDaoImpl">
         <property name="sessionFactory" ref="sessionFactory" />
     </bean>
 
-    <bean class="org.kd.dao.hibernate.CounterpartyDaoImpl">
+    <bean class="org.kd.dao.FundDaoImpl">
         <property name="sessionFactory" ref="sessionFactory" />
     </bean>
 

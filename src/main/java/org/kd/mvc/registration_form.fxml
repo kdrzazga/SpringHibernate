@@ -1,0 +1,65 @@
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+<GridPane fx:controller="org.kd.mvc.RegistrationFormController"
+          xmlns:fx="http://javafx.com/fxml" alignment="center"
+          hgap="3" vgap="3">
+    <padding>
+        <Insets top="15" right="15" bottom="15" left="15"/>
+    </padding>
+    <columnConstraints>
+        <ColumnConstraints minWidth="100" prefWidth="100"
+                           maxWidth="300" halignment="RIGHT">
+        </ColumnConstraints>
+        <ColumnConstraints minWidth="150" prefWidth="150"
+                           maxWidth="300" hgrow="ALWAYS">
+        </ColumnConstraints>
+    </columnConstraints>
+
+    <!-- Add Header Label -->
+    <Label text="Counterparty Info" GridPane.columnIndex="0"
+           GridPane.rowIndex="0" GridPane.columnSpan="2"
+           GridPane.rowSpan="1" GridPane.halignment="CENTER">
+        <font>
+            <Font name="Arial" size="16"/>
+        </font>
+        <GridPane.margin>
+            <Insets top="5" bottom="5" left="0"/>
+        </GridPane.margin>
+    </Label>
+
+    <!-- Add Name Label -->
+    <Label text="Counterparty Name: " GridPane.columnIndex="0"
+           GridPane.rowIndex="1">
+    </Label>
+    <!-- Add Name Text Field -->
+    <TextField fx:id="nameField" prefHeight="15"
+               GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+
+    <Label text="Short Name : " GridPane.columnIndex="0"
+           GridPane.rowIndex="2">
+    </Label>
+
+    <TextField fx:id="emailField" prefHeight="15"
+               GridPane.columnIndex="1" GridPane.rowIndex="2" editable="false"/>
+
+    <Label text="Funds : " GridPane.columnIndex="0"
+           GridPane.rowIndex="3">
+    </Label>
+
+    <TextField fx:id="fundsField" prefHeight="40"
+                   GridPane.columnIndex="1" GridPane.rowIndex="3" editable="false"/>
+
+    <!-- Add Submit Button -->
+    <Button fx:id="submitButton" text="OK"
+            prefWidth="100" prefHeight="40" defaultButton="true"
+            GridPane.columnIndex="0" GridPane.rowIndex="4"
+            GridPane.columnSpan="2" GridPane.rowSpan="1"
+            GridPane.halignment="CENTER"
+            onAction="#handleSubmitButtonAction">-->
+        <GridPane.margin>
+            <Insets top="5" right="0" bottom="5" left="0"></Insets>
+        </GridPane.margin>
+    </Button>
+</GridPane>

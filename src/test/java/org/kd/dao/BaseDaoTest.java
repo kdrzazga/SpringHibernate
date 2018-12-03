@@ -1,4 +1,4 @@
-package org.kd.runastest;
+package org.kd.dao;
 
 import org.dbunit.database.IDatabaseConnection;
 import org.dbunit.dataset.DataSetException;
@@ -16,7 +16,7 @@ import java.io.InputStream;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:dao-test-context.xml")
-public abstract class BaseApplication extends AbstractTransactionalJUnit4SpringContextTests {
+public abstract class BaseDaoTest extends AbstractTransactionalJUnit4SpringContextTests {
 
     @Autowired
     private IDatabaseConnection databaseConnection;

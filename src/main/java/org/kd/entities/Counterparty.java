@@ -1,12 +1,8 @@
 package org.kd.entities;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.util.Set;
 
-/**
- * @author: Matt Brown
- * @since: 8/3/11
- */
 @Entity
 @Table(name = "counterparties")
 public class Counterparty {
@@ -14,66 +10,16 @@ public class Counterparty {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-    private String firstName;
-    private String lastName;
-    private Date dateOfBirth;
-    private Date employmentStartDate;
+    private String name;
 
     /**
-     * Bi-directional relationship between Fund and Counterparty.
+     * Bi-directional relationship between Counterparty and Fund.
      */
-    @ManyToOne
-    @JoinColumn(name = "fund_id")
-    private Fund fund;
-
-    /**
-     * Unidirectional relationship between Counterparty and Team.
-     */
-    @ManyToOne
-    @JoinColumn(name = "team_id")
-    private Team team;
-
-    public Fund getFund() {
-        return fund;
-    }
-
-    public void setFund(Fund fund) {
-        this.fund = fund;
-    }
-
-    public Team getTeam() {
-        return team;
-    }
-
-    public void setTeam(Team team) {
-        this.team = team;
-    }
-
-    public Date getDateOfBirth() {
-        return dateOfBirth;
-    }
-
-    public void setDateOfBirth(Date dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
-    }
-
-    public Date getEmploymentStartDate() {
-        return employmentStartDate;
-    }
-
-    public void setEmploymentStartDate(Date employmentStartDate) {
-        this.employmentStartDate = employmentStartDate;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
+    @OneToMany(mappedBy = "counterparty")
+    private Set<Fund> funds;
 
     public long getId() {
+
         return id;
     }
 
@@ -81,12 +27,21 @@ public class Counterparty {
         this.id = id;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getName() {
+        return name;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Set<Fund> getFunds() {
+
+        return funds;
+    }
+
+    public void setFunds(Set<Fund> funds) {
+        this.funds = funds;
     }
 
     @Override
@@ -96,9 +51,7 @@ public class Counterparty {
 
         Counterparty counterparty = (Counterparty) o;
 
-        if (id != counterparty.id) return false;
-
-        return true;
+        return id == counterparty.id;
     }
 
     @Override

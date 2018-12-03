@@ -1,12 +1,8 @@
 package org.kd.entities;
 
 import javax.persistence.*;
-import java.util.Set;
+import java.util.Date;
 
-/**
- * @author: Matt Brown
- * @since: 8/3/11
- */
 @Entity
 @Table(name = "funds")
 public class Fund {
@@ -15,21 +11,54 @@ public class Fund {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     private String name;
-    private double units;
+    private String shortName;
+    private Date units;
+    private Date employmentStartDate;
 
     /**
-     * Bi-directional relationship between Fund and Counterparty.
+     * Bi-directional relationship between Counterparty and Fund.
      */
-    @OneToMany(mappedBy = "fund")
-    private Set<Counterparty> counterparties;
+    @ManyToOne
+    @JoinColumn(name = "counterparty_id")
+    private Counterparty counterparty;
 
-    public long getId() {
+    /**
+     * Unidirectional relationship between Fund and Team.
+     */
+    @ManyToOne
+    @JoinColumn(name = "team_id")
+    private Team team;
 
-        return id;
+    public Counterparty getCounterparty() {
+        return counterparty;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setCounterparty(Counterparty counterparty) {
+        this.counterparty = counterparty;
+    }
+
+    public Team getTeam() {
+        return team;
+    }
+
+    public void setTeam(Team team) {
+        this.team = team;
+    }
+
+    public Date getUnits() {
+        return units;
+    }
+
+    public void setUnits(Date units) {
+        this.units = units;
+    }
+
+    public Date getEmploymentStartDate() {
+        return employmentStartDate;
+    }
+
+    public void setEmploymentStartDate(Date employmentStartDate) {
+        this.employmentStartDate = employmentStartDate;
     }
 
     public String getName() {
@@ -40,13 +69,20 @@ public class Fund {
         this.name = name;
     }
 
-    public Set<Counterparty> getCounterparties() {
-
-        return counterparties;
+    public long getId() {
+        return id;
     }
 
-    public void setCounterparties(Set<Counterparty> counterparties) {
-        this.counterparties = counterparties;
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getShortName() {
+        return shortName;
+    }
+
+    public void setShortName(String shortName) {
+        this.shortName = shortName;
     }
 
     @Override
@@ -56,9 +92,7 @@ public class Fund {
 
         Fund fund = (Fund) o;
 
-        if (id != fund.id) return false;
-
-        return true;
+        return id == fund.id;
     }
 
     @Override

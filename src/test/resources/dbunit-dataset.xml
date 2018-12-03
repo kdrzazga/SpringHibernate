@@ -1,17 +1,16 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!DOCTYPE dataset [
-        <!ELEMENT dataset (funds | counterparties | teams)*>
+        <!ELEMENT dataset (counterparties | funds | teams)*>
+        <!ELEMENT counterparties EMPTY>
+        <!ATTLIST counterparties
+                id CDATA #REQUIRED
+                name CDATA #REQUIRED>
         <!ELEMENT funds EMPTY>
         <!ATTLIST funds
                 id CDATA #REQUIRED
                 name CDATA #REQUIRED
-                units CDATA #IMPLIED>
-        <!ELEMENT counterparties EMPTY>
-        <!ATTLIST counterparties
-                id CDATA #REQUIRED
-                firstName CDATA #REQUIRED
-                lastName CDATA #REQUIRED
-                fund_id CDATA #IMPLIED
+                shortName CDATA #REQUIRED
+                counterparty_id CDATA #IMPLIED
                 team_id CDATA #IMPLIED>
         <!ELEMENT teams EMPTY>
         <!ATTLIST teams
@@ -20,13 +19,14 @@
         ]>
 
 <dataset>
-    <funds id="1" name="AIG" units="123"/>
-    <funds id="2" name="PZU OFE" units="456.7"/>
+
+    <counterparties id="1" name="Spacetek"/>
+    <counterparties id="2" name="No Employees counterparty"/>
 
     <teams id="1" name="Super team"/>
-    
-    <counterparties id="1" firstName="Bob" lastName="Smith" fund_id="1" team_id="1"/>
-    <counterparties id="2" firstName="" lastName=""/>
-    <counterparties id="3" firstName="Jane" lastName="Doe" fund_id="1"/>
+
+    <funds id="1" name="Bob" shortName="Smith" counterparty_id="1" team_id="1"/>
+    <funds id="2" name="" shortName=""/>
+    <funds id="3" name="Jane" shortName="Doe" counterparty_id="1"/>
 
 </dataset>

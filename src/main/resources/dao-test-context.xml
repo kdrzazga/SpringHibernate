@@ -14,8 +14,6 @@
         <constructor-arg ref="dataSource"/>
     </bean>
 
-    <bean id="ui" class="org.kd.ui.UiImpl"></bean>
-
     <bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
         <property name="dataSource" ref="dataSource" />
         <property name="hibernateProperties">
@@ -25,8 +23,8 @@
         </property>
         <property name="annotatedClasses">
             <list>
-                <value>org.kd.entities.Fund</value>
                 <value>org.kd.entities.Counterparty</value>
+                <value>org.kd.entities.Fund</value>
                 <value>org.kd.entities.Team</value>
             </list>
         </property>
@@ -37,11 +35,12 @@
         <property name="sessionFactory" ref="sessionFactory" />
     </bean>
 
-    <bean class="org.kd.dao.hibernate.FundDaoImpl">
+    <!-- DAOs under test -->
+    <bean class="org.kd.dao.CounterpartyDaoImpl">
         <property name="sessionFactory" ref="sessionFactory" />
     </bean>
 
-    <bean class="org.kd.dao.hibernate.CounterpartyDaoImpl">
+    <bean class="org.kd.dao.FundDaoImpl">
         <property name="sessionFactory" ref="sessionFactory" />
     </bean>
 

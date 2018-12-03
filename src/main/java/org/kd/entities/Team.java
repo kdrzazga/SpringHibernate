@@ -2,12 +2,8 @@ package org.kd.entities;
 
 import javax.persistence.*;
 
-/**
- * @author: Matt Brown
- * @since: 8/3/11
- */
 @Entity
-@Table(name = "teams")
+@Table(name="teams")
 public class Team {
 
     @Id
@@ -38,7 +34,7 @@ public class Team {
 
         Team team = (Team) o;
 
-        return (id == team.id);
+        return id == team.id;
     }
 
     @Override
