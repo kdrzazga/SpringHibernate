@@ -1,64 +1,55 @@
 package org.kd.entities;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "funds")
-public class Fund {
+public class Fund implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     private String name;
     private String shortName;
-    private Date units;
-    private Date employmentStartDate;
+    private Double units;
 
     /**
-     * Bi-directional relationship between Counterparty and Fund.
+     * Bi-directional relationship between Party and Fund.
      */
     @ManyToOne
     @JoinColumn(name = "counterparty_id")
-    private Counterparty counterparty;
+    private Party party;
 
     /**
-     * Unidirectional relationship between Fund and Team.
+     * Unidirectional relationship between Fund and Trade.
      */
     @ManyToOne
     @JoinColumn(name = "team_id")
-    private Team team;
+    private Trade trade;
 
-    public Counterparty getCounterparty() {
-        return counterparty;
+    public Party getParty() {
+        return party;
     }
 
-    public void setCounterparty(Counterparty counterparty) {
-        this.counterparty = counterparty;
+    public void setParty(Party party) {
+        this.party = party;
     }
 
-    public Team getTeam() {
-        return team;
+    public Trade getTrade() {
+        return trade;
     }
 
-    public void setTeam(Team team) {
-        this.team = team;
+    public void setTrade(Trade trade) {
+        this.trade = trade;
     }
 
-    public Date getUnits() {
+    public Double getUnits() {
         return units;
     }
 
-    public void setUnits(Date units) {
+    public void setUnits(Double units) {
         this.units = units;
-    }
-
-    public Date getEmploymentStartDate() {
-        return employmentStartDate;
-    }
-
-    public void setEmploymentStartDate(Date employmentStartDate) {
-        this.employmentStartDate = employmentStartDate;
     }
 
     public String getName() {
@@ -90,7 +81,7 @@ public class Fund {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Fund fund = (Fund) o;
+        var fund = (Fund) o;
 
         return id == fund.id;
     }

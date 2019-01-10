@@ -23,9 +23,9 @@
         </property>
         <property name="annotatedClasses">
             <list>
-                <value>org.kd.entities.Counterparty</value>
+                <value>org.kd.entities.Party</value>
                 <value>org.kd.entities.Fund</value>
-                <value>org.kd.entities.Team</value>
+                <value>org.kd.entities.Trade</value>
             </list>
         </property>
     </bean>
@@ -35,8 +35,10 @@
         <property name="sessionFactory" ref="sessionFactory" />
     </bean>
 
+    <bean id="dbManager" class="org.kd.db.DbManager"/>
+
     <!-- DAOs under test -->
-    <bean class="org.kd.dao.CounterpartyDaoImpl">
+    <bean class="org.kd.dao.PartyDaoImpl">
         <property name="sessionFactory" ref="sessionFactory" />
     </bean>
 

@@ -1,30 +1,32 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!DOCTYPE dataset [
-        <!ELEMENT dataset (counterparties | funds | teams)*>
-        <!ELEMENT counterparties EMPTY>
-        <!ATTLIST counterparties
+        <!ELEMENT dataset (parties | funds | trades)*>
+        <!ELEMENT parties EMPTY>
+        <!ATTLIST parties
                 id CDATA #REQUIRED
-                name CDATA #REQUIRED>
+                name CDATA #REQUIRED
+                shortName CDATA #REQUIRED>
         <!ELEMENT funds EMPTY>
         <!ATTLIST funds
                 id CDATA #REQUIRED
                 name CDATA #REQUIRED
                 shortName CDATA #REQUIRED
+                units CDATA #REQUIRED
                 counterparty_id CDATA #IMPLIED
                 team_id CDATA #IMPLIED>
-        <!ELEMENT teams EMPTY>
-        <!ATTLIST teams
+        <!ELEMENT trades EMPTY>
+        <!ATTLIST trades
                 id CDATA #REQUIRED
-                name CDATA #REQUIRED>
+                quantity CDATA #REQUIRED>
         ]>
 
 <dataset>
-    <counterparties id="1" name="Employees Provident Fund"/>
-    <counterparties id="2" name="Ontario Teachers' Pension Plan"/>
+    <parties id="1" name="Employees Provident Fund" shortName="EPF"/>
+    <parties id="2" name="Ontario Teachers' Pension Plan" shortName="OTPP"/>
 
-    <teams id="1" name="Super team"/>
+    <trades id="1" quantity="100"/>
 
-    <funds id="1" name="IBM" shortName="IBM" counterparty_id="1" team_id="1"/>
-    <funds id="2" name="MSFT" shortName="Microsoft"/>
-    <funds id="3" name="APPL" shortName="Apple" counterparty_id="1"/>
+    <funds id="1" name="IBM" shortName="IBM" counterparty_id="1" units="120.5" team_id="1"/>
+    <funds id="2" name="Microsoft" shortName="MSFT" units="20.75" />
+    <funds id="3" name="Apple" shortName="APPL" counterparty_id="1" units="1525" />
 </dataset>

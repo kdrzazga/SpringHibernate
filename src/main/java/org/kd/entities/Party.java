@@ -1,17 +1,24 @@
 package org.kd.entities;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
-@Table(name="teams")
-public class Team {
+@Table(name = "parties")
+public class Party implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     private String name;
+    private String shortName;
 
+    /*
+        @OneToMany(mappedBy = "counterparty")
+        private Set<Fund> funds;
+    */
     public long getId() {
+
         return id;
     }
 
@@ -30,15 +37,26 @@ public class Team {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (o == null
+                || getClass() != o.getClass()
+                || !o.getClass().equals(Party.class))
+            return false;
 
-        Team team = (Team) o;
+        var party = (Party) o;
 
-        return id == team.id;
+        return id == party.id;
     }
 
     @Override
     public int hashCode() {
         return (int) (id ^ (id >>> 32));
+    }
+
+    public String getShortName() {
+        return shortName;
+    }
+
+    public void setShortName(String shortName) {
+        this.shortName = shortName;
     }
 }

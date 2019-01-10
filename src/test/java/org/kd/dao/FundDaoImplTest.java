@@ -1,6 +1,5 @@
 package org.kd.dao;
 
-import org.kd.entities.Fund;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -14,21 +13,21 @@ public class FundDaoImplTest extends BaseDaoTest {
 
     @Test
     public void testGet() {
-        Fund fund = fundDao.get(1);
+        var fund = fundDao.get(1);
+
         assertNotNull(fund);
-        assertEquals("Bob", fund.getName());
-
-        assertNotNull("Counterparty not found for fund", fund.getCounterparty());
-
-        assertNotNull("Team not set for fund", fund.getTeam());
-        assertEquals("Super team", fund.getTeam().getName());
+        assertEquals("IBM", fund.getName());
+        assertNotNull("Party not found for fund", fund.getParty());
+        assertNotNull("Trade not set for fund", fund.getTrade());
+        assertEquals(100, fund.getTrade().getQuantity(), 0.01);
     }
 
     @Test
     public void testGetNoCompanyOrTeam() {
-        Fund fund = fundDao.get(2);
+        var fund = fundDao.get(2);
+
         assertNotNull(fund);
-        assertNull(fund.getCounterparty());
-        assertNull(fund.getTeam());
+        assertNull(fund.getParty());
+        assertNull(fund.getTrade());
     }
 }

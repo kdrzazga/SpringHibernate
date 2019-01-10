@@ -1,38 +1,36 @@
 package org.kd.dao;
 
+import org.dbunit.DatabaseUnitException;
 import org.dbunit.database.IDatabaseConnection;
-import org.dbunit.dataset.DataSetException;
-import org.dbunit.dataset.IDataSet;
-import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
-import org.dbunit.operation.DatabaseOperation;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.runner.RunWith;
+import org.kd.db.DbManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import java.io.InputStream;
+import java.sql.SQLException;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:dao-test-context.xml")
+@ContextConfiguration("classpath:app-context.xml")
 public abstract class BaseDaoTest extends AbstractTransactionalJUnit4SpringContextTests {
 
     @Autowired
     private IDatabaseConnection databaseConnection;
 
+    @Autowired
+    private DbManager dbManager;
+
     @Before
-    public void setUp() throws Exception {
-        IDataSet dataSet = loadDataSet();
-        DatabaseOperation.CLEAN_INSERT.execute(databaseConnection, dataSet);
+    public void setUp() throws SQLException, DatabaseUnitException {
+        dbManager.setupDb(databaseConnection);
     }
 
-    protected IDataSet loadDataSet() throws DataSetException {
-        String name = "dbunit-dataset.xml";
-        InputStream stream = Thread.currentThread().getContextClassLoader().getResourceAsStream(name);
-        if (stream == null) {
-            throw new IllegalStateException("Dbunit file '" + name + "' does not exist");
-        }
-        return new FlatXmlDataSetBuilder().build(stream);
+    @After
+    public void tearDown() throws SQLException, DatabaseUnitException {
+        dbManager.tearDownDb(databaseConnection);
+        databaseConnection.close();
     }
 }
