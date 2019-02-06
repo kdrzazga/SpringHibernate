@@ -6,10 +6,12 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import org.kd.entities.Fund;
 import org.kd.entities.Party;
-import org.kd.main.Trader;
 import org.kd.main.model.DataModelManager;
 
 import java.util.Optional;
+import java.util.OptionalDouble;
+import java.util.OptionalLong;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class ViewerController {
@@ -90,30 +92,80 @@ public class ViewerController {
     @FXML
     protected void handleShowCptyAction(ActionEvent event) {
 
-        var errorMsg = new PropertiesReader().readKey("error.messsage.cpty.not.selected");
+        var errorMsg = new PropertiesReader().readKey("error.message.party.not.selected");
         if (isNoneElementSelected(cptyIdChoiceBox, showCptyButton, errorMsg)) return;
 
-        var id = Long.parseLong(cptyIdChoiceBox.getValue());
-        var cpty = DataModelManager.getPartyDao().get(id);
-        if (cpty != null) {
-            this.cptyNameField.setText(cpty.getName());
-            this.shortCptyNameField.setText(cpty.getShortName());
+        var id = readPartyId();
+        var party = DataModelManager.getPartyDao().get(id);
+        if (party != null) {
+            this.cptyNameField.setText(party.getName());
+            this.shortCptyNameField.setText(party.getShortName());
         }
+    }
+
+    private long readPartyId() {
+        return Long.parseLong(cptyIdChoiceBox.getValue());
     }
 
     @FXML
     protected void handleShowFundAction(ActionEvent event) {
 
-        String errorMsg = new PropertiesReader().readKey("error.messsage.fund.not.selected");
+        String errorMsg = new PropertiesReader().readKey("error.message.fund.not.selected");
         if (isNoneElementSelected(fundIdChoiceBox, showFundButton, errorMsg)) return;
 
-        var id = Long.parseLong(fundIdChoiceBox.getValue());
+        var id = readFundId();
         var fund = DataModelManager.getFundDao().get(id);
         if (fund != null) {
             this.fundNameField.setText(fund.getName());
             this.fundShortNameField.setText(fund.getShortName());
             this.fundUnitsField.setText(fund.getUnits().toString());
         }
+    }
+
+    private long readFundId() {
+        return OptionalLong
+                .of(Long.parseLong(fundIdChoiceBox.getValue()))
+                .orElse(0);
+    }
+
+    private String readFundShortName() {
+        return this.fundShortNameField.getText();
+    }
+
+    private String readFundName() {
+        return this.fundNameField.getText();
+    }
+
+    private double readFundUnits() {
+        return OptionalDouble
+                .of(Double.valueOf(this.fundUnitsField.getText()))
+                .orElse(0);
+    }
+
+    @FXML
+    protected void handleSavePartyAction(ActionEvent event) {
+        DataModelManager
+                .getPartyDao()
+                .save(new Party(readPartyId(), readPartyName(), readPartyShortName(), readFunds()));
+    }
+
+    @FXML
+    protected void handleSaveFundAction(ActionEvent event) {
+        DataModelManager
+                .getFundDao()
+                .save(new Fund(readFundId(), readFundName(), readFundShortName(), readFundUnits()));
+    }
+
+    private Set<Fund> readFunds() {
+        return Set.of(new Fund());//TODO: implement this
+    }
+
+    private String readPartyShortName() {
+        return this.shortCptyNameField.getText();
+    }
+
+    private String readPartyName() {
+        return this.cptyNameField.getText();
     }
 
     @FXML

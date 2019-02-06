@@ -24,10 +24,9 @@ public class Trader extends Application {
         var controller = (ViewerController)loader.getController();
         controller.loadParties();
         controller.loadFunds();
-
     }
 
-    public void setupPrimaryStage(Stage primaryStage, Parent root, String appTitle) {
+    private void setupPrimaryStage(Stage primaryStage, Parent root, String appTitle) {
         primaryStage.setTitle(appTitle);
         primaryStage.setIconified(false);
         primaryStage.setScene(new Scene(root, 450, 415));
