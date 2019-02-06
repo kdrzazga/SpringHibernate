@@ -28,6 +28,15 @@ public class Fund implements Serializable {
     @JoinColumn(name = "team_id")
     private Trade trade;
 
+    public Fund(){}
+
+    public Fund(long id, String newName, String newShortName, double units) {
+        this.id = id;
+        this.name = newName;
+        this.shortName = newShortName;
+        this.units = units;
+    }
+
     public Party getParty() {
         return party;
     }

@@ -6,20 +6,23 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.kd.main.model.DataModelManager;
+import org.kd.main.view.PropertiesReader;
 
 public class Trader extends Application {
 
-    private final String APP_TITLE = "Trader";
+    public static boolean devMode = false;
 
     @Override
     public void
     start(Stage primaryStage) throws Exception {
         initialize();
         Parent root = FXMLLoader.load(getClass().getResource("main_form.fxml"));
-        primaryStage.setTitle(APP_TITLE);
+        var appTitle = new PropertiesReader().readKey("app.title");
+        primaryStage.setTitle(appTitle);
         primaryStage.setIconified(false);
-        primaryStage.setScene(new Scene(root, 450, 325));
+        primaryStage.setScene(new Scene(root, 450, 415));
         primaryStage.show();
+
         primaryStage.setOnCloseRequest(event -> {
             exit();
         });
@@ -34,6 +37,14 @@ public class Trader extends Application {
     }
 
     public static void main(String[] args) {
+        if (args.length > 0)
+            devMode = args[0].equals("--dev") || args[0].equals("-d");
+
         launch(args);
     }
+
+    public static boolean getDevMode() {
+        return devMode;
+    }
+
 }

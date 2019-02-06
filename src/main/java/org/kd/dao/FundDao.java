@@ -4,4 +4,6 @@ import org.kd.entities.Fund;
 
 public interface FundDao {
     Fund get(long id);
+
+    void save(Fund fund);
 }

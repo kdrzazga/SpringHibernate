@@ -1,5 +1,6 @@
 package org.kd.dao;
 
+import org.kd.entities.Fund;
 import org.kd.entities.Party;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
@@ -14,6 +15,11 @@ public class PartyDaoImpl extends HibernateDaoSupport implements PartyDao {
     }
 
     public List getAvailableCptiesIds(){
-        return getHibernateTemplate().findByNamedQuery("select id from counterparties;");
+        return getHibernateTemplate().loadAll(Party.class);
+    }
+
+    @Override
+    public void save(Party party) {
+        getHibernateTemplate().saveOrUpdate(party);
     }
 }

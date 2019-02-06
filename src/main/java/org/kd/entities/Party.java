@@ -2,6 +2,7 @@ package org.kd.entities;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Set;
 
 @Entity
 @Table(name = "parties")
@@ -12,6 +13,16 @@ public class Party implements Serializable {
     private long id;
     private String name;
     private String shortName;
+
+    public Party(){
+
+    }
+
+    public Party(long id, String name, String shortName, Set<Fund> availableFunds){
+        this.id = id;
+        this.name = name;
+        this.shortName = shortName;
+    }
 
     /*
         @OneToMany(mappedBy = "counterparty")

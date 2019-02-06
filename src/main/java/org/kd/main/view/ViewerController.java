@@ -2,15 +2,19 @@ package org.kd.main.view;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import org.kd.main.Trader;
 import org.kd.main.model.DataModelManager;
 
 import java.util.Optional;
 
 public class ViewerController {
+
+    @FXML
+    private Tab devTab;
+
+    @FXML
+    private TableView<String> tradeTable;
 
     @FXML
     private ChoiceBox<String> cptyIdChoiceBox;
@@ -42,19 +46,19 @@ public class ViewerController {
     @FXML
     private Button showFundButton;
 
-    private static final String FORM_ERROR = "Form Error!";
+
+    @FXML
+    public void initialize() {
+        devTab.setDisable(!Trader.getDevMode());
+    }
 
     @FXML
     protected void handleShowCptyAction(ActionEvent event) {
 
-        if (!isItemSelected(cptyIdChoiceBox)) {
-            var owner = showCptyButton.getScene().getWindow();
-            AlertHelper.showAlert(Alert.AlertType.ERROR, owner, FORM_ERROR,
-                    "Please select Party Id.");
-            return;
-        }
+        var errorMsg = new PropertiesReader().readKey("error.messsage.cpty.not.selected");
+        if (isNoneElementSelected(cptyIdChoiceBox, showCptyButton, errorMsg)) return;
 
-        long id = Long.parseLong(cptyIdChoiceBox.getValue());
+        var id = Long.parseLong(cptyIdChoiceBox.getValue());
         var cpty = DataModelManager.getPartyDao().get(id);
         if (cpty != null) {
             this.cptyNameField.setText(cpty.getName());
@@ -64,14 +68,11 @@ public class ViewerController {
 
     @FXML
     protected void handleShowFundAction(ActionEvent event) {
-        if (!isItemSelected(fundIdChoiceBox)) {
-            var owner = showFundButton.getScene().getWindow();
-            AlertHelper.showAlert(Alert.AlertType.ERROR, owner, FORM_ERROR,
-                    "Please select Fund Id.");
-            return;
-        }
 
-        Long id = Long.parseLong(fundIdChoiceBox.getValue());
+        String errorMsg = new PropertiesReader().readKey("error.messsage.fund.not.selected");
+        if (isNoneElementSelected(fundIdChoiceBox, showFundButton, errorMsg)) return;
+
+        var id = Long.parseLong(fundIdChoiceBox.getValue());
         var fund = DataModelManager.getFundDao().get(id);
         if (fund != null) {
             this.fundNameField.setText(fund.getName());
@@ -86,9 +87,21 @@ public class ViewerController {
     }
 
     private boolean isItemSelected(ChoiceBox<String> choiceBox) {
+
         return Optional.ofNullable(choiceBox)
                 .map(ChoiceBox::getValue)
                 .map(String::isEmpty)
                 .isPresent();
+    }
+
+    private boolean isNoneElementSelected(ChoiceBox<String> fundIdChoiceBox, Button showFundButton, String errorMessage) {
+        if (isItemSelected(fundIdChoiceBox)) return false;
+
+        var owner = showFundButton.getScene().getWindow();
+        var formErrorMsg = new PropertiesReader().readKey("error.messsage.cpty.not.selected");
+        AlertHelper.showAlert(Alert.AlertType.ERROR, owner, formErrorMsg,
+                errorMessage);
+        return true;
+
     }
 }

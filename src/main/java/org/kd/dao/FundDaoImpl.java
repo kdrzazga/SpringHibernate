@@ -11,4 +11,9 @@ public class FundDaoImpl extends HibernateDaoSupport implements FundDao {
     public Fund get(long id) {
         return getHibernateTemplate().get(Fund.class, id);
     }
+
+    @Override
+    public void save(Fund fund) {
+        getHibernateTemplate().saveOrUpdate(fund);
+    }
 }

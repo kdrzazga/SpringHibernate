@@ -25,6 +25,7 @@ public class DbManager {
     }
 
     private IDataSet loadDataSet() throws DataSetException {
+
         var stream = Thread.currentThread().getContextClassLoader().getResourceAsStream(dbFilename);
         if (stream == null) {
             throw new IllegalStateException("Dbunit file '" + dbFilename + "' does not exist");

@@ -29,11 +29,16 @@ public class Trade implements Serializable {
     }
 
     @Override
+    public String toString() {
+        return id + " " + quantity;
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Trade trade = (Trade) o;
+        var trade = (Trade) o;
 
         return id == trade.id;
     }
