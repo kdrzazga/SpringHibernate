@@ -8,7 +8,6 @@ import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
 import org.dbunit.operation.DatabaseOperation;
 
 import javax.inject.Named;
-import java.io.InputStream;
 import java.sql.SQLException;
 
 @Named

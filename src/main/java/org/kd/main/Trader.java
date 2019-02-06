@@ -7,25 +7,35 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.kd.main.model.DataModelManager;
 import org.kd.main.view.PropertiesReader;
+import org.kd.main.view.ViewerController;
 
 public class Trader extends Application {
 
-    public static boolean devMode = false;
-
     @Override
-    public void
-    start(Stage primaryStage) throws Exception {
+    public void start(Stage primaryStage) throws Exception {
         initialize();
-        Parent root = FXMLLoader.load(getClass().getResource("main_form.fxml"));
+
+        var loader = new FXMLLoader(getClass().getResource("main_form.fxml"));
+        Parent root = loader.load();
+        
         var appTitle = new PropertiesReader().readKey("app.title");
+        setupPrimaryStage(primaryStage, root, appTitle);
+
+        var controller = (ViewerController)loader.getController();
+        controller.loadParties();
+        controller.loadFunds();
+
+    }
+
+    public void setupPrimaryStage(Stage primaryStage, Parent root, String appTitle) {
         primaryStage.setTitle(appTitle);
         primaryStage.setIconified(false);
         primaryStage.setScene(new Scene(root, 450, 415));
-        primaryStage.show();
-
         primaryStage.setOnCloseRequest(event -> {
             exit();
         });
+
+        primaryStage.show();
     }
 
     private void initialize() {
@@ -37,14 +47,7 @@ public class Trader extends Application {
     }
 
     public static void main(String[] args) {
-        if (args.length > 0)
-            devMode = args[0].equals("--dev") || args[0].equals("-d");
-
         launch(args);
-    }
-
-    public static boolean getDevMode() {
-        return devMode;
     }
 
 }

@@ -1,12 +1,16 @@
 package org.kd.main.view;
 
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import org.kd.entities.Fund;
+import org.kd.entities.Party;
 import org.kd.main.Trader;
 import org.kd.main.model.DataModelManager;
 
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class ViewerController {
 
@@ -29,6 +33,9 @@ public class ViewerController {
     private TextField shortCptyNameField;
 
     @FXML
+    private ChoiceBox<String> cptyId4TradeChoiceBox;
+
+    @FXML
     private TextField fundsField;
 
     @FXML
@@ -46,10 +53,38 @@ public class ViewerController {
     @FXML
     private Button showFundButton;
 
-
     @FXML
     public void initialize() {
-        devTab.setDisable(!Trader.getDevMode());
+        devTab.setDisable(new PropertiesReader().readKey("dev-mode").equals("false"));
+    }
+
+    public void loadParties() {
+
+        var list = FXCollections.observableArrayList(
+                DataModelManager
+                        .getPartyDao()
+                        .getAvailableCptiesIds()
+                        .stream()
+                        .map(Party::getId)
+                        .map(id -> id.toString())
+                        .collect(Collectors.toList()));
+
+        cptyIdChoiceBox.setItems(list);
+        cptyId4TradeChoiceBox.setItems(list);
+    }
+
+    public void loadFunds() {
+
+        var list = FXCollections.observableArrayList(
+                DataModelManager
+                        .getFundDao()
+                        .getAvailableFunds()
+                        .stream()
+                        .map(Fund::getId)
+                        .map(id -> id.toString())
+                        .collect(Collectors.toList()));
+
+        fundIdChoiceBox.setItems(list);
     }
 
     @FXML

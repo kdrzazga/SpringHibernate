@@ -1,6 +1,5 @@
 package org.kd.dao;
 
-import org.kd.entities.Fund;
 import org.kd.entities.Party;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
@@ -14,7 +13,7 @@ public class PartyDaoImpl extends HibernateDaoSupport implements PartyDao {
         return getHibernateTemplate().get(Party.class, id);
     }
 
-    public List getAvailableCptiesIds(){
+    public List<Party> getAvailableCptiesIds(){
         return getHibernateTemplate().loadAll(Party.class);
     }
 
