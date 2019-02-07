@@ -8,6 +8,7 @@ import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
 import org.dbunit.operation.DatabaseOperation;
 
 import javax.inject.Named;
+import java.io.IOException;
 import java.sql.SQLException;
 
 @Named
@@ -21,6 +22,17 @@ public class DbManager {
 
     public void tearDownDb(IDatabaseConnection databaseConnection) throws DatabaseUnitException, SQLException {
         DatabaseOperation.DELETE_ALL.execute(databaseConnection, loadDataSet());
+    }
+
+    public void saveDbToXml(IDatabaseConnection databaseConnection) {
+        try {
+            var fullDataSet = databaseConnection.createDataSet();
+            new DbSaver().save(dbFilename, fullDataSet);
+
+        } catch (SQLException | DataSetException | IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     private IDataSet loadDataSet() throws DataSetException {

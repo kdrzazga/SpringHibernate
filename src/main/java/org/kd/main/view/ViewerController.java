@@ -4,15 +4,15 @@ import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import org.kd.entities.Fund;
-import org.kd.entities.Party;
-import org.kd.main.model.DataModelManager;
-
 import java.util.Optional;
 import java.util.OptionalDouble;
 import java.util.OptionalLong;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+import org.kd.entities.Fund;
+import org.kd.entities.Party;
+import org.kd.main.model.DataModelManager;
 
 public class ViewerController {
 
@@ -68,7 +68,7 @@ public class ViewerController {
                         .getAvailableCptiesIds()
                         .stream()
                         .map(Party::getId)
-                        .map(id -> id.toString())
+                        .map(Object::toString)
                         .collect(Collectors.toList()));
 
         cptyIdChoiceBox.setItems(list);
@@ -83,7 +83,7 @@ public class ViewerController {
                         .getAvailableFunds()
                         .stream()
                         .map(Fund::getId)
-                        .map(id -> id.toString())
+                        .map(Object::toString)
                         .collect(Collectors.toList()));
 
         fundIdChoiceBox.setItems(list);
@@ -185,7 +185,7 @@ public class ViewerController {
         if (isItemSelected(fundIdChoiceBox)) return false;
 
         var owner = showFundButton.getScene().getWindow();
-        var formErrorMsg = new PropertiesReader().readKey("error.messsage.cpty.not.selected");
+        var formErrorMsg = new PropertiesReader().readKey("error.message.party.not.selected");
         AlertHelper.showAlert(Alert.AlertType.ERROR, owner, formErrorMsg,
                 errorMessage);
         return true;

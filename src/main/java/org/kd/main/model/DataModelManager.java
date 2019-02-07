@@ -34,6 +34,10 @@ public class DataModelManager {
         }
     }
 
+    public static void saveDb(IDatabaseConnection databaseConnection){
+        dbManager.saveDbToXml(databaseConnection);
+    }
+
     private static void initDb(IDatabaseConnection databaseConnection) {
         try {
             dbManager.setupDb(databaseConnection);

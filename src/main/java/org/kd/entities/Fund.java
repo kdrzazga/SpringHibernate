@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "funds")
+@Table(name = "FUNDS")
 public class Fund implements Serializable {
 
     @Id
@@ -18,14 +18,14 @@ public class Fund implements Serializable {
      * Bi-directional relationship between Party and Fund.
      */
     @ManyToOne
-    @JoinColumn(name = "counterparty_id")
+    @JoinColumn(name = "PARTY_ID")
     private Party party;
 
     /**
      * Unidirectional relationship between Fund and Trade.
      */
     @ManyToOne
-    @JoinColumn(name = "team_id")
+    @JoinColumn(name = "TRADE_ID")
     private Trade trade;
 
     public Fund(){}

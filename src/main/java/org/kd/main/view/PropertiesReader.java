@@ -7,7 +7,7 @@ import java.util.Properties;
 
 public class PropertiesReader {
 
-    private ClassLoader objClassLoader;
+    private final ClassLoader objClassLoader;
 
     public PropertiesReader() {
         objClassLoader = getClass().getClassLoader();
@@ -22,7 +22,7 @@ public class PropertiesReader {
         if (propertiesFilename != null && !propertiesFilename.trim().isEmpty()
                 && key != null && !key.trim().isEmpty()) {
             try (
-                    var objFileInputStream = new FileInputStream(Objects.requireNonNull(objClassLoader.getResource(propertiesFilename)).getFile());
+                    var objFileInputStream = new FileInputStream(Objects.requireNonNull(objClassLoader.getResource(propertiesFilename)).getFile())
             ) {
                 commonProperties.load(objFileInputStream);
                 return String.valueOf(commonProperties.get(key));
