@@ -20,9 +20,8 @@ public class Trader extends Application {
         
         setupPrimaryStage(primaryStage, root);
 
-        var controller = (ViewerController)loader.getController();
-        controller.loadParties();
-        controller.loadFunds();
+        ((ViewerController)loader.getController()).loadParties();
+        ((ViewerController)loader.getController()).loadFunds();
     }
 
     private void setupPrimaryStage(Stage primaryStage, Parent root) {
@@ -39,7 +38,7 @@ public class Trader extends Application {
     }
 
     private void exit() {
-        DataModelManager.clearDb();
+        DataModelManager.saveDb();
     }
 
     public static void main(String[] args) {

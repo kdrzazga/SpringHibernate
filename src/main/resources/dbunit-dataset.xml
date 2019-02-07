@@ -1,32 +1,34 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!DOCTYPE dataset [
-        <!ELEMENT dataset (PARTIES | FUNDS | TRADES)*>
-        <!ELEMENT PARTIES EMPTY>
-        <!ATTLIST PARTIES
-                id CDATA #REQUIRED
-                NAME CDATA #REQUIRED
-                shortName CDATA #REQUIRED>
-        <!ELEMENT FUNDS EMPTY>
-        <!ATTLIST FUNDS
-                id CDATA #REQUIRED
-                NAME CDATA #REQUIRED
-                shortName CDATA #REQUIRED
-                units CDATA #REQUIRED
-                PARTY_ID CDATA #IMPLIED
-                TRADE_ID CDATA #IMPLIED>
-        <!ELEMENT TRADES EMPTY>
-        <!ATTLIST TRADES
-                id CDATA #REQUIRED
-                quantity CDATA #REQUIRED>
-        ]>
+	<!ELEMENT dataset (FUNDS |PARTIES |TRADES)*>
+
+	<!ELEMENT FUNDS EMPTY>
+	<!ATTLIST FUNDS
+	        ID CDATA #REQUIRED
+	        NAME CDATA #REQUIRED
+	        SHORTNAME CDATA #REQUIRED
+
+        UNITS CDATA #REQUIRED
+	        PARTY_ID CDATA #IMPLIED
+	        TRADE_ID CDATA #IMPLIED>
+
+	<!ELEMENT PARTIES EMPTY>
+	<!ATTLIST PARTIES
+	        ID CDATA #REQUIRED
+	        NAME CDATA #REQUIRED
+	        SHORTNAME CDATA #REQUIRED>
+
+	<!ELEMENT TRADES EMPTY>
+	<!ATTLIST TRADES
+	        ID CDATA #REQUIRED
+	        QUANTITY CDATA #REQUIRED>
+	]>
 
 <dataset>
-    <PARTIES id="1" NAME="Employees Provident Fund" shortName="EPF"/>
-    <PARTIES id="2" NAME="Ontario Teachers' Pension Plan" shortName="OTPP"/>
-
-    <TRADES id="1" quantity="100"/>
-
-    <FUNDS id="1" NAME="IBM" shortName="IBM" PARTY_ID="1" units="120.5" TRADE_ID="1"/>
-    <FUNDS id="2" NAME="Microsoft" shortName="MSFT" units="20.75" />
-    <FUNDS id="3" NAME="Apple" shortName="APPL" PARTY_ID="1" units="1525" />
+  <TRADES ID="1" QUANTITY="100.0"/>
+  <PARTIES ID="2" NAME="Ontario Teachers&apos; Pension Plan" SHORTNAME="OTPP"/>
+  <PARTIES ID="1" NAME="Employees Provident Fund" SHORTNAME="EPF"/>
+  <FUNDS ID="3" NAME="Apple" SHORTNAME="APPL" UNITS="1525.0" PARTY_ID="1"/>
+  <FUNDS ID="2" NAME="Microsoft" SHORTNAME="MSFT" UNITS="20.75"/>
+  <FUNDS ID="1" NAME="IBM" SHORTNAME="IBM" UNITS="120.5" PARTY_ID="1" TRADE_ID="1"/>
 </dataset>

@@ -34,8 +34,8 @@ public class DataModelManager {
         }
     }
 
-    public static void saveDb(IDatabaseConnection databaseConnection){
-        dbManager.saveDbToXml(databaseConnection);
+    public static void saveDb(){
+        dbManager.saveDbToXml(context.getBean(DatabaseDataSourceConnection.class));
     }
 
     private static void initDb(IDatabaseConnection databaseConnection) {
