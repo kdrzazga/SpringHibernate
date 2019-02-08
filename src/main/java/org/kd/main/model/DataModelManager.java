@@ -5,6 +5,7 @@ import org.dbunit.database.DatabaseDataSourceConnection;
 import org.dbunit.database.IDatabaseConnection;
 import org.kd.dao.PartyDao;
 import org.kd.dao.FundDao;
+import org.kd.dao.TradeDao;
 import org.kd.db.DbManager;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -15,6 +16,7 @@ public class DataModelManager {
 
     private static PartyDao partyDao;
     private static FundDao fundDao;
+    private static TradeDao tradeDao;
     private static ApplicationContext context;
     private static DbManager dbManager;
 
@@ -24,6 +26,7 @@ public class DataModelManager {
         initDb(context.getBean(DatabaseDataSourceConnection.class));
         partyDao = context.getBean(PartyDao.class);
         fundDao = context.getBean(FundDao.class);
+        tradeDao = context.getBean(TradeDao.class);
     }
 
     public static void clearDb() {
@@ -60,6 +63,10 @@ public class DataModelManager {
 
     public static void setFundDao(FundDao fundDao) {
         DataModelManager.fundDao = fundDao;
+    }
+
+    public static TradeDao getTradeDao() {
+        return tradeDao;
     }
 
     public static ApplicationContext getContext() {

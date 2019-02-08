@@ -21,7 +21,7 @@ class DbSaver {
         if (new File(path).delete()) {
             var ps = createDbStructureScript();
             var tables = formatTablesToWrite(dataSet);
-            ps.append(String.join("\n", tables.toArray(new String[tables.size()])));
+            ps.append(String.join("\n", tables.toArray(new String[0])));
 
             new FileOutputStream(path).write(ps.toString().getBytes());
             System.out.println("DB saved");
@@ -32,19 +32,22 @@ class DbSaver {
         var writer = new StringWriter();
 
         FlatXmlDataSet.write(dataSet, writer);
+        var datasetOpeningTag = "<dataset>";
         var datasetClosingTag = "</dataset>";
 
         var tables = writer
                 .toString()
                 .replace("<?xml version='1.0' encoding='UTF-8'?>", "")
+                .replace(datasetOpeningTag, "")
                 .replace(datasetClosingTag, "")
                 .split("\n");
 
         Arrays.sort(tables, Collections.reverseOrder());//funds need to be created prior to parties,as they contain FOREIGN KEY to parties
 
         var tablesWithTags = new Vector<String>();
-        Arrays.asList(tables).stream().forEach(table -> tablesWithTags.add(table));
-        tablesWithTags.add(datasetClosingTag);
+        tablesWithTags.add(datasetOpeningTag);
+        Arrays.asList(tables).forEach(table -> tablesWithTags.add(table));
+        tablesWithTags.add(datasetClosingTag + "\n");
 
         return tablesWithTags;
     }
@@ -75,7 +78,6 @@ class DbSaver {
                         "\t<!ATTLIST TRADES\n" +
                         "\t        ID CDATA #REQUIRED\n" +
                         "\t        QUANTITY CDATA #REQUIRED>\n" +
-                        "\t]>\n" +
-                        "\n");
+                        "\t]>\n");
     }
 }

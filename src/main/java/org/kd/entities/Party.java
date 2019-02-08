@@ -14,20 +14,19 @@ public class Party implements Serializable {
     private String name;
     private String shortName;
 
-    public Party(){
+    public Party() {
 
     }
 
-    public Party(long id, String name, String shortName, Set<Fund> availableFunds){
+    public Party(long id, String name, String shortName, Set<Fund> availableFunds) {
         this.id = id;
         this.name = name;
         this.shortName = shortName;
     }
 
-    /*
-        @OneToMany(mappedBy = "counterparty")
-        private Set<Fund> funds;
-    */
+   // @OneToMany(mappedBy = "id")
+    //private Set<Fund> funds;
+
     public long getId() {
 
         return id;

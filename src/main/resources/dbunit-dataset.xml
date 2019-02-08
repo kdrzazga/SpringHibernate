@@ -23,12 +23,20 @@
 	        ID CDATA #REQUIRED
 	        QUANTITY CDATA #REQUIRED>
 	]>
-
 <dataset>
-  <TRADES ID="1" QUANTITY="100.0"/>
-  <PARTIES ID="2" NAME="Ontario Teachers&apos; Pension Plan" SHORTNAME="OTPP"/>
-  <PARTIES ID="1" NAME="Employees Provident Fund" SHORTNAME="EPF"/>
-  <FUNDS ID="3" NAME="Apple" SHORTNAME="APPL" UNITS="1525.0" PARTY_ID="1"/>
-  <FUNDS ID="2" NAME="Microsoft" SHORTNAME="MSFT" UNITS="20.75"/>
-  <FUNDS ID="1" NAME="IBM" SHORTNAME="IBM" UNITS="120.5" PARTY_ID="1" TRADE_ID="1"/>
+  <TRADES ID="107499" QUANTITY="1236.44"/>
+  <TRADES ID="10001001" QUANTITY="100.0"/>
+  <PARTIES ID="2100" NAME="South Korea National Pension Service" SHORTNAME="NPS"/>
+  <PARTIES ID="2012" NAME="Norway Government Pension Fund" SHORTNAME="GPF"/>
+  <PARTIES ID="2005" NAME="Ontario Teachers&apos; Pension Plan" SHORTNAME="OTPP"/>
+  <PARTIES ID="2004" NAME="Employees Provident Fund" SHORTNAME="EPF"/>
+  <PARTIES ID="2003" NAME="Pension Benefit Guaranty Corporation" SHORTNAME="PBGC"/>
+  <FUNDS ID="3100" NAME="Apple" SHORTNAME="APPL" UNITS="1525.0" PARTY_ID="2004"/>
+  <FUNDS ID="3020" NAME="The Madison Square Garden Comp" SHORTNAME="MSG" UNITS="210.75"/>
+  <FUNDS ID="3019" NAME="Motorola Solutions" SHORTNAME="MSI" UNITS="8233211.20024"/>
+  <FUNDS ID="3018" NAME="Microsoft" SHORTNAME="MSFT" UNITS="20.75"/>
+  <FUNDS ID="3017" NAME="Google Inc." SHORTNAME="GOOGL" UNITS="20.75"/>
+  <FUNDS ID="3016" NAME="IBM" SHORTNAME="IBM" UNITS="120.5"/>
+  <FUNDS ID="3003" NAME="Mesabi Trust" SHORTNAME="MSB" UNITS="3498.0" PARTY_ID="2100"/>
+
 </dataset>

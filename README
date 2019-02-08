@@ -1,3 +1,3 @@
 Application based on Hibernate and Spring.
 Parties can buy units from Funds.
-In memory database
+Single XML file database.

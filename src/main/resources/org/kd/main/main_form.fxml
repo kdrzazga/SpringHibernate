@@ -4,7 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-<Pane fx:id="mainPane" maxHeight="520.0" minHeight="520.0" prefHeight="520.0" scaleShape="false"
+<Pane fx:id="mainPane" maxHeight="520.0" minHeight="520.0" prefHeight="520.0" scaleShape="true"
       xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="org.kd.main.view.ViewerController">
     <TabPane fx:id="mainTabPane" maxHeight="575.0" minHeight="520.0" prefHeight="520.0" prefWidth="446.0"
@@ -37,7 +37,7 @@
                                     </padding>
                                 </Label>
                                 <Label text="Party Id :" GridPane.rowIndex="1"/>
-                                <ChoiceBox id="cptyId4TradeChoiceBox" fx:id="cptyId4TradeChoiceBox"
+                                <ChoiceBox id="partyId4TradeChoiceBox" fx:id="partyId4TradeChoiceBox"
                                            nodeOrientation="LEFT_TO_RIGHT" prefHeight="14.0" prefWidth="180.0"
                                            GridPane.columnIndex="1" GridPane.rowIndex="1">
 
@@ -62,11 +62,6 @@
                         </GridPane>
                         <TableView fx:id="tradeTable" layoutX="23.0" layoutY="255.0" prefHeight="121.0"
                                    prefWidth="389.0">
-                            <columns>
-                                <TableColumn prefWidth="68.0" text="Trade Id"/>
-                                <TableColumn prefWidth="55.0" text="Party"/>
-                                <TableColumn prefWidth="60.0" text="Units"/>
-                            </columns>
                         </TableView>
                     </children>
                 </AnchorPane>
@@ -74,7 +69,7 @@
         </Tab>
         <Tab fx:id="cptyTab" text="Party">
             <content>
-                <AnchorPane minHeight="280.0" minWidth="0.0" prefHeight="380.0" prefWidth="200.0">
+                <AnchorPane minHeight="280.0" minWidth="431.0" prefHeight="380.0" prefWidth="200.0">
                     <children>
                         <GridPane hgap="3.0" prefHeight="341.0" prefWidth="431.0" vgap="3.0">
                             <columnConstraints>
@@ -103,24 +98,22 @@
                                         <Insets bottom="15.0" left="15.0" right="15.0" top="15.0"/>
                                     </padding>
                                 </Label>
-                                <Label alignment="CENTER_RIGHT" text="Party Name : " GridPane.rowIndex="6"
-                                       GridPane.valignment="TOP">
+                                <Label alignment="CENTER_RIGHT" text="Party Name : " GridPane.rowIndex="6">
                                     <GridPane.margin>
                                         <Insets top="4.0"/>
                                     </GridPane.margin>
                                 </Label>
-                                <TextField fx:id="cptyNameField" prefHeight="15" GridPane.columnIndex="1"
+                                <TextField fx:id="cptyNameField" prefHeight="15" minWidth="225" GridPane.columnIndex="1"
                                            GridPane.rowIndex="6"/>
-                                <Label alignment="CENTER_RIGHT" text="Short Name : " GridPane.rowIndex="7"
-                                       GridPane.valignment="TOP">
+                                <Label alignment="CENTER_RIGHT" text="Short Name : " GridPane.rowIndex="7">
                                     <GridPane.margin>
                                         <Insets top="4.0"/>
                                     </GridPane.margin>
                                 </Label>
-                                <TextField fx:id="shortCptyNameField" prefHeight="15" GridPane.columnIndex="1"
+                                <TextField fx:id="shortCptyNameField" prefHeight="15" maxWidth="100"
+                                           GridPane.columnIndex="1"
                                            GridPane.rowIndex="7"/>
-                                <Label alignment="CENTER_RIGHT" text="Funds : " GridPane.rowIndex="8"
-                                       GridPane.valignment="TOP">
+                                <Label alignment="CENTER_RIGHT" text="Funds : " GridPane.rowIndex="8">
                                     <GridPane.margin>
                                         <Insets top="4.0"/>
                                     </GridPane.margin>
@@ -134,12 +127,12 @@
                                         <Insets bottom="5" top="5"/>
                                     </GridPane.margin>
                                 </Button>
-                                <ChoiceBox id="cptyIdChoiceBox" fx:id="cptyIdChoiceBox"
+                                <ChoiceBox id="partyIdChoiceBox" fx:id="partyIdChoiceBox"
                                            nodeOrientation="LEFT_TO_RIGHT" prefHeight="14.0" prefWidth="180.0"
                                            GridPane.columnIndex="1" GridPane.rowIndex="2">
 
                                 </ChoiceBox>
-                                <Label text="Party Id :" GridPane.rowIndex="2"/>
+                                <Label text="Party Id :" GridPane.rowIndex="2" layoutX="27.0"/>
                                 <Button fx:id="savePartyButton" defaultButton="true" layoutX="141.0" layoutY="118.0"
                                         onAction="#handleSavePartyAction" prefHeight="36.0" prefWidth="169.0"
                                         text="Save Changes" textAlignment="CENTER" GridPane.columnSpan="2"
@@ -193,15 +186,15 @@
                                 </ChoiceBox>
                                 <Label alignment="CENTER_RIGHT" text="Fund Name : " GridPane.rowIndex="3"/>
                                 <Label alignment="CENTER_RIGHT" text="Short Name : " GridPane.rowIndex="4"/>
-                                <TextField fx:id="fundNameField" prefHeight="15" GridPane.columnIndex="1"
+                                <TextField fx:id="fundNameField" prefHeight="15" minWidth="225" GridPane.columnIndex="1"
                                            GridPane.rowIndex="3"/>
-                                <TextField fx:id="fundShortNameField" editable="true" prefHeight="15"
+                                <TextField fx:id="fundShortNameField" editable="true" prefHeight="15" maxWidth="100"
                                            GridPane.columnIndex="1" GridPane.rowIndex="4"/>
                                 <Button fx:id="showFundButton" defaultButton="true" onAction="#handleShowFundAction"
                                         prefHeight="36.0" prefWidth="169.0" text="Show" GridPane.columnSpan="2"
                                         GridPane.halignment="CENTER" GridPane.rowIndex="2"/>
                                 <Label alignment="CENTER_RIGHT" text="Units" GridPane.rowIndex="5"/>
-                                <TextField fx:id="fundUnitsField" editable="true" prefHeight="15"
+                                <TextField fx:id="fundUnitsField" editable="true" prefHeight="15" maxWidth="100"
                                            GridPane.columnIndex="1" GridPane.rowIndex="5"/>
                                 <Button fx:id="saveFundButton" defaultButton="true" layoutX="141.0" layoutY="118.0"
                                         onAction="#handleSaveFundAction" prefHeight="36.0" prefWidth="169.0"

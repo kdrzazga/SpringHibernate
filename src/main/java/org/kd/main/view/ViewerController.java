@@ -4,14 +4,17 @@ import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+
 import java.util.Optional;
 import java.util.OptionalDouble;
 import java.util.OptionalLong;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import javafx.scene.control.cell.PropertyValueFactory;
 import org.kd.entities.Fund;
 import org.kd.entities.Party;
+import org.kd.entities.Trade;
 import org.kd.main.model.DataModelManager;
 
 public class ViewerController {
@@ -20,10 +23,10 @@ public class ViewerController {
     private Tab devTab;
 
     @FXML
-    private TableView<String> tradeTable;
+    private TableView<Trade> tradeTable;
 
     @FXML
-    private ChoiceBox<String> cptyIdChoiceBox;
+    private ChoiceBox<String> partyIdChoiceBox;
 
     @FXML
     private ChoiceBox<String> fundIdChoiceBox;
@@ -35,7 +38,7 @@ public class ViewerController {
     private TextField shortCptyNameField;
 
     @FXML
-    private ChoiceBox<String> cptyId4TradeChoiceBox;
+    private ChoiceBox<String> partyId4TradeChoiceBox;
 
     @FXML
     private TextField fundsField;
@@ -71,8 +74,8 @@ public class ViewerController {
                         .map(Object::toString)
                         .collect(Collectors.toList()));
 
-        cptyIdChoiceBox.setItems(list);
-        cptyId4TradeChoiceBox.setItems(list);
+        partyIdChoiceBox.setItems(list);
+        partyId4TradeChoiceBox.setItems(list);
     }
 
     public void loadFunds() {
@@ -93,7 +96,7 @@ public class ViewerController {
     protected void handleShowCptyAction(ActionEvent event) {
 
         var errorMsg = new PropertiesReader().readKey("error.message.party.not.selected");
-        if (isNoneElementSelected(cptyIdChoiceBox, showCptyButton, errorMsg)) return;
+        if (isNoneElementSelected(partyIdChoiceBox, showCptyButton, errorMsg)) return;
 
         var id = readPartyId();
         var party = DataModelManager.getPartyDao().get(id);
@@ -104,7 +107,7 @@ public class ViewerController {
     }
 
     private long readPartyId() {
-        return Long.parseLong(cptyIdChoiceBox.getValue());
+        return Long.parseLong(partyIdChoiceBox.getValue());
     }
 
     @FXML
@@ -144,6 +147,9 @@ public class ViewerController {
 
     @FXML
     protected void handleSavePartyAction(ActionEvent event) {
+        String errorMsg = new PropertiesReader().readKey("error.message.party.not.selected");
+        if (isNoneElementSelected(partyIdChoiceBox, showFundButton, errorMsg)) return;
+
         DataModelManager
                 .getPartyDao()
                 .save(new Party(readPartyId(), readPartyName(), readPartyShortName(), readFunds()));
@@ -151,6 +157,9 @@ public class ViewerController {
 
     @FXML
     protected void handleSaveFundAction(ActionEvent event) {
+        String errorMsg = new PropertiesReader().readKey("error.message.fund.not.selected");
+        if (isNoneElementSelected(fundIdChoiceBox, showFundButton, errorMsg)) return;
+
         DataModelManager
                 .getFundDao()
                 .save(new Fund(readFundId(), readFundName(), readFundShortName(), readFundUnits()));
@@ -181,14 +190,30 @@ public class ViewerController {
                 .isPresent();
     }
 
-    private boolean isNoneElementSelected(ChoiceBox<String> fundIdChoiceBox, Button showFundButton, String errorMessage) {
-        if (isItemSelected(fundIdChoiceBox)) return false;
+    private boolean isNoneElementSelected(ChoiceBox<String> choiceBox, Button showButton, String errorMessage) {
+        if (isItemSelected(choiceBox)) return false;
 
-        var owner = showFundButton.getScene().getWindow();
+        var owner = showButton.getScene().getWindow();
         var formErrorMsg = new PropertiesReader().readKey("error.message.party.not.selected");
         AlertHelper.showAlert(Alert.AlertType.ERROR, owner, formErrorMsg,
                 errorMessage);
         return true;
+    }
 
+    public void loadTrades() {
+        var trades = FXCollections
+                .observableArrayList(
+                        DataModelManager
+                                .getTradeDao()
+                                .getAllTrades());
+
+        var idColumn = new TableColumn<Trade, String>("Id");
+        var quantityColumn = new TableColumn<Trade, String>("Quantity");
+
+        idColumn.setCellValueFactory(new PropertyValueFactory<>("Id"));
+        quantityColumn.setCellValueFactory(new PropertyValueFactory<>("quantity"));
+
+        tradeTable.setItems(trades);
+        tradeTable.getColumns().addAll(idColumn, quantityColumn);
     }
 }
