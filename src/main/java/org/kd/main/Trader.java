@@ -22,6 +22,7 @@ public class Trader extends Application {
 
         ((ViewerController)loader.getController()).loadParties();
         ((ViewerController)loader.getController()).loadFunds();
+        ((ViewerController)loader.getController()).loadTrades();
     }
 
     private void setupPrimaryStage(Stage primaryStage, Parent root) {

@@ -50,4 +50,8 @@
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 
+    <bean class="org.kd.dao.TradeDaoImpl">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
 </beans>
