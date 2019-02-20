@@ -3,6 +3,7 @@ package org.kd.main;
 import org.dbunit.database.IDatabaseConnection;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.kd.main.model.data.Config;
 import org.kd.main.model.data.dao.FundDao;
 import org.kd.main.model.data.db.DbManager;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +14,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:app-context.xml")
+@ContextConfiguration(classes = {Config.class})//Config.class already contains app-context.xml
 public class ContextTest {
 
     @Autowired

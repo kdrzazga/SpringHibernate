@@ -7,7 +7,7 @@ import org.kd.main.model.data.DataModelManager;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-public class FundDaoImplTest  extends BaseDbTest {
+public class FundDaoImplTest extends BaseDbTest {
 
     @Test
     public void testGet() {

@@ -9,7 +9,7 @@ import org.springframework.test.context.junit4.AbstractTransactionalJUnit4Spring
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:app-context.xml")
+@ContextConfiguration(classes = Config.class)
 public abstract class BaseDbTest extends AbstractTransactionalJUnit4SpringContextTests {
 
     @BeforeClass
