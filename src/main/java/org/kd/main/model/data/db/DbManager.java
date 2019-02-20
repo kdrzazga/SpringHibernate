@@ -1,4 +1,4 @@
-package org.kd.db;
+package org.kd.main.model.data.db;
 
 import org.dbunit.DatabaseUnitException;
 import org.dbunit.database.IDatabaseConnection;
@@ -42,6 +42,10 @@ public class DbManager {
             throw new IllegalStateException("Dbunit file '" + dbFilename + "' does not exist");
         }
         return new FlatXmlDataSetBuilder().build(stream);
+    }
+
+    public String getDbFilename() {
+        return dbFilename;
     }
 
     public void setDbFilename(String dbFilename) {

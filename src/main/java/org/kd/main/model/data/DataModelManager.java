@@ -1,12 +1,12 @@
-package org.kd.main.model;
+package org.kd.main.model.data;
 
 import org.dbunit.DatabaseUnitException;
 import org.dbunit.database.DatabaseDataSourceConnection;
 import org.dbunit.database.IDatabaseConnection;
-import org.kd.dao.PartyDao;
-import org.kd.dao.FundDao;
-import org.kd.dao.TradeDao;
-import org.kd.db.DbManager;
+import org.kd.main.model.data.dao.PartyDao;
+import org.kd.main.model.data.dao.FundDao;
+import org.kd.main.model.data.dao.TradeDao;
+import org.kd.main.model.data.db.DbManager;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 

@@ -1,4 +1,4 @@
-package org.kd.db;
+package org.kd.main.model.data.db;
 
 import org.dbunit.dataset.DataSetException;
 import org.dbunit.dataset.IDataSet;
@@ -19,11 +19,11 @@ class DbSaver {
         var path = "src\\main\\resources\\" + dbFilename;
 
         if (new File(path).delete()) {
-            var ps = createDbStructureScript();
+            var stringWriter = createDbStructureScript();
             var tables = formatTablesToWrite(dataSet);
-            ps.append(String.join("\n", tables.toArray(new String[0])));
+            stringWriter.append(String.join("\n", tables.toArray(new String[0])));
 
-            new FileOutputStream(path).write(ps.toString().getBytes());
+            new FileOutputStream(path).write(stringWriter.toString().getBytes());
             System.out.println("DB saved");
         }
     }
@@ -46,7 +46,7 @@ class DbSaver {
 
         var tablesWithTags = new Vector<String>();
         tablesWithTags.add(datasetOpeningTag);
-        Arrays.asList(tables).forEach(table -> tablesWithTags.add(table));
+        Arrays.asList(tables).forEach(tablesWithTags::add);
         tablesWithTags.add(datasetClosingTag + "\n");
 
         return tablesWithTags;
@@ -61,23 +61,23 @@ class DbSaver {
                         "\n" +
                         "\t<!ELEMENT FUNDS EMPTY>\n" +
                         "\t<!ATTLIST FUNDS\n" +
-                        "\t        ID CDATA #REQUIRED\n" +
-                        "\t        NAME CDATA #REQUIRED\n" +
-                        "\t        SHORTNAME CDATA #REQUIRED\n" +
-                        "\n        UNITS CDATA #REQUIRED\n" +
-                        "\t        PARTY_ID CDATA #IMPLIED\n" +
-                        "\t        TRADE_ID CDATA #IMPLIED>\n" +
+                        "\t\tID CDATA #REQUIRED\n" +
+                        "\t\tNAME CDATA #REQUIRED\n" +
+                        "\t\tSHORTNAME CDATA #REQUIRED\n" +
+                        "\n\tUNITS CDATA #REQUIRED\n" +
+                        "\t\tPARTY_ID CDATA #IMPLIED\n" +
+                        "\t\tTRADE_ID CDATA #IMPLIED>\n" +
                         "\n" +
                         "\t<!ELEMENT PARTIES EMPTY>\n" +
                         "\t<!ATTLIST PARTIES\n" +
-                        "\t        ID CDATA #REQUIRED\n" +
-                        "\t        NAME CDATA #REQUIRED\n" +
-                        "\t        SHORTNAME CDATA #REQUIRED>\n" +
+                        "\t\tID CDATA #REQUIRED\n" +
+                        "\t\tNAME CDATA #REQUIRED\n" +
+                        "\t\tSHORTNAME CDATA #REQUIRED>\n" +
                         "\n" +
                         "\t<!ELEMENT TRADES EMPTY>\n" +
                         "\t<!ATTLIST TRADES\n" +
-                        "\t        ID CDATA #REQUIRED\n" +
-                        "\t        QUANTITY CDATA #REQUIRED>\n" +
+                        "\t\tID CDATA #REQUIRED\n" +
+                        "\t\tQUANTITY CDATA #REQUIRED>\n" +
                         "\t]>\n");
     }
 }

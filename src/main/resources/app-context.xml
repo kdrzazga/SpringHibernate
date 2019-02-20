@@ -4,7 +4,7 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <bean id="dbManager" class="org.kd.db.DbManager">
+    <bean id="dbManager" class="org.kd.main.model.data.db.DbManager">
         <property name="dbFilename" value="dbunit-dataset.xml"/>
     </bean>
 
@@ -28,9 +28,9 @@
         </property>
         <property name="annotatedClasses">
             <list>
-                <value>org.kd.entities.Party</value>
-                <value>org.kd.entities.Fund</value>
-                <value>org.kd.entities.Trade</value>
+                <value>org.kd.main.model.data.entities.Party</value>
+                <value>org.kd.main.model.data.entities.Fund</value>
+                <value>org.kd.main.model.data.entities.Trade</value>
             </list>
         </property>
     </bean>
@@ -40,17 +40,17 @@
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 
-    <bean id="dataModelManager" class="org.kd.main.model.DataModelManager"/>
+    <bean id="dataModelManager" class="org.kd.main.model.data.DataModelManager"/>
 
-    <bean class="org.kd.dao.PartyDaoImpl">
+    <bean class="org.kd.main.model.data.dao.PartyDaoImpl">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 
-    <bean class="org.kd.dao.FundDaoImpl">
+    <bean class="org.kd.main.model.data.dao.FundDaoImpl">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 
-    <bean class="org.kd.dao.TradeDaoImpl">
+    <bean class="org.kd.main.model.data.dao.TradeDaoImpl">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 

@@ -1,4 +1,4 @@
-package org.kd.entities;
+package org.kd.main.model.data.entities;
 
 import javax.persistence.*;
 import java.io.Serializable;

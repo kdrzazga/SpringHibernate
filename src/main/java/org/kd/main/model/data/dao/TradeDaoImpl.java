@@ -1,6 +1,6 @@
-package org.kd.dao;
+package org.kd.main.model.data.dao;
 
-import org.kd.entities.Trade;
+import org.kd.main.model.data.entities.Trade;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import java.util.List;

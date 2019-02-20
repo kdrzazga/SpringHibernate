@@ -26,8 +26,7 @@ public class PropertiesReader {
             ) {
                 commonProperties.load(objFileInputStream);
                 return String.valueOf(commonProperties.get(key));
-            }
-            catch (IOException ex) {
+            } catch (IOException ex) {
                 ex.printStackTrace();
             }
         }

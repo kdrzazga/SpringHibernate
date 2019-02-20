@@ -12,10 +12,10 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import javafx.scene.control.cell.PropertyValueFactory;
-import org.kd.entities.Fund;
-import org.kd.entities.Party;
-import org.kd.entities.Trade;
-import org.kd.main.model.DataModelManager;
+import org.kd.main.model.data.entities.Fund;
+import org.kd.main.model.data.entities.Party;
+import org.kd.main.model.data.entities.Trade;
+import org.kd.main.model.data.DataModelManager;
 
 public class ViewerController {
 

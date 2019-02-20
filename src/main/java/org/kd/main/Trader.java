@@ -5,7 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import org.kd.main.model.DataModelManager;
+import org.kd.main.model.data.DataModelManager;
 import org.kd.main.view.PropertiesReader;
 import org.kd.main.view.ViewerController;
 

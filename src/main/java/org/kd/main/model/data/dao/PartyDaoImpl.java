@@ -1,6 +1,6 @@
-package org.kd.dao;
+package org.kd.main.model.data.dao;
 
-import org.kd.entities.Party;
+import org.kd.main.model.data.entities.Party;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import javax.inject.Named;
