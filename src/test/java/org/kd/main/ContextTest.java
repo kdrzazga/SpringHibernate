@@ -1,52 +1,29 @@
 package org.kd.main;
 
-import org.dbunit.database.IDatabaseConnection;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.kd.main.model.data.Config;
-import org.kd.main.model.data.dao.FundDao;
-import org.kd.main.model.data.db.DbManager;
+import org.kd.main.server.TraderServer;
+import org.kd.main.server.model.data.dao.FundDaoRepo;
+import org.kd.main.server.model.data.dao.PartyDaoRepo;
+import org.kd.main.server.model.data.dao.TradeDaoRepo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 
+@SpringBootTest(classes = {TraderServer.class})
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {Config.class})//Config.class already contains app-context.xml
 public class ContextTest {
 
     @Autowired
-    private IDatabaseConnection databaseConnection;
+    private FundDaoRepo fundDao;
 
     @Autowired
-    private DbManager dbManager;
+    private PartyDaoRepo partyDao;
 
     @Autowired
-    private FundDao fundDao;
-
-    @Autowired
-    private FundDao partyDao;
-
-    @Autowired
-    private FundDao tradeDao;
-
-    @Test
-    public void testDatabaseConnectionInjection() {
-        assertNotNull(databaseConnection);
-    }
-
-    @Test
-    public void testDbManagerInjection() {
-        assertNotNull(dbManager);
-    }
-
-    @Test
-    public void testDatabasePathInjection() {
-        assertNotNull(dbManager.getDbFilename());
-        assertTrue(dbManager.getDbFilename().endsWith(".xml"));
-    }
+    private TradeDaoRepo tradeDao;
 
     @Test
     public void FundDaoInjection() {
