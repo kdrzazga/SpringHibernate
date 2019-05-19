@@ -1,8 +1,8 @@
 package org.kd.main.common.model.data;
 
-import org.kd.main.server.model.data.entities.Fund;
-import org.kd.main.server.model.data.entities.Party;
-import org.kd.main.server.model.data.entities.Trade;
+import org.kd.main.common.entities.Fund;
+import org.kd.main.common.entities.Bank;
+import org.kd.main.common.entities.Transfer;
 
 import java.util.List;
 
@@ -15,17 +15,17 @@ public interface DataService {
      */
     void saveDb();
 
-    List<Fund> loadFunds();
+    List<Fund> loadCustomers();
 
-    List<Party> loadParties();
+    List<Bank> loadBanks();
 
-    List<Trade> loadTrades();
+    List<Transfer> loadTransfers();
 
-    void saveParty(Party party);
+    void saveBank(Bank bank);
 
-    Fund loadFund(long id);
+    Fund loadCustomer(long id);
 
-    void saveFund(Fund fund);
+    void saveCustomer(Fund fund);
 
-    Party loadParty(long id);
+    Bank loadBank(long id);
 }

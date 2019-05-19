@@ -4,8 +4,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
+@ComponentScan(basePackages = {"org.kd.main.common", "org.kd.main.server"})
 public class TraderServer {
 
     private static ConfigurableApplicationContext context;
@@ -15,7 +17,7 @@ public class TraderServer {
         writeInfo();
     }
 
-    public static void stop(){
+    public static void stop() {
         context.stop();
         context.close();
     }

@@ -8,14 +8,20 @@ import javafx.stage.Stage;
 import org.kd.main.client.presenter.PresenterHandler;
 import org.kd.main.client.presenter.TraderPresenter;
 import org.kd.main.client.view.lib.PropertiesReader;
+import org.kd.main.common.TraderConfig;
+import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 public class Trader extends Application {
 
     private PresenterHandler handler;
+    private static ConfigurableApplicationContext context;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        this.handler = new TraderPresenter();
+        this.context = new AnnotationConfigApplicationContext(TraderConfig.class);
+
+        this.handler = context.getBean(PresenterHandler.class);
 
         initialize();
 

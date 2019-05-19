@@ -1,12 +1,11 @@
-package org.kd.main.server.model.data.entities;
+package org.kd.main.common.entities;
 
 import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
 @Table(name = "TRADES")
-public class Trade implements Serializable {
-
+public class Transfer implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -16,10 +15,10 @@ public class Trade implements Serializable {
     private float units;
     private boolean internal;
 
-    private Trade() {
+    private Transfer() {
     }
 
-    public Trade(int src_fund_id, int dest_fund_id, float units, boolean internal) {
+    public Transfer(int src_fund_id, int dest_fund_id, float units, boolean internal) {
         this.src_fund_id = src_fund_id;
         this.dest_fund_id = dest_fund_id;
         this.units = units;

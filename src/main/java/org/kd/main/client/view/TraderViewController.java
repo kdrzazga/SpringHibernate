@@ -14,9 +14,9 @@ import java.util.stream.Collectors;
 
 import org.kd.main.client.presenter.PresenterHandler;
 import org.kd.main.client.view.lib.PropertiesReader;
-import org.kd.main.server.model.data.entities.Fund;
-import org.kd.main.server.model.data.entities.Party;
-import org.kd.main.server.model.data.entities.Trade;
+import org.kd.main.common.entities.Bank;
+import org.kd.main.common.entities.Fund;
+import org.kd.main.common.entities.Transfer;
 
 public class TraderViewController {
 
@@ -26,7 +26,7 @@ public class TraderViewController {
     private Tab devTab;
 
     @FXML
-    private TableView<Trade> tradeTable;
+    private TableView<Transfer> tradeTable;
 
     @FXML
     private ChoiceBox<String> partyIdChoiceBox;
@@ -69,9 +69,9 @@ public class TraderViewController {
     public void loadParties() {
 
         var list = FXCollections.observableArrayList(
-                handler.loadParties()
+                handler.loadBanks()
                         .stream()
-                        .map(Party::getId)
+                        .map(Bank::getId)
                         .map(Object::toString)
                         .collect(Collectors.toList()));
 
@@ -95,10 +95,10 @@ public class TraderViewController {
     public void loadTrades() {
         var trades = FXCollections
                 .observableArrayList(
-                        handler.loadTrades());
+                        handler.loadTransfers());
 
-        var idColumn = new TableColumn<Trade, String>("Id");
-        var quantityColumn = new TableColumn<Trade, String>("Quantity");
+        var idColumn = new TableColumn<Transfer, String>("Id");
+        var quantityColumn = new TableColumn<Transfer, String>("Quantity");
 
         idColumn.setCellValueFactory(new PropertyValueFactory<>("Id"));
         quantityColumn.setCellValueFactory(new PropertyValueFactory<>("quantity"));
@@ -114,7 +114,7 @@ public class TraderViewController {
         if (isNoneElementSelected(partyIdChoiceBox, showCptyButton, errorMsg)) return;
 
         var id = readPartyId();
-        var party = handler.loadParty(id);
+        var party = handler.loadBank(id);
 
         if (party != null) {
             this.cptyNameField.setText(party.getName());
@@ -166,7 +166,7 @@ public class TraderViewController {
         String errorMsg = new PropertiesReader().readKey("error.message.party.not.selected");
         if (isNoneElementSelected(partyIdChoiceBox, showFundButton, errorMsg)) return;
 
-        handler.saveParty(new Party(readPartyId(), readPartyName(), readPartyShortName()));
+        handler.saveBank(new Bank(readPartyId(), readPartyName(), readPartyShortName()));
     }
 
     @FXML
@@ -192,7 +192,7 @@ public class TraderViewController {
 
     @FXML
     protected void handleBookTradeAction(ActionEvent event) {
-        System.out.println("Book Trade!");
+        System.out.println("Book Transfer!");
     }
 
     private boolean isItemSelected(ChoiceBox<String> choiceBox) {
