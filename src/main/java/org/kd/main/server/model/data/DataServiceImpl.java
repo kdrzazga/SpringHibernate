@@ -1,9 +1,9 @@
 package org.kd.main.server.model.data;
 
 import org.kd.main.common.model.data.DataService;
-import org.kd.main.server.model.data.entities.Fund;
-import org.kd.main.server.model.data.entities.Party;
-import org.kd.main.server.model.data.entities.Trade;
+import org.kd.main.common.entities.Bank;
+import org.kd.main.common.entities.Fund;
+import org.kd.main.common.entities.Transfer;
 import org.kd.main.server.model.data.dao.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -11,14 +11,18 @@ import java.util.List;
 
 public class DataServiceImpl implements DataService {
 
-    @Autowired
-    private FundDaoRepo fundDao;
+    private FundDaoRepo customerDaoRepo;
+
+    private BankDaoRepo bankDaoRepo;
+
+    private TransferDaoRepo transferDaoRepo;
 
     @Autowired
-    private PartyDaoRepo partyDao;
-
-    @Autowired
-    private TradeDaoRepo tradeDao;
+    public DataServiceImpl(FundDaoRepo customerDaoRepo, BankDaoRepo bankDaoRepo, TransferDaoRepo transferDaoRepo){
+        this.bankDaoRepo = bankDaoRepo;
+        this.customerDaoRepo = customerDaoRepo;
+        this.transferDaoRepo = transferDaoRepo;
+    }
 
     @Override
     public void initApplication() {
@@ -29,37 +33,38 @@ public class DataServiceImpl implements DataService {
     }
 
     @Override
-    public List<Fund> loadFunds() {
-        return fundDao.getAllFunds();
+    public List<Fund> loadCustomers() {
+        return customerDaoRepo.getAllFunds();
     }
 
     @Override
-    public List<Party> loadParties() {
-        return partyDao.getAllParties();
+    public List<Bank> loadBanks() {
+
+        return bankDaoRepo.getAllBanks();
     }
 
     @Override
-    public List<Trade> loadTrades() {
-        return tradeDao.getAllTrades();
+    public List<Transfer> loadTransfers() {
+        return transferDaoRepo.getAllTransfers();
     }
 
     @Override
-    public void saveParty(Party party) {
-        partyDao.update(party);
+    public void saveBank(Bank bank) {
+        bankDaoRepo.update(bank);
     }
 
     @Override
-    public Fund loadFund(long id) {
-        return fundDao.get(id);
+    public Fund loadCustomer(long id) {
+        return customerDaoRepo.get(id);
     }
 
     @Override
-    public void saveFund(Fund fund) {
-        fundDao.update(fund);
+    public void saveCustomer(Fund fund) {
+        customerDaoRepo.update(fund);
     }
 
     @Override
-    public Party loadParty(long id) {
-        return partyDao.get(id);
+    public Bank loadBank(long id) {
+        return bankDaoRepo.get(id);
     }
 }

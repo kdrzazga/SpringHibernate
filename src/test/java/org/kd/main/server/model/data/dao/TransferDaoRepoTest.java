@@ -4,7 +4,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.kd.main.server.TraderServer;
-import org.kd.main.server.model.data.entities.Fund;
+import org.kd.main.common.entities.Fund;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -17,38 +17,38 @@ import static org.junit.Assert.*;
 
 @SpringBootTest(classes = {TraderServer.class})
 @RunWith(SpringJUnit4ClassRunner.class)
-public class TradeDaoRepoTest {
+public class TransferDaoRepoTest {
 
     @Autowired
-    private TradeDaoRepo tradeDaoRepo;
+    private TransferDaoRepo transferDaoRepo;
 
     @Autowired
     private FundDaoRepo fundDaoRepo;
 
     @Test
     public void testGetTradeByPrimaryKey() {
-        assertEquals(3002, tradeDaoRepo.getTradeByPrimaryKey(3002).getId());
-        assertEquals(3003, tradeDaoRepo.getTradeByPrimaryKey(3003).getId());
-        assertEquals(3005, tradeDaoRepo.getTradeByPrimaryKey(3005).getId());
+        assertEquals(3002, transferDaoRepo.getTradeByPrimaryKey(3002).getId());
+        assertEquals(3003, transferDaoRepo.getTradeByPrimaryKey(3003).getId());
+        assertEquals(3005, transferDaoRepo.getTradeByPrimaryKey(3005).getId());
     }
 
     @Test
     public void testRemoveTradeByPrimaryKey() {
-        tradeDaoRepo.removeTradeByPrimaryKey(3006);
-        Assert.assertNull(tradeDaoRepo.getTradeByPrimaryKey(3006));
-        tradeDaoRepo.book(2003, 2004, 30.02f);//books transact again, but id will change
+        transferDaoRepo.removeTradeByPrimaryKey(3006);
+        Assert.assertNull(transferDaoRepo.getTradeByPrimaryKey(3006));
+        transferDaoRepo.book(2003, 2004, 30.02f);//books transact again, but id will change
     }
 
     @Test
     public void testGetTradesForParticularFund() {
-        var tradeForFund2002 = tradeDaoRepo.getTradeByFundId(2002);
+        var tradeForFund2002 = transferDaoRepo.getTradeByFundId(2002);
         Assert.assertNotNull(tradeForFund2002);
         assertEquals(3, tradeForFund2002.size());
     }
 
     @Test
     public void testGetAllTrades() {
-        var transacts = tradeDaoRepo.getAllTrades();
+        var transacts = transferDaoRepo.getAllTransfers();
 
         Assert.assertNotNull(transacts);
         assertThat(transacts, hasSize(greaterThan(0)));
@@ -79,10 +79,10 @@ public class TradeDaoRepoTest {
                 .findFirst();
 
         if (!destFund.isPresent())
-            fail("Wrong test data. Cannot book Trade. Only one fund with appropriate party id ");
+            fail("Wrong test data. Cannot book Transfer. Only one fund with appropriate party id ");
 
         final int errorCode = -1;
-        final int newTradeId =  tradeDaoRepo.book(srcFundId, destFund.get().getId(), 0.5f);
+        final int newTradeId =  transferDaoRepo.book(srcFundId, destFund.get().getId(), 0.5f);
 
         assertNotEquals(errorCode, newTradeId);
 
@@ -90,7 +90,7 @@ public class TradeDaoRepoTest {
     }
 
     private void removeBookedTrade(int id) {
-        tradeDaoRepo.removeTradeByPrimaryKey(id);
+        transferDaoRepo.removeTradeByPrimaryKey(id);
     }
 
 }

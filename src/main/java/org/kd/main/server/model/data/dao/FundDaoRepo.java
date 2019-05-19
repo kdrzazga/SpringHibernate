@@ -2,7 +2,7 @@ package org.kd.main.server.model.data.dao;
 
 import org.hibernate.Session;
 import org.hibernate.query.Query;
-import org.kd.main.server.model.data.entities.Fund;
+import org.kd.main.common.entities.Fund;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;

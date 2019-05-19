@@ -1,4 +1,4 @@
-package org.kd.main.server.model.data.entities;
+package org.kd.main.common.entities;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "parties")
-public class Party implements Serializable {
+public class Bank implements Serializable {
 
     @Id
     @GeneratedValue
@@ -17,15 +17,15 @@ public class Party implements Serializable {
     private String name;
     private String shortname;
 
-    private Party(){
+    private Bank(){
     }
 
-    public Party(int id, String name, String shortname){
+    public Bank(int id, String name, String shortname){
         this(name, shortname);
         this.id = id;
     }
 
-    public Party(String name, String shortname){
+    public Bank(String name, String shortname){
         this.name = name;
         this.shortname = shortname;
     }
@@ -56,6 +56,6 @@ public class Party implements Serializable {
 
     @Override
     public String toString() {
-        return "Party " + getId() + " " + getShortname() + " " + getName();
+        return "Bank " + getId() + " " + getShortname() + " " + getName();
     }
 }

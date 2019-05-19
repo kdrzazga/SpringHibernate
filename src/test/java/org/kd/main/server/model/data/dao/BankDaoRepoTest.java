@@ -5,8 +5,8 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.kd.main.server.TraderServer;
-import org.kd.main.server.model.data.entities.Fund;
-import org.kd.main.server.model.data.entities.Party;
+import org.kd.main.common.entities.Fund;
+import org.kd.main.common.entities.Bank;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -17,14 +17,14 @@ import static org.junit.Assert.*;
 
 @SpringBootTest(classes = {TraderServer.class})
 @RunWith(SpringJUnit4ClassRunner.class)
-public class PartyDaoRepoTest {
+public class BankDaoRepoTest {
 
     @Autowired
-    private PartyDaoRepo partyDaoRepo;
+    private BankDaoRepo bankDaoRepo;
 
     @Test
     public void testGetAllParties() {
-        var allParties = partyDaoRepo.getAllParties();
+        var allParties = bankDaoRepo.getAllBanks();
 
         Assert.assertNotNull(allParties);
         assertTrue(allParties.size() > 0);
@@ -32,7 +32,7 @@ public class PartyDaoRepoTest {
 
     @Test
     public void testGetSinglePartyById() {
-        var party = partyDaoRepo.get(1012L);
+        var party = bankDaoRepo.get(1012L);
 
         Assert.assertNotNull(party);
         assertEquals(1012L, party.getId());
@@ -40,7 +40,7 @@ public class PartyDaoRepoTest {
 
     @Test
     public void testGetSinglePartyByName() {
-        var party = partyDaoRepo.get("BABA");
+        var party = bankDaoRepo.get("BABA");
 
         Assert.assertNotNull(party);
         assertEquals("Alibaba Group Holding", party.getName());
@@ -48,7 +48,7 @@ public class PartyDaoRepoTest {
 
     @Test
     public void testGetAssociatedFund() {
-        List<Fund> associatedFunds = partyDaoRepo.getAssociatedFunds(1012L);
+        List<Fund> associatedFunds = bankDaoRepo.getAssociatedCustomers(1012L);
 
         Assert.assertNotNull(associatedFunds);
         assertTrue(associatedFunds.size() > 0);
@@ -56,29 +56,29 @@ public class PartyDaoRepoTest {
 
     @Test
     public void testInsert(){
-        var partyId = partyDaoRepo.insert(new Party("Test Party", "TEST"));
-        assertEquals(partyId, partyDaoRepo.get("TEST").getId());
+        var partyId = bankDaoRepo.insert(new Bank("Test Bank", "TEST"));
+        assertEquals(partyId, bankDaoRepo.get("TEST").getId());
     }
 
 
     @Test
     public void testPartyUpdate(){
         var newPartyName = "NEW TEST NAME";
-        var party = partyDaoRepo.get(1012L);
+        var party = bankDaoRepo.get(1012L);
         party.setName(newPartyName);
-        partyDaoRepo.update(party);
+        bankDaoRepo.update(party);
 
-        var readParty = partyDaoRepo.get(1012L);
+        var readParty = bankDaoRepo.get(1012L);
         assertEquals(newPartyName, readParty.getName());
     }
 
     @Ignore
     @Test
     public void testPersistenceAndDetach(){
-        var party = new Party("Test Party 3", "TEST3");
-        var partyId = partyDaoRepo.insert(party);
-        partyDaoRepo.detach(party);
-        assertNotEquals(partyId, partyDaoRepo.get("TEST3").getId());
+        var party = new Bank("Test Bank 3", "TEST3");
+        var partyId = bankDaoRepo.insert(party);
+        bankDaoRepo.detach(party);
+        assertNotEquals(partyId, bankDaoRepo.get("TEST3").getId());
     }
 
 }

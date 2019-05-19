@@ -1,8 +1,8 @@
 package org.kd.main.server.model.data.dao;
 
 import org.hibernate.Session;
-import org.kd.main.server.model.data.entities.Fund;
-import org.kd.main.server.model.data.entities.Trade;
+import org.kd.main.common.entities.Fund;
+import org.kd.main.common.entities.Transfer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,36 +12,36 @@ import javax.persistence.PersistenceContext;
 import java.util.List;
 
 @Repository
-public class TradeDaoRepo{
+public class TransferDaoRepo {
 
     @PersistenceContext
     private EntityManager entityManager;
 
     @Autowired
-    private PartyDaoRepo partyDaoRepo;
+    private BankDaoRepo bankDaoRepo;
 
     @Autowired
     private FundDaoRepo fundDaoRepo;
 
     @Transactional
-    public Trade getTradeByPrimaryKey(int id) {
-        return entityManager.find(Trade.class, id);
+    public Transfer getTradeByPrimaryKey(int id) {
+        return entityManager.find(Transfer.class, id);
     }
 
     @Transactional
     public void removeTradeByPrimaryKey(int id) {
-        var entity = entityManager.find(Trade.class, id);
+        var entity = entityManager.find(Transfer.class, id);
         //entityManager.getTradeion().begin();// this is handled by Spring @Transactional
         entityManager.remove(entity);
         //entityManager.getTradeion().commit();// this is handled by Spring @Transactional too
     }
 
     @Transactional
-    public List<Trade> getAllTrades() {
+    public List<Transfer> getAllTransfers() {
         var session = entityManager.unwrap(Session.class);
         var builder = session.getCriteriaBuilder();
-        var criteria = builder.createQuery(Trade.class);
-        criteria.from(Trade.class);
+        var criteria = builder.createQuery(Transfer.class);
+        criteria.from(Transfer.class);
 
         var transacts = session.createQuery(criteria).getResultList();
         session.close();
@@ -49,12 +49,12 @@ public class TradeDaoRepo{
     }
 
     @Transactional
-    public List<Trade> getTradeByFundId(int fundId) {
+    public List<Transfer> getTradeByFundId(int fundId) {
         var session = entityManager.unwrap(Session.class);
         var builder = session.getCriteriaBuilder();
-        var criteria = builder.createQuery(Trade.class);
+        var criteria = builder.createQuery(Transfer.class);
 
-        var root = criteria.from(Trade.class);
+        var root = criteria.from(Transfer.class);
         criteria.select(root);
         criteria.where(builder.equal(root.get("dest_fund_id"), fundId));
 
@@ -93,7 +93,7 @@ public class TradeDaoRepo{
     }
 
     private int addNewTrade(int sourceFundId, int destFundId, float units, boolean internal){
-        var newTrade = new Trade(sourceFundId, destFundId, units, internal);
+        var newTrade = new Transfer(sourceFundId, destFundId, units, internal);
 
         entityManager.persist(newTrade);
         entityManager.flush();

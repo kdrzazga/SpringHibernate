@@ -3,9 +3,9 @@ package org.kd.main;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.kd.main.server.TraderServer;
+import org.kd.main.server.model.data.dao.BankDaoRepo;
 import org.kd.main.server.model.data.dao.FundDaoRepo;
-import org.kd.main.server.model.data.dao.PartyDaoRepo;
-import org.kd.main.server.model.data.dao.TradeDaoRepo;
+import org.kd.main.server.model.data.dao.TransferDaoRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -17,26 +17,18 @@ import static org.junit.Assert.assertNotNull;
 public class ContextTest {
 
     @Autowired
-    private FundDaoRepo fundDao;
+    private FundDaoRepo customerDao;
 
     @Autowired
-    private PartyDaoRepo partyDao;
+    private BankDaoRepo bankDao;
 
     @Autowired
-    private TradeDaoRepo tradeDao;
+    private TransferDaoRepo transferDao;
 
     @Test
-    public void FundDaoInjection() {
-        assertNotNull(fundDao);
-    }
-
-    @Test
-    public void PartyDaoInjection() {
-        assertNotNull(partyDao);
-    }
-
-    @Test
-    public void TradeDaoInjection() {
-        assertNotNull(tradeDao);
+    public void contextSetup() {
+        assertNotNull(customerDao);
+        assertNotNull(bankDao);
+        assertNotNull(transferDao);
     }
 }

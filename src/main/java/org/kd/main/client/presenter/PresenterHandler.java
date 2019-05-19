@@ -1,16 +1,18 @@
 package org.kd.main.client.presenter;
 
-import org.kd.main.server.model.data.entities.Fund;
-import org.kd.main.server.model.data.entities.Party;
-import org.kd.main.server.model.data.entities.Trade;
+import org.kd.main.common.entities.Bank;
+import org.kd.main.common.entities.Fund;
+import org.kd.main.common.entities.Transfer;
 
 import java.util.List;
 
 public interface PresenterHandler {
 
-    List<Party> loadParties();
+    List<Bank> loadBanks();
 
-    void saveParty(Party party);
+    void saveBank(Bank bank);
+
+    Bank loadBank(long id);
 
     List<Fund> loadFunds();
 
@@ -18,11 +20,9 @@ public interface PresenterHandler {
 
     void saveFund(Fund fund);
 
-    List<Trade> loadTrades();
+    List<Transfer> loadTransfers();
 
     void initApplication();
 
     void saveDb();
-
-    Party loadParty(long id);
 }
