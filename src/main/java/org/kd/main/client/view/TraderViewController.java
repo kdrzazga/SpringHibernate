@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 import org.kd.main.client.presenter.PresenterHandler;
 import org.kd.main.client.view.lib.PropertiesReader;
 import org.kd.main.common.entities.Bank;
-import org.kd.main.common.entities.Fund;
+import org.kd.main.common.entities.Customer;
 import org.kd.main.common.entities.Transfer;
 
 public class TraderViewController {
@@ -82,9 +82,9 @@ public class TraderViewController {
     public void loadFunds() {
 
         var list = FXCollections.observableArrayList(
-                handler.loadFunds()
+                handler.loadCustomers()
                         .stream()
-                        .map(Fund::getId)
+                        .map(Customer::getId)
                         .map(Object::toString)
                         .collect(Collectors.toList()));
 
@@ -98,10 +98,10 @@ public class TraderViewController {
                         handler.loadTransfers());
 
         var idColumn = new TableColumn<Transfer, String>("Id");
-        var quantityColumn = new TableColumn<Transfer, String>("Quantity");
+        var quantityColumn = new TableColumn<Transfer, String>("Units");
 
         idColumn.setCellValueFactory(new PropertyValueFactory<>("Id"));
-        quantityColumn.setCellValueFactory(new PropertyValueFactory<>("quantity"));
+        quantityColumn.setCellValueFactory(new PropertyValueFactory<>("units"));
 
         tradeTable.setItems(trades);
         tradeTable.getColumns().addAll(idColumn, quantityColumn);
@@ -174,12 +174,12 @@ public class TraderViewController {
         String errorMsg = new PropertiesReader().readKey("error.message.fund.not.selected");
         if (isNoneElementSelected(fundIdChoiceBox, showFundButton, errorMsg)) return;
 
-        handler.saveFund(new Fund(readFundShortName(), readFundName(),  readFundUnits(), readPartyId()));
+        handler.saveFund(new Customer(readFundShortName(), readFundName(),  readFundUnits(), readPartyId()));
     }
 
-    private Set<Fund> readFundsAvailableForParty() {
+    private Set<Customer> readFundsAvailableForParty() {
 
-        return Set.of(new Fund("", "", 0, 1001));//TODO: this will be implemented during migration to Hibernate 5
+        return Set.of(new Customer("", "", 0, 1001));//TODO: this will be implemented during migration to Hibernate 5
     }
 
     private String readPartyShortName() {

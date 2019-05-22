@@ -3,7 +3,7 @@ package org.kd.main.client.presenter;
 import com.fasterxml.jackson.core.type.TypeReference;
 import org.kd.main.common.TraderConfig;
 import org.kd.main.common.entities.Bank;
-import org.kd.main.common.entities.Fund;
+import org.kd.main.common.entities.Customer;
 import org.kd.main.common.entities.Transfer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +15,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Vector;
 
 @Import(TraderConfig.class)
 public class TraderPresenter implements PresenterHandler {
@@ -27,25 +28,29 @@ public class TraderPresenter implements PresenterHandler {
     private String requestUrl;
     private String responseStatusCode;
     private String responseBody;
-
-
-    Logger log = LoggerFactory.getLogger(TraderPresenter.class);
+    private final Logger log = LoggerFactory.getLogger(TraderPresenter.class);
 
     @Override
     public List<Bank> loadBanks() {
         requestType = HttpMethod.valueOf("GET");
-        requestUrl = serviceAddress.concat("/countries");
+        requestUrl = serviceAddress.concat("/banks");
         requestAsString = "";
 
         ResponseEntity<String> response = restUtility.processHttpRequest(requestType, requestAsString, requestUrl, "application/json");
+        if (response == null) {
+            log.error("REST error. Couldn't read banks from server.");
+            return new Vector<>();
+        }
         retrieveResponseBodyAndStatusCode(response);
-        var mapper = new ObjectMapper();
-        List<Bank> banks = null;
+        List<Bank> banks;
         try {
-            banks = mapper.readValue(response.getBody(), new TypeReference<List<Bank>>() {
+            banks = new ObjectMapper()
+                    .readValue(response.getBody()
+                            , new TypeReference<List<Bank>>() {
             });
         } catch (IOException e) {
             e.printStackTrace();
+            return new Vector<>();
         }
 
         return banks;
@@ -64,27 +69,67 @@ public class TraderPresenter implements PresenterHandler {
     }
 
     @Override
-    public List<Fund> loadFunds() {
+    public List<Customer> loadCustomers() {
+        requestType = HttpMethod.valueOf("GET");
+        requestUrl = serviceAddress.concat("/customers");
+        requestAsString = "";
+
+        ResponseEntity<String> response = restUtility.processHttpRequest(requestType, requestAsString, requestUrl, "application/json");
+        if (response == null) {
+            log.error("REST error. Couldn't read customers from server.");
+            return new Vector<>();
+        }
+        retrieveResponseBodyAndStatusCode(response);
+        List<Customer> customers;
+        try {
+            customers = new ObjectMapper()
+                    .readValue(response.getBody()
+                            , new TypeReference<List<Customer>>() {
+                            });
+        } catch (IOException e) {
+            e.printStackTrace();
+            return new Vector<>();
+        }
+
+        return customers;
+    }
+
+    @Override
+    public Customer loadFund(long id) {
         //TODO: implement
         throw new RuntimeException("not implemented yet");
     }
 
     @Override
-    public Fund loadFund(long id) {
-        //TODO: implement
-        throw new RuntimeException("not implemented yet");
-    }
-
-    @Override
-    public void saveFund(Fund fund) {
+    public void saveFund(Customer customer) {
         //TODO: implement
         throw new RuntimeException("not implemented yet");
     }
 
     @Override
     public List<Transfer> loadTransfers() {
-        //TODO: implement
-        throw new RuntimeException("not implemented yet");
+        requestType = HttpMethod.valueOf("GET");
+        requestUrl = serviceAddress.concat("/transfers");
+        requestAsString = "";
+
+        ResponseEntity<String> response = restUtility.processHttpRequest(requestType, requestAsString, requestUrl, "application/json");
+        if (response == null) {
+            log.error("REST error. Couldn't read transfers from server.");
+            return new Vector<>();
+        }
+        retrieveResponseBodyAndStatusCode(response);
+        List<Transfer> transfers;
+        try {
+            transfers = new ObjectMapper()
+                    .readValue(response.getBody()
+                            , new TypeReference<List<Transfer>>() {
+                            });
+        } catch (IOException e) {
+            e.printStackTrace();
+            return new Vector<>();
+        }
+
+        return transfers;
     }
 
     @Override

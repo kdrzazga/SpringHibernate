@@ -4,7 +4,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.kd.main.server.TraderServer;
-import org.kd.main.common.entities.Fund;
+import org.kd.main.common.entities.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -71,7 +71,7 @@ public class TransferDaoRepoTest {
         checkBookingTrade(srcFundId, fund -> fund.getParty_id() != commonPartyId);
     }
 
-    private void checkBookingTrade(int srcFundId, Predicate<Fund> partyIdComparisonPredicate) {
+    private void checkBookingTrade(int srcFundId, Predicate<Customer> partyIdComparisonPredicate) {
 
         var destFund = fundDaoRepo.getAllFunds()
                 .stream()

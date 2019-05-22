@@ -14,7 +14,7 @@ import static org.junit.Assert.assertTrue;
 
 @SpringBootTest(classes = {TraderServer.class})
 @RunWith(SpringJUnit4ClassRunner.class)
-public class FundDaoRepoTest {
+public class CustomerDaoRepoTest {
 
     @Autowired
     private FundDaoRepo fundDaoRepo;

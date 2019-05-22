@@ -2,10 +2,11 @@ package org.kd.main.common.entities;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Objects;
 
 @Entity
 @Table(name = "funds")
-public class Fund implements Serializable {
+public class Customer implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -16,10 +17,10 @@ public class Fund implements Serializable {
     private double units;
     private int party_id;
 
-    private Fund() {
+    private Customer() {
     }
 
-    public Fund(String shortname, String name, double units, int party_id) {
+    public Customer(String shortname, String name, double units, int party_id) {
         this.shortname = shortname;
         this.name = name;
         this.units = units;
@@ -68,6 +69,23 @@ public class Fund implements Serializable {
 
     @Override
     public String toString() {
-        return "Fund " + getId() + " " + getShortname() + " " + getName() + " with units: " + getUnits();
+        return "Customer " + getId() + " " + getShortname() + " " + getName() + " with units: " + getUnits();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Customer)) return false;
+        Customer customer = (Customer) o;
+        return id == customer.id &&
+                Double.compare(customer.units, units) == 0 &&
+                party_id == customer.party_id &&
+                Objects.equals(shortname, customer.shortname) &&
+                Objects.equals(name, customer.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, shortname, name, units, party_id);
     }
 }

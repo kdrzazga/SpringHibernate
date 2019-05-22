@@ -1,8 +1,8 @@
 package org.kd.main.server.model.data;
 
+import org.kd.main.common.entities.Customer;
 import org.kd.main.common.model.data.DataService;
 import org.kd.main.common.entities.Bank;
-import org.kd.main.common.entities.Fund;
 import org.kd.main.common.entities.Transfer;
 import org.kd.main.server.model.data.dao.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +33,7 @@ public class DataServiceImpl implements DataService {
     }
 
     @Override
-    public List<Fund> loadCustomers() {
+    public List<Customer> loadCustomers() {
         return customerDaoRepo.getAllFunds();
     }
 
@@ -54,13 +54,13 @@ public class DataServiceImpl implements DataService {
     }
 
     @Override
-    public Fund loadCustomer(long id) {
+    public Customer loadCustomer(long id) {
         return customerDaoRepo.get(id);
     }
 
     @Override
-    public void saveCustomer(Fund fund) {
-        customerDaoRepo.update(fund);
+    public void saveCustomer(Customer customer) {
+        customerDaoRepo.update(customer);
     }
 
     @Override

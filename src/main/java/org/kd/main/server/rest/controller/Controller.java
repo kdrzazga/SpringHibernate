@@ -4,7 +4,7 @@ import org.kd.main.server.model.data.dao.BankDaoRepo;
 import org.kd.main.server.model.data.dao.FundDaoRepo;
 import org.kd.main.server.model.data.dao.TransferDaoRepo;
 import org.kd.main.common.entities.Bank;
-import org.kd.main.common.entities.Fund;
+import org.kd.main.common.entities.Customer;
 import org.kd.main.common.entities.Transfer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,7 +25,7 @@ public class Controller {
     private TransferDaoRepo transferDao;
 
     @GetMapping(path = "/customers")
-    public List<Fund> readCustomers() {
+    public List<Customer> readCustomers() {
         return customerDao.getAllFunds();
     }
 

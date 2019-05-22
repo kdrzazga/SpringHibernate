@@ -6,7 +6,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.kd.main.client.presenter.PresenterHandler;
-import org.kd.main.client.presenter.TraderPresenter;
 import org.kd.main.client.view.lib.PropertiesReader;
 import org.kd.main.common.TraderConfig;
 import org.springframework.context.ConfigurableApplicationContext;

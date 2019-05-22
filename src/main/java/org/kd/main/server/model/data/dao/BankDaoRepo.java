@@ -3,7 +3,7 @@ package org.kd.main.server.model.data.dao;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.kd.main.common.entities.Bank;
-import org.kd.main.common.entities.Fund;
+import org.kd.main.common.entities.Customer;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -52,7 +52,7 @@ public class BankDaoRepo {
         var crBuilder = session.getCriteriaBuilder();
         CriteriaQuery<Bank> query = crBuilder.createQuery(Bank.class);
         Root<Bank> root = query.from(Bank.class);
-        query.select(root).where(crBuilder.equal(root.get("id"), id));//SELECT from Fund WHERE id=id
+        query.select(root).where(crBuilder.equal(root.get("id"), id));//SELECT from Customer WHERE id=id
         Query<Bank> q = session.createQuery(query);
         return q.getSingleResult();
     }
@@ -69,11 +69,11 @@ public class BankDaoRepo {
     }
 
     @Transactional
-    public List<Fund> getAssociatedCustomers(long bankId) {
+    public List<Customer> getAssociatedCustomers(long bankId) {
         var session = getSession();
         var crBuilder = session.getCriteriaBuilder();
-        var query = crBuilder.createQuery(Fund.class);
-        var root = query.from(Fund.class);
+        var query = crBuilder.createQuery(Customer.class);
+        var root = query.from(Customer.class);
         query.select(root).where(crBuilder.equal(root.get("party_id"), bankId));//SELECT from Funds WHERE party_id=bankId
         var q = session.createQuery(query);
         return q.getResultList();

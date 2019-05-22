@@ -1,6 +1,5 @@
 package org.kd.main.client.presenter;
 
-
 import org.kd.main.common.TraderConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;

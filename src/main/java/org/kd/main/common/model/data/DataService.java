@@ -1,6 +1,6 @@
 package org.kd.main.common.model.data;
 
-import org.kd.main.common.entities.Fund;
+import org.kd.main.common.entities.Customer;
 import org.kd.main.common.entities.Bank;
 import org.kd.main.common.entities.Transfer;
 
@@ -15,7 +15,7 @@ public interface DataService {
      */
     void saveDb();
 
-    List<Fund> loadCustomers();
+    List<Customer> loadCustomers();
 
     List<Bank> loadBanks();
 
@@ -23,9 +23,9 @@ public interface DataService {
 
     void saveBank(Bank bank);
 
-    Fund loadCustomer(long id);
+    Customer loadCustomer(long id);
 
-    void saveCustomer(Fund fund);
+    void saveCustomer(Customer customer);
 
     Bank loadBank(long id);
 }

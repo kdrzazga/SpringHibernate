@@ -1,7 +1,7 @@
 package org.kd.main.client.presenter;
 
 import org.kd.main.common.entities.Bank;
-import org.kd.main.common.entities.Fund;
+import org.kd.main.common.entities.Customer;
 import org.kd.main.common.entities.Transfer;
 
 import java.util.List;
@@ -14,11 +14,11 @@ public interface PresenterHandler {
 
     Bank loadBank(long id);
 
-    List<Fund> loadFunds();
+    List<Customer> loadCustomers();
 
-    Fund loadFund(long id);
+    Customer loadFund(long id);
 
-    void saveFund(Fund fund);
+    void saveFund(Customer customer);
 
     List<Transfer> loadTransfers();
 

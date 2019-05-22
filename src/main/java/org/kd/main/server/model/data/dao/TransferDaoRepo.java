@@ -1,7 +1,7 @@
 package org.kd.main.server.model.data.dao;
 
 import org.hibernate.Session;
-import org.kd.main.common.entities.Fund;
+import org.kd.main.common.entities.Customer;
 import org.kd.main.common.entities.Transfer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -76,15 +76,15 @@ public class TransferDaoRepo {
                 : bookExternalTrade();
     }
 
-    private int bookInternalTrade(Fund sourceFund, Fund destFund, float units) {
-        if (sourceFund.getUnits() < units) return -1;
+    private int bookInternalTrade(Customer sourceCustomer, Customer destCustomer, float units) {
+        if (sourceCustomer.getUnits() < units) return -1;
 
-        sourceFund.setUnits(sourceFund.getUnits() - units);
-        destFund.setUnits(destFund.getUnits() + units);
+        sourceCustomer.setUnits(sourceCustomer.getUnits() - units);
+        destCustomer.setUnits(destCustomer.getUnits() + units);
 
-        fundDaoRepo.update(sourceFund);
-        fundDaoRepo.update(destFund);
-        return addNewTrade(sourceFund.getId(), destFund.getId(), units, true);
+        fundDaoRepo.update(sourceCustomer);
+        fundDaoRepo.update(destCustomer);
+        return addNewTrade(sourceCustomer.getId(), destCustomer.getId(), units, true);
     }
 
     private int bookExternalTrade() {

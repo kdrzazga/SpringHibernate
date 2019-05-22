@@ -4,8 +4,8 @@ import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.kd.main.common.entities.Customer;
 import org.kd.main.server.TraderServer;
-import org.kd.main.common.entities.Fund;
 import org.kd.main.common.entities.Bank;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -48,10 +48,10 @@ public class BankDaoRepoTest {
 
     @Test
     public void testGetAssociatedFund() {
-        List<Fund> associatedFunds = bankDaoRepo.getAssociatedCustomers(1012L);
+        List<Customer> associatedCustomers = bankDaoRepo.getAssociatedCustomers(1012L);
 
-        Assert.assertNotNull(associatedFunds);
-        assertTrue(associatedFunds.size() > 0);
+        Assert.assertNotNull(associatedCustomers);
+        assertTrue(associatedCustomers.size() > 0);
     }
 
     @Test

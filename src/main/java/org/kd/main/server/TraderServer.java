@@ -25,5 +25,6 @@ public class TraderServer {
     private static void writeInfo() {
         LoggerFactory.getLogger(TraderServer.class).info("\nH2 database link: http://localhost:8080/h2-console");
         LoggerFactory.getLogger(TraderServer.class).info("Make sure h2 console is enabled in application.properties");
+        LoggerFactory.getLogger(TraderServer.class).info("\n\n\nSERVER STARTED\n\n");
     }
 }

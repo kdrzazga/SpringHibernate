@@ -2,6 +2,7 @@ package org.kd.main.common.entities;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Objects;
 
 @Entity
 @Table(name = "TRADES")
@@ -43,7 +44,7 @@ public class Transfer implements Serializable {
 
     @Override
     public String toString() {
-        return "Transaction " + this.id + "from Fund " + getDest_fund_id() + " to party " + getSrc_fund_id();
+        return "Transaction " + this.id + "from Customer " + getDest_fund_id() + " to party " + getSrc_fund_id();
     }
 
     public int getDest_fund_id() {
@@ -70,4 +71,20 @@ public class Transfer implements Serializable {
         this.internal = internal;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Transfer)) return false;
+        var transfer = (Transfer) o;
+        return id == transfer.id &&
+                src_fund_id == transfer.src_fund_id &&
+                dest_fund_id == transfer.dest_fund_id &&
+                Float.compare(transfer.units, units) == 0 &&
+                internal == transfer.internal;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, src_fund_id, dest_fund_id, units, internal);
+    }
 }
