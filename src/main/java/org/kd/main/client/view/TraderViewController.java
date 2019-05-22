@@ -91,7 +91,6 @@ public class TraderViewController {
         fundIdChoiceBox.setItems(list);
     }
 
-
     public void loadTrades() {
         var trades = FXCollections
                 .observableArrayList(
@@ -133,11 +132,11 @@ public class TraderViewController {
         if (isNoneElementSelected(fundIdChoiceBox, showFundButton, errorMsg)) return;
 
         var id = readFundId();
-        var fund = handler.loadFund(id);
-        if (fund != null) {
-            this.fundNameField.setText(fund.getName());
-            this.fundShortNameField.setText(fund.getShortname());
-            this.fundUnitsField.setText(String.valueOf(fund.getUnits()));
+        var customer = handler.loadCustomer(id);
+        if (customer != null) {
+            this.fundNameField.setText(customer.getName());
+            this.fundShortNameField.setText(customer.getShortname());
+            this.fundUnitsField.setText(String.valueOf(customer.getUnits()));
         }
     }
 
@@ -174,7 +173,7 @@ public class TraderViewController {
         String errorMsg = new PropertiesReader().readKey("error.message.fund.not.selected");
         if (isNoneElementSelected(fundIdChoiceBox, showFundButton, errorMsg)) return;
 
-        handler.saveFund(new Customer(readFundShortName(), readFundName(),  readFundUnits(), readPartyId()));
+        handler.saveCustomer(new Customer(readFundShortName(), readFundName(),  readFundUnits(), readPartyId()));
     }
 
     private Set<Customer> readFundsAvailableForParty() {

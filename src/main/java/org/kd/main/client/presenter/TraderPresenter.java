@@ -1,6 +1,7 @@
 package org.kd.main.client.presenter;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.kd.main.common.TraderConfig;
 import org.kd.main.common.entities.Bank;
 import org.kd.main.common.entities.Customer;
@@ -11,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
 import java.util.List;
@@ -30,6 +30,17 @@ public class TraderPresenter implements PresenterHandler {
     private String responseBody;
     private final Logger log = LoggerFactory.getLogger(TraderPresenter.class);
 
+    private final TypeReference<Bank> bankTypeReference = new TypeReference<>() {
+    };
+    private final TypeReference<Customer> customerTypeReference = new TypeReference<>() {
+    };
+    private final TypeReference<List<Bank>> bankListTypeReference = new TypeReference<>() {
+    };
+    private final TypeReference<List<Customer>> customerListTypeReference = new TypeReference<>() {
+    };
+    private final TypeReference<List<Transfer>> transferListTypeReference = new TypeReference<>() {
+    };
+
     @Override
     public List<Bank> loadBanks() {
         requestType = HttpMethod.valueOf("GET");
@@ -46,8 +57,7 @@ public class TraderPresenter implements PresenterHandler {
         try {
             banks = new ObjectMapper()
                     .readValue(response.getBody()
-                            , new TypeReference<List<Bank>>() {
-            });
+                            , bankListTypeReference);
         } catch (IOException e) {
             e.printStackTrace();
             return new Vector<>();
@@ -58,8 +68,27 @@ public class TraderPresenter implements PresenterHandler {
 
     @Override
     public Bank loadBank(long id) {
-        //TODO: implement
-        throw new RuntimeException("not implemented yet");
+        requestType = HttpMethod.valueOf("GET");
+        requestUrl = serviceAddress.concat("/bank/").concat(Long.valueOf(id).toString());
+        requestAsString = "";
+
+        ResponseEntity<String> response = restUtility.processHttpRequest(requestType, requestAsString, requestUrl, "application/json");
+        if (response == null) {
+            log.error("REST error. Couldn't read bank with id={} from server.", id);
+            return null;
+        }
+        retrieveResponseBodyAndStatusCode(response);
+        Bank bank;
+        try {
+            bank = new ObjectMapper()
+                    .readValue(response.getBody()
+                            , bankTypeReference);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+        return bank;
     }
 
     @Override
@@ -84,8 +113,7 @@ public class TraderPresenter implements PresenterHandler {
         try {
             customers = new ObjectMapper()
                     .readValue(response.getBody()
-                            , new TypeReference<List<Customer>>() {
-                            });
+                            , customerListTypeReference);
         } catch (IOException e) {
             e.printStackTrace();
             return new Vector<>();
@@ -95,13 +123,32 @@ public class TraderPresenter implements PresenterHandler {
     }
 
     @Override
-    public Customer loadFund(long id) {
-        //TODO: implement
-        throw new RuntimeException("not implemented yet");
+    public Customer loadCustomer(long id) {
+        requestType = HttpMethod.valueOf("GET");
+        requestUrl = serviceAddress.concat("/customer/").concat(Long.valueOf(id).toString());
+        requestAsString = "";
+
+        ResponseEntity<String> response = restUtility.processHttpRequest(requestType, requestAsString, requestUrl, "application/json");
+        if (response == null) {
+            log.error("REST error. Couldn't read customer with id={} from server.", id);
+            return null;
+        }
+        retrieveResponseBodyAndStatusCode(response);
+        Customer customer;
+        try {
+            customer = new ObjectMapper()
+                    .readValue(response.getBody()
+                            , customerTypeReference);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+        return customer;
     }
 
     @Override
-    public void saveFund(Customer customer) {
+    public void saveCustomer(Customer customer) {
         //TODO: implement
         throw new RuntimeException("not implemented yet");
     }
@@ -122,8 +169,7 @@ public class TraderPresenter implements PresenterHandler {
         try {
             transfers = new ObjectMapper()
                     .readValue(response.getBody()
-                            , new TypeReference<List<Transfer>>() {
-                            });
+                            , transferListTypeReference);
         } catch (IOException e) {
             e.printStackTrace();
             return new Vector<>();
@@ -141,7 +187,6 @@ public class TraderPresenter implements PresenterHandler {
     public void saveDb() {
 
     }
-
 
     private void retrieveResponseBodyAndStatusCode(ResponseEntity<String> response) {
         if (response != null) {

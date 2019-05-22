@@ -73,7 +73,7 @@ public class TransferDaoRepoTest {
 
     private void checkBookingTrade(int srcFundId, Predicate<Customer> partyIdComparisonPredicate) {
 
-        var destFund = fundDaoRepo.getAllFunds()
+        var destFund = fundDaoRepo.getAllCustomers()
                 .stream()
                 .filter(partyIdComparisonPredicate)
                 .findFirst();

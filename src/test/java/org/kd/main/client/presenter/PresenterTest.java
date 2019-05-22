@@ -30,6 +30,8 @@ import static org.junit.Assert.*;
 @PropertySource("classpath:application.properties")
 public class PresenterTest {
 
+    //don't start Tests when Server is running -> port is busy
+
     @Value("${port:8080}")
     private String port;
 

@@ -26,7 +26,7 @@ public class CustomerDaoRepoTest {
 
     @Test
     public void testGetAllFunds() {
-        var allFunds = fundDaoRepo.getAllFunds();
+        var allFunds = fundDaoRepo.getAllCustomers();
 
         Assert.assertNotNull(allFunds);
         assertTrue(allFunds.size() > 0);

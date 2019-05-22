@@ -34,7 +34,7 @@ public class DataServiceImpl implements DataService {
 
     @Override
     public List<Customer> loadCustomers() {
-        return customerDaoRepo.getAllFunds();
+        return customerDaoRepo.getAllCustomers();
     }
 
     @Override

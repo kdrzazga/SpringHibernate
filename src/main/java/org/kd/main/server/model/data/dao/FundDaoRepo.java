@@ -36,7 +36,7 @@ public class FundDaoRepo  {
     }
 
     @Transactional
-    public List<Customer> getAllFunds() {
+    public List<Customer> getAllCustomers() {
         //javax.persistence.Query query = entityManager.createQuery("SELECT id, name, shortname, units, party_id FROM Customer");//doesn't work
 
         var session = getSession();

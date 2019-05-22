@@ -1,3 +1,8 @@
-Application based on Hibernate and Spring.
-Parties can buy units from Funds.
+Application based on Hibernate and Spring Boot (backend) and JavaFx (frontend).
+Customers can buy units from Bank.
 Single XML file database.
+
+To run:
+1) start server: org.kd.main.server.TraderServer  -> Be patient, it takes some time.
+2) start client: org.kd.main.client.Launcher
+;)

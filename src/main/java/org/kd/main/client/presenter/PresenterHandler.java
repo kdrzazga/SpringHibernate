@@ -16,9 +16,9 @@ public interface PresenterHandler {
 
     List<Customer> loadCustomers();
 
-    Customer loadFund(long id);
+    Customer loadCustomer(long id);
 
-    void saveFund(Customer customer);
+    void saveCustomer(Customer customer);
 
     List<Transfer> loadTransfers();
 
