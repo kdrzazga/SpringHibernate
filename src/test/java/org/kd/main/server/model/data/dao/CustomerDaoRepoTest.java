@@ -39,6 +39,7 @@ public class CustomerDaoRepoTest {
         Assert.assertNotNull(fund);
         assertEquals(2012L, fund.getId());
     }
+
 /*
     @Test
     public void testGet() {

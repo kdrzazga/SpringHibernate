@@ -1,6 +1,8 @@
-package org.kd.main.client.presenter;
+package org.kd.main.common;
 
-import org.kd.main.common.TraderConfig;
+import org.kd.main.client.presenter.TraderPresenter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.*;
@@ -15,11 +17,17 @@ public class RestUtility {
     private String errorResponseStatusCode;
     private String errorResponseBody;
 
+    private String responseStatusCode;
+    private String responseBody;
+    private final Logger log = LoggerFactory.getLogger(TraderPresenter.class);
+
     @Autowired
     private RestTemplate restTemplate;
 
     private void interceptErrorResponse(HttpStatusCodeException e) {
-        errorResponseStatusCode = e.getStatusCode().toString().replaceAll("\\D+", "");
+
+        var digitsRegex = "\\D+";
+        errorResponseStatusCode = e.getStatusCode().toString().replaceAll(digitsRegex, "");
         errorResponseBody = e.getResponseBodyAsString();
     }
 
@@ -36,8 +44,27 @@ public class RestUtility {
     private HttpEntity<String> createRequestEntity(String request, String contentType) {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.valueOf(contentType));
-        HttpEntity<String> entity = new HttpEntity<>(request, httpHeaders);
-        return entity;
+        return new HttpEntity<>(request, httpHeaders);
+    }
+
+    public void retrieveResponseBodyAndStatusCode(ResponseEntity<String> response) {
+        if (response != null) {
+            int responseStatusCodeNumber = response.getStatusCodeValue();
+            responseStatusCode = "" + responseStatusCodeNumber;
+            responseBody = response.getBody();
+            log.info("Status code: " + responseStatusCode);
+        } else {
+            responseBody = getErrorResponseBody();
+            log.info("Status code: " + getErrorResponseStatusCode());
+        }
+    }
+
+    public String getResponseBody() {
+        return responseBody;
+    }
+
+    public String getResponseStatusCode() {
+        return responseStatusCode;
     }
 
     public String getErrorResponseStatusCode() {

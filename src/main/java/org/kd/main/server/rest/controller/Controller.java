@@ -7,9 +7,9 @@ import org.kd.main.server.model.data.dao.BankDaoRepo;
 import org.kd.main.server.model.data.dao.FundDaoRepo;
 import org.kd.main.server.model.data.dao.TransferDaoRepo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -49,4 +49,23 @@ public class Controller {
     public List<Transfer> readTransfers() {
         return transferDao.getAllTransfers();
     }
+
+    @PostMapping(path = "/customer")
+    public ResponseEntity<Customer> updateCustomer(@RequestBody Customer customer) {
+        customerDao.update(customer);
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(customer);
+    }
+
+    @PostMapping(path = "/bank")
+    public ResponseEntity<Bank> updateBank(@RequestBody Bank bank) {
+        bankDao.update(bank);
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(bank);
+    }
+
 }

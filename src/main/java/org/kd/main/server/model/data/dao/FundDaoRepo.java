@@ -3,21 +3,24 @@ package org.kd.main.server.model.data.dao;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.kd.main.common.entities.Customer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
 
 @Repository
-public class FundDaoRepo  {
+public class FundDaoRepo {
 
     @PersistenceContext
     private EntityManager entityManager;
+
+    private Logger log = LoggerFactory.getLogger(FundDaoRepo.class);
 
     @Transactional
     public long insert(Customer customer) {
@@ -51,6 +54,10 @@ public class FundDaoRepo  {
 
     @Transactional
     public Customer get(long id) {
+        return read(id);
+    }
+
+    public Customer read(long id) {
         var session = getSession();
         var crBuilder = session.getCriteriaBuilder();
         CriteriaQuery<Customer> query = crBuilder.createQuery(Customer.class);
@@ -74,6 +81,7 @@ public class FundDaoRepo  {
     @Transactional
     public void update(Customer customer) {
         var session = getSession();
+        log.info("Logging session: " + session + " updating customer " + customer);
         session.update(customer);
     }
 

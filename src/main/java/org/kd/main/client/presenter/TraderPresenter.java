@@ -2,6 +2,9 @@ package org.kd.main.client.presenter;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import org.kd.main.common.RestUtility;
 import org.kd.main.common.TraderConfig;
 import org.kd.main.common.entities.Bank;
 import org.kd.main.common.entities.Customer;
@@ -26,8 +29,7 @@ public class TraderPresenter implements PresenterHandler {
     private HttpMethod requestType;
     private String requestAsString;
     private String requestUrl;
-    private String responseStatusCode;
-    private String responseBody;
+
     private final Logger log = LoggerFactory.getLogger(TraderPresenter.class);
 
     private final TypeReference<Bank> bankTypeReference = new TypeReference<>() {
@@ -52,7 +54,7 @@ public class TraderPresenter implements PresenterHandler {
             log.error("REST error. Couldn't read banks from server.");
             return new Vector<>();
         }
-        retrieveResponseBodyAndStatusCode(response);
+        restUtility.retrieveResponseBodyAndStatusCode(response);
         List<Bank> banks;
         try {
             banks = new ObjectMapper()
@@ -77,7 +79,7 @@ public class TraderPresenter implements PresenterHandler {
             log.error("REST error. Couldn't read bank with id={} from server.", id);
             return null;
         }
-        retrieveResponseBodyAndStatusCode(response);
+        restUtility.retrieveResponseBodyAndStatusCode(response);
         Bank bank;
         try {
             bank = new ObjectMapper()
@@ -108,7 +110,7 @@ public class TraderPresenter implements PresenterHandler {
             log.error("REST error. Couldn't read customers from server.");
             return new Vector<>();
         }
-        retrieveResponseBodyAndStatusCode(response);
+        restUtility.retrieveResponseBodyAndStatusCode(response);
         List<Customer> customers;
         try {
             customers = new ObjectMapper()
@@ -133,7 +135,7 @@ public class TraderPresenter implements PresenterHandler {
             log.error("REST error. Couldn't read customer with id={} from server.", id);
             return null;
         }
-        retrieveResponseBodyAndStatusCode(response);
+        restUtility.retrieveResponseBodyAndStatusCode(response);
         Customer customer;
         try {
             customer = new ObjectMapper()
@@ -149,8 +151,17 @@ public class TraderPresenter implements PresenterHandler {
 
     @Override
     public void saveCustomer(Customer customer) {
-        //TODO: implement
-        throw new RuntimeException("not implemented yet");
+        var contentType = "application/json";
+        var requestUrl = "http://localhost:8080/customer";
+
+        Gson gsonBuilder = new GsonBuilder().create();
+        String customerJson = gsonBuilder.toJson(customer);
+
+        var response = restUtility.processHttpRequest(HttpMethod.POST, customerJson, requestUrl, contentType);
+
+        restUtility.retrieveResponseBodyAndStatusCode(response);
+        if (!"200".equals(restUtility.getResponseStatusCode()))
+            log.error(restUtility.getErrorResponseStatusCode() + " " + restUtility.getErrorResponseBody());
     }
 
     @Override
@@ -164,7 +175,7 @@ public class TraderPresenter implements PresenterHandler {
             log.error("REST error. Couldn't read transfers from server.");
             return new Vector<>();
         }
-        retrieveResponseBodyAndStatusCode(response);
+        restUtility.retrieveResponseBodyAndStatusCode(response);
         List<Transfer> transfers;
         try {
             transfers = new ObjectMapper()
@@ -188,16 +199,5 @@ public class TraderPresenter implements PresenterHandler {
 
     }
 
-    private void retrieveResponseBodyAndStatusCode(ResponseEntity<String> response) {
-        if (response != null) {
-            int responseStatusCodeNumber = response.getStatusCodeValue();
-            responseStatusCode = "" + responseStatusCodeNumber;
-            responseBody = response.getBody();
-            log.info("Status code: " + responseStatusCode);
-        } else {
-            responseStatusCode = restUtility.getErrorResponseStatusCode();
-            responseBody = restUtility.getErrorResponseBody();
-            log.info("Status code: " + responseStatusCode);
-        }
-    }
+
 }

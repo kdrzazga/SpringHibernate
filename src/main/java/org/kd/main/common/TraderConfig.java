@@ -1,7 +1,6 @@
 package org.kd.main.common;
 
 import org.kd.main.client.presenter.PresenterHandler;
-import org.kd.main.client.presenter.RestUtility;
 import org.kd.main.client.presenter.TraderPresenter;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
