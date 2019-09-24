@@ -44,7 +44,7 @@ public class TraderPresenter implements PresenterHandler {
     };
 
     @Override
-    public List<Bank> loadBanks() {
+    public List<Bank> readBanks() {
         requestType = HttpMethod.valueOf("GET");
         requestUrl = serviceAddress.concat("/banks");
         requestAsString = "";
@@ -69,7 +69,7 @@ public class TraderPresenter implements PresenterHandler {
     }
 
     @Override
-    public Bank loadBank(long id) {
+    public Bank readBank(long id) {
         requestType = HttpMethod.valueOf("GET");
         requestUrl = serviceAddress.concat("/bank/").concat(Long.valueOf(id).toString());
         requestAsString = "";
@@ -95,12 +95,24 @@ public class TraderPresenter implements PresenterHandler {
 
     @Override
     public void saveBank(Bank bank) {
-        //TODO: implement
-        throw new RuntimeException("not implemented yet");
+        var contentType = "application/json";
+        var requestUrl = "http://localhost:8080/bank";
+        requestType = HttpMethod.valueOf("PUT");
+
+        String bankJson = new GsonBuilder().create().toJson(bank);
+
+        var response = restUtility.processHttpRequest(requestType, bankJson, requestUrl, contentType);
+        if (response == null) {
+            log.error("REST error. Couldn't save bank.");
+        }
+        restUtility.retrieveResponseBodyAndStatusCode(response);
+        if (!"200".equals(restUtility.getResponseStatusCode()))
+            log.error(restUtility.getErrorResponseStatusCode() + " " + restUtility.getErrorResponseBody());
+
     }
 
     @Override
-    public List<Customer> loadCustomers() {
+    public List<Customer> readCustomers() {
         requestType = HttpMethod.valueOf("GET");
         requestUrl = serviceAddress.concat("/customers");
         requestAsString = "";
@@ -125,7 +137,7 @@ public class TraderPresenter implements PresenterHandler {
     }
 
     @Override
-    public Customer loadCustomer(long id) {
+    public Customer readCustomer(long id) {
         requestType = HttpMethod.valueOf("GET");
         requestUrl = serviceAddress.concat("/customer/").concat(Long.valueOf(id).toString());
         requestAsString = "";
@@ -157,7 +169,7 @@ public class TraderPresenter implements PresenterHandler {
         Gson gsonBuilder = new GsonBuilder().create();
         String customerJson = gsonBuilder.toJson(customer);
 
-        var response = restUtility.processHttpRequest(HttpMethod.POST, customerJson, requestUrl, contentType);
+        var response = restUtility.processHttpRequest(HttpMethod.PUT, customerJson, requestUrl, contentType);
 
         restUtility.retrieveResponseBodyAndStatusCode(response);
         if (!"200".equals(restUtility.getResponseStatusCode()))
@@ -165,7 +177,7 @@ public class TraderPresenter implements PresenterHandler {
     }
 
     @Override
-    public List<Transfer> loadTransfers() {
+    public List<Transfer> readTransfers() {
         requestType = HttpMethod.valueOf("GET");
         requestUrl = serviceAddress.concat("/transfers");
         requestAsString = "";

@@ -13,8 +13,14 @@ public class TraderServer {
     private static ConfigurableApplicationContext context;
 
     public static void main(String[] args) {
-        context = SpringApplication.run(TraderServer.class, args);
+        start();
         writeInfo();
+    }
+
+    public static void start() {
+        if (context == null) {
+            context = SpringApplication.run(TraderServer.class);
+        }
     }
 
     public static void stop() {

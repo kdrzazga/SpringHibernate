@@ -69,7 +69,7 @@ public class TraderViewController {
     public void loadParties() {
 
         var list = FXCollections.observableArrayList(
-                handler.loadBanks()
+                handler.readBanks()
                         .stream()
                         .map(Bank::getId)
                         .map(Object::toString)
@@ -82,7 +82,7 @@ public class TraderViewController {
     public void loadFunds() {
 
         var list = FXCollections.observableArrayList(
-                handler.loadCustomers()
+                handler.readCustomers()
                         .stream()
                         .map(Customer::getId)
                         .map(Object::toString)
@@ -94,7 +94,7 @@ public class TraderViewController {
     public void loadTrades() {
         var trades = FXCollections
                 .observableArrayList(
-                        handler.loadTransfers());
+                        handler.readTransfers());
 
         var idColumn = new TableColumn<Transfer, String>("Id");
         var quantityColumn = new TableColumn<Transfer, String>("Units");
@@ -113,7 +113,7 @@ public class TraderViewController {
         if (isNoneElementSelected(partyIdChoiceBox, showCptyButton, errorMsg)) return;
 
         var id = readPartyId();
-        var party = handler.loadBank(id);
+        var party = handler.readBank(id);
 
         if (party != null) {
             this.cptyNameField.setText(party.getName());
@@ -132,7 +132,7 @@ public class TraderViewController {
         if (isNoneElementSelected(fundIdChoiceBox, showFundButton, errorMsg)) return;
 
         var id = readFundId();
-        var customer = handler.loadCustomer(id);
+        var customer = handler.readCustomer(id);
         if (customer != null) {
             this.fundNameField.setText(customer.getName());
             this.fundShortNameField.setText(customer.getShortname());

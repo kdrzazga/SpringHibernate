@@ -1,5 +1,6 @@
 package org.kd.main.server.rest.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.kd.main.common.entities.Bank;
 import org.kd.main.common.entities.Customer;
 import org.kd.main.common.entities.Transfer;
@@ -25,14 +26,37 @@ public class Controller {
     @Autowired
     private TransferDaoRepo transferDao;
 
+    @GetMapping(path = "/customer/{id}")
+    public Customer readCustomer(@PathVariable long id) {
+        return customerDao.get(id);
+    }
+
     @GetMapping(path = "/customers")
     public List<Customer> readCustomers() {
         return customerDao.getAllCustomers();
     }
 
-    @GetMapping(path = "/banks")
-    public List<Bank> readBanks() {
-        return bankDao.getAllBanks();
+    @PutMapping(path = "/customer", consumes = "application/json", produces = "application/json")
+    public ResponseEntity<String> updateCustomer(@RequestBody String customerJson) {
+        try {
+            var objectMapper = new ObjectMapper();
+            customerJson = customerJson
+                    .replaceAll("\r\n", "")
+                    .replaceAll("\t", "");
+
+            var customer = objectMapper.readValue(customerJson, Customer.class);
+            customerDao.update(customer);
+
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .body(customer.toString());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("ERROR");
+        }
     }
 
     @GetMapping(path = "/bank/{id}")
@@ -40,9 +64,38 @@ public class Controller {
         return bankDao.get(id);
     }
 
-    @GetMapping(path = "/customer/{id}")
-    public Customer readCustomer(@PathVariable long id) {
-        return customerDao.get(id);
+    @GetMapping(path = "/banks")
+    public List<Bank> readBanks() {
+        return bankDao.getAllBanks();
+    }
+
+    @PutMapping(path = "/bank", consumes = "application/json", produces = "application/json")
+    public ResponseEntity<String> updateBank(@RequestBody String bankJson) {
+        try {
+            var objectMapper = new ObjectMapper();
+            bankJson = bankJson
+                    .replaceAll("\r\n", "")
+                    .replaceAll("\t", "");
+
+            var bank = objectMapper.readValue(bankJson, Bank.class);
+            bankDao.update(bank);
+
+            return ResponseEntity
+                    .status(HttpStatus.OK)
+                    .body(bank.toString());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("ERROR");
+        }
+
+    }
+
+    @GetMapping(path = "/transfer/{id}")
+    public Transfer readTransfer(@PathVariable long id) {
+        return transferDao.getTransferByPrimaryKey(id);
     }
 
     @GetMapping(path = "/transfers")
@@ -50,22 +103,5 @@ public class Controller {
         return transferDao.getAllTransfers();
     }
 
-    @PostMapping(path = "/customer")
-    public ResponseEntity<Customer> updateCustomer(@RequestBody Customer customer) {
-        customerDao.update(customer);
-
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(customer);
-    }
-
-    @PostMapping(path = "/bank")
-    public ResponseEntity<Bank> updateBank(@RequestBody Bank bank) {
-        bankDao.update(bank);
-
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(bank);
-    }
 
 }

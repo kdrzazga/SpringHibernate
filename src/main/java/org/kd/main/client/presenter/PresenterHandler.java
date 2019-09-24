@@ -8,19 +8,19 @@ import java.util.List;
 
 public interface PresenterHandler {
 
-    List<Bank> loadBanks();
+    List<Bank> readBanks();
 
     void saveBank(Bank bank);
 
-    Bank loadBank(long id);
+    Bank readBank(long id);
 
-    List<Customer> loadCustomers();
+    List<Customer> readCustomers();
 
-    Customer loadCustomer(long id);
+    Customer readCustomer(long id);
 
     void saveCustomer(Customer customer);
 
-    List<Transfer> loadTransfers();
+    List<Transfer> readTransfers();
 
     void initApplication();
 

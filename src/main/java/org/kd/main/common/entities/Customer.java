@@ -10,24 +10,24 @@ public class Customer implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private long id;
 
     private String shortname;
     private String name;
     private double units;
-    private int party_id;
+    private long party_id;
 
     private Customer() {
     }
 
-    public Customer(String shortname, String name, double units, int party_id) {
+    public Customer(String shortname, String name, double units, long party_id) {
         this.shortname = shortname;
         this.name = name;
         this.units = units;
         this.party_id = party_id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -43,11 +43,11 @@ public class Customer implements Serializable {
         this.units = units;
     }
 
-    public void setParty_id(int party_id) {
+    public void setParty_id(long party_id) {
         this.party_id = party_id;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
@@ -63,7 +63,7 @@ public class Customer implements Serializable {
         return units;
     }
 
-    public int getParty_id() {
+    public long getParty_id() {
         return party_id;
     }
 

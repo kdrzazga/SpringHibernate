@@ -73,7 +73,7 @@ public class PresenterTest {
 
     @Test
     public void testLoadBanks() {
-        var banks = presenterHandler.loadBanks();
+        var banks = presenterHandler.readBanks();
         assertNotNull(banks);
         assertThat(banks, hasSize(greaterThan(0)));
         assertEquals(bank, banks.get(0));
@@ -81,7 +81,7 @@ public class PresenterTest {
 
     @Test
     public void testLoadCustomers() {
-        var customers = presenterHandler.loadCustomers();
+        var customers = presenterHandler.readCustomers();
         assertNotNull(customers);
         assertThat(customers, hasSize(greaterThan(0)));
         assertEquals(customer, customers.get(0));
@@ -89,7 +89,7 @@ public class PresenterTest {
 
     @Test
     public void testLoadTransfers() {
-        var transfers = presenterHandler.loadTransfers();
+        var transfers = presenterHandler.readTransfers();
         assertNotNull(transfers);
         assertThat(transfers, hasSize(greaterThan(0)));
         assertEquals(transfer, transfers.get(0));

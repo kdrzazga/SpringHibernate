@@ -24,12 +24,12 @@ public class TransferDaoRepo {
     private FundDaoRepo fundDaoRepo;
 
     @Transactional
-    public Transfer getTradeByPrimaryKey(int id) {
+    public Transfer getTransferByPrimaryKey(long id) {
         return entityManager.find(Transfer.class, id);
     }
 
     @Transactional
-    public void removeTradeByPrimaryKey(int id) {
+    public void removeTransferByPrimaryKey(long id) {
         var entity = entityManager.find(Transfer.class, id);
         //entityManager.getTradeion().begin();// this is handled by Spring @Transactional
         entityManager.remove(entity);
@@ -49,7 +49,7 @@ public class TransferDaoRepo {
     }
 
     @Transactional
-    public List<Transfer> getTradeByFundId(int fundId) {
+    public List<Transfer> getTransferByFundId(long fundId) {
         var session = entityManager.unwrap(Session.class);
         var builder = session.getCriteriaBuilder();
         var criteria = builder.createQuery(Transfer.class);
@@ -64,7 +64,7 @@ public class TransferDaoRepo {
     }
 
     @Transactional
-    public int book(long sourceFundIs, long destFundId, float units) {
+    public long book(long sourceFundIs, long destFundId, float units) {
 
         var destFund = fundDaoRepo.get(destFundId);
         var sourceFund = fundDaoRepo.get(sourceFundIs);
@@ -72,11 +72,11 @@ public class TransferDaoRepo {
         if (destFund == null || sourceFund == null) return -1;
 
         return (destFund.getParty_id() == sourceFund.getParty_id())
-                ? bookInternalTrade(sourceFund, destFund, units)
-                : bookExternalTrade();
+                ? bookInternalTransfer(sourceFund, destFund, units)
+                : bookExternalTransfer();
     }
 
-    private int bookInternalTrade(Customer sourceCustomer, Customer destCustomer, float units) {
+    private long bookInternalTransfer(Customer sourceCustomer, Customer destCustomer, float units) {
         if (sourceCustomer.getUnits() < units) return -1;
 
         sourceCustomer.setUnits(sourceCustomer.getUnits() - units);
@@ -84,15 +84,15 @@ public class TransferDaoRepo {
 
         fundDaoRepo.update(sourceCustomer);
         fundDaoRepo.update(destCustomer);
-        return addNewTrade(sourceCustomer.getId(), destCustomer.getId(), units, true);
+        return addNewTransfer(sourceCustomer.getId(), destCustomer.getId(), units, true);
     }
 
-    private int bookExternalTrade() {
+    private long bookExternalTransfer() {
         throw new RuntimeException("Not implemented yet");
         //TODO implement
     }
 
-    private int addNewTrade(int sourceFundId, int destFundId, float units, boolean internal){
+    private long addNewTransfer(long sourceFundId, long destFundId, float units, boolean internal){
         var newTrade = new Transfer(sourceFundId, destFundId, units, internal);
 
         entityManager.persist(newTrade);
