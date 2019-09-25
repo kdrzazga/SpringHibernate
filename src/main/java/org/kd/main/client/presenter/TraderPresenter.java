@@ -96,7 +96,7 @@ public class TraderPresenter implements PresenterHandler {
     @Override
     public void saveBank(Bank bank) {
         var contentType = "application/json";
-        var requestUrl = "http://localhost:8080/bank";
+        var requestUrl = serviceAddress.concat("/bank");
         requestType = HttpMethod.valueOf("PUT");
 
         String bankJson = new GsonBuilder().create().toJson(bank);
@@ -164,7 +164,7 @@ public class TraderPresenter implements PresenterHandler {
     @Override
     public void saveCustomer(Customer customer) {
         var contentType = "application/json";
-        var requestUrl = "http://localhost:8080/customer";
+        var requestUrl = serviceAddress.concat("/customer");
 
         Gson gsonBuilder = new GsonBuilder().create();
         String customerJson = gsonBuilder.toJson(customer);
@@ -190,9 +190,7 @@ public class TraderPresenter implements PresenterHandler {
         restUtility.retrieveResponseBodyAndStatusCode(response);
         List<Transfer> transfers;
         try {
-            transfers = new ObjectMapper()
-                    .readValue(response.getBody()
-                            , transferListTypeReference);
+            transfers = new ObjectMapper().readValue(response.getBody(), transferListTypeReference);
         } catch (IOException e) {
             e.printStackTrace();
             return new Vector<>();
@@ -203,13 +201,9 @@ public class TraderPresenter implements PresenterHandler {
 
     @Override
     public void initApplication() {
-
     }
 
     @Override
     public void saveDb() {
-
     }
-
-
 }

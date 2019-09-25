@@ -15,17 +15,17 @@ public interface DataService {
      */
     void saveDb();
 
-    List<Customer> loadCustomers();
+    List<Customer> readCustomers();
 
-    List<Bank> loadBanks();
+    List<Bank> readBanks();
 
-    List<Transfer> loadTransfers();
+    List<Transfer> readTransfers();
 
-    void saveBank(Bank bank);
+    void updateBank(Bank bank);
 
-    Customer loadCustomer(long id);
+    Customer readCustomer(long id);
 
-    void saveCustomer(Customer customer);
+    void updateCustomer(Customer customer);
 
-    Bank loadBank(long id);
+    Bank readBank(long id);
 }

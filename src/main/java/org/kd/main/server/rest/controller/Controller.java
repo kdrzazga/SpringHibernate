@@ -5,7 +5,7 @@ import org.kd.main.common.entities.Bank;
 import org.kd.main.common.entities.Customer;
 import org.kd.main.common.entities.Transfer;
 import org.kd.main.server.model.data.dao.BankDaoRepo;
-import org.kd.main.server.model.data.dao.FundDaoRepo;
+import org.kd.main.server.model.data.dao.CustomerDaoRepo;
 import org.kd.main.server.model.data.dao.TransferDaoRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,7 +18,7 @@ import java.util.List;
 public class Controller {
 
     @Autowired
-    private FundDaoRepo customerDao;
+    private CustomerDaoRepo customerDao;
 
     @Autowired
     private BankDaoRepo bankDao;
@@ -61,12 +61,12 @@ public class Controller {
 
     @GetMapping(path = "/bank/{id}")
     public Bank readBank(@PathVariable long id) {
-        return bankDao.get(id);
+        return bankDao.read(id);
     }
 
     @GetMapping(path = "/banks")
     public List<Bank> readBanks() {
-        return bankDao.getAllBanks();
+        return bankDao.readAll();
     }
 
     @PutMapping(path = "/bank", consumes = "application/json", produces = "application/json")
@@ -95,12 +95,12 @@ public class Controller {
 
     @GetMapping(path = "/transfer/{id}")
     public Transfer readTransfer(@PathVariable long id) {
-        return transferDao.getTransferByPrimaryKey(id);
+        return transferDao.readTransferByPrimaryKey(id);
     }
 
     @GetMapping(path = "/transfers")
     public List<Transfer> readTransfers() {
-        return transferDao.getAllTransfers();
+        return transferDao.readAllTransfers();
     }
 
 

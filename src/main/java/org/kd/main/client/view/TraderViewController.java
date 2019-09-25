@@ -26,40 +26,40 @@ public class TraderViewController {
     private Tab devTab;
 
     @FXML
-    private TableView<Transfer> tradeTable;
+    private TableView<Transfer> transferTable;
 
     @FXML
-    private ChoiceBox<String> partyIdChoiceBox;
+    private ChoiceBox<String> bankIdChoiceBox;
 
     @FXML
-    private ChoiceBox<String> fundIdChoiceBox;
+    private ChoiceBox<String> customerIdChoiceBox;
 
     @FXML
-    private TextField cptyNameField;
+    private TextField bankNameField;
 
     @FXML
-    private TextField shortCptyNameField;
+    private TextField shortBankNameField;
 
     @FXML
-    private ChoiceBox<String> partyId4TradeChoiceBox;
+    private ChoiceBox<String> bankId4TradeChoiceBox;
 
     @FXML
-    private TextField fundsField;
+    private TextField customersField;
 
     @FXML
-    private Button showCptyButton;
+    private Button showBankButton;
 
     @FXML
-    private TextField fundNameField;
+    private TextField customerNameField;
 
     @FXML
-    private TextField fundShortNameField;
+    private TextField customerShortNameField;
 
     @FXML
-    private TextField fundUnitsField;
+    private TextField customerCashField;
 
     @FXML
-    private Button showFundButton;
+    private Button showCustomerButton;
 
     @FXML
     public void initialize() {
@@ -75,8 +75,8 @@ public class TraderViewController {
                         .map(Object::toString)
                         .collect(Collectors.toList()));
 
-        partyIdChoiceBox.setItems(list);
-        partyId4TradeChoiceBox.setItems(list);
+        bankIdChoiceBox.setItems(list);
+        bankId4TradeChoiceBox.setItems(list);
     }
 
     public void loadFunds() {
@@ -88,7 +88,7 @@ public class TraderViewController {
                         .map(Object::toString)
                         .collect(Collectors.toList()));
 
-        fundIdChoiceBox.setItems(list);
+        customerIdChoiceBox.setItems(list);
     }
 
     public void loadTrades() {
@@ -102,68 +102,68 @@ public class TraderViewController {
         idColumn.setCellValueFactory(new PropertyValueFactory<>("Id"));
         quantityColumn.setCellValueFactory(new PropertyValueFactory<>("units"));
 
-        tradeTable.setItems(trades);
-        tradeTable.getColumns().addAll(idColumn, quantityColumn);
+        transferTable.setItems(trades);
+        transferTable.getColumns().addAll(idColumn, quantityColumn);
     }
 
     @FXML
     protected void handleShowCptyAction(ActionEvent event) {
 
         var errorMsg = new PropertiesReader().readKey("error.message.party.not.selected");
-        if (isNoneElementSelected(partyIdChoiceBox, showCptyButton, errorMsg)) return;
+        if (isNoneElementSelected(bankIdChoiceBox, showBankButton, errorMsg)) return;
 
         var id = readPartyId();
         var party = handler.readBank(id);
 
         if (party != null) {
-            this.cptyNameField.setText(party.getName());
-            this.shortCptyNameField.setText(party.getShortname());
+            this.bankNameField.setText(party.getName());
+            this.shortBankNameField.setText(party.getShortname());
         }
     }
 
     private int readPartyId() {
-        return Integer.parseInt(partyIdChoiceBox.getValue());
+        return Integer.parseInt(bankIdChoiceBox.getValue());
     }
 
     @FXML
     protected void handleShowFundAction(ActionEvent event) {
 
         String errorMsg = new PropertiesReader().readKey("error.message.fund.not.selected");
-        if (isNoneElementSelected(fundIdChoiceBox, showFundButton, errorMsg)) return;
+        if (isNoneElementSelected(customerIdChoiceBox, showCustomerButton, errorMsg)) return;
 
         var id = readFundId();
         var customer = handler.readCustomer(id);
         if (customer != null) {
-            this.fundNameField.setText(customer.getName());
-            this.fundShortNameField.setText(customer.getShortname());
-            this.fundUnitsField.setText(String.valueOf(customer.getUnits()));
+            this.customerNameField.setText(customer.getName());
+            this.customerShortNameField.setText(customer.getShortname());
+            this.customerCashField.setText(String.valueOf(customer.getUnits()));
         }
     }
 
     private long readFundId() {
         return OptionalLong
-                .of(Long.parseLong(fundIdChoiceBox.getValue()))
+                .of(Long.parseLong(customerIdChoiceBox.getValue()))
                 .orElse(0);
     }
 
     private String readFundShortName() {
-        return this.fundShortNameField.getText();
+        return this.customerShortNameField.getText();
     }
 
     private String readFundName() {
-        return this.fundNameField.getText();
+        return this.customerNameField.getText();
     }
 
     private double readFundUnits() {
         return OptionalDouble
-                .of(Double.valueOf(this.fundUnitsField.getText()))
+                .of(Double.valueOf(this.customerCashField.getText()))
                 .orElse(0);
     }
 
     @FXML
     protected void handleSavePartyAction(ActionEvent event) {
         String errorMsg = new PropertiesReader().readKey("error.message.party.not.selected");
-        if (isNoneElementSelected(partyIdChoiceBox, showFundButton, errorMsg)) return;
+        if (isNoneElementSelected(bankIdChoiceBox, showCustomerButton, errorMsg)) return;
 
         handler.saveBank(new Bank(readPartyId(), readPartyName(), readPartyShortName()));
     }
@@ -171,7 +171,7 @@ public class TraderViewController {
     @FXML
     protected void handleSaveFundAction(ActionEvent event) {
         String errorMsg = new PropertiesReader().readKey("error.message.fund.not.selected");
-        if (isNoneElementSelected(fundIdChoiceBox, showFundButton, errorMsg)) return;
+        if (isNoneElementSelected(customerIdChoiceBox, showCustomerButton, errorMsg)) return;
 
         handler.saveCustomer(new Customer(readFundShortName(), readFundName(),  readFundUnits(), readPartyId()));
     }
@@ -182,11 +182,11 @@ public class TraderViewController {
     }
 
     private String readPartyShortName() {
-        return this.shortCptyNameField.getText();
+        return this.shortBankNameField.getText();
     }
 
     private String readPartyName() {
-        return this.cptyNameField.getText();
+        return this.bankNameField.getText();
     }
 
     @FXML

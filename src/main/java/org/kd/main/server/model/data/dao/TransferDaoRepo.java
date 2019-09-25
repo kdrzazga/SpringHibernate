@@ -21,15 +21,15 @@ public class TransferDaoRepo {
     private BankDaoRepo bankDaoRepo;
 
     @Autowired
-    private FundDaoRepo fundDaoRepo;
+    private CustomerDaoRepo customerDaoRepo;
 
     @Transactional
-    public Transfer getTransferByPrimaryKey(long id) {
+    public Transfer readTransferByPrimaryKey(long id) {
         return entityManager.find(Transfer.class, id);
     }
 
     @Transactional
-    public void removeTransferByPrimaryKey(long id) {
+    public void deleteTransferByPrimaryKey(long id) {
         var entity = entityManager.find(Transfer.class, id);
         //entityManager.getTradeion().begin();// this is handled by Spring @Transactional
         entityManager.remove(entity);
@@ -37,7 +37,7 @@ public class TransferDaoRepo {
     }
 
     @Transactional
-    public List<Transfer> getAllTransfers() {
+    public List<Transfer> readAllTransfers() {
         var session = entityManager.unwrap(Session.class);
         var builder = session.getCriteriaBuilder();
         var criteria = builder.createQuery(Transfer.class);
@@ -49,7 +49,7 @@ public class TransferDaoRepo {
     }
 
     @Transactional
-    public List<Transfer> getTransferByFundId(long fundId) {
+    public List<Transfer> readTransferByFundId(long fundId) {
         var session = entityManager.unwrap(Session.class);
         var builder = session.getCriteriaBuilder();
         var criteria = builder.createQuery(Transfer.class);
@@ -66,8 +66,8 @@ public class TransferDaoRepo {
     @Transactional
     public long book(long sourceFundIs, long destFundId, float units) {
 
-        var destFund = fundDaoRepo.get(destFundId);
-        var sourceFund = fundDaoRepo.get(sourceFundIs);
+        var destFund = customerDaoRepo.get(destFundId);
+        var sourceFund = customerDaoRepo.get(sourceFundIs);
 
         if (destFund == null || sourceFund == null) return -1;
 
@@ -82,9 +82,9 @@ public class TransferDaoRepo {
         sourceCustomer.setUnits(sourceCustomer.getUnits() - units);
         destCustomer.setUnits(destCustomer.getUnits() + units);
 
-        fundDaoRepo.update(sourceCustomer);
-        fundDaoRepo.update(destCustomer);
-        return addNewTransfer(sourceCustomer.getId(), destCustomer.getId(), units, true);
+        customerDaoRepo.update(sourceCustomer);
+        customerDaoRepo.update(destCustomer);
+        return createTransfer(sourceCustomer.getId(), destCustomer.getId(), units, true);
     }
 
     private long bookExternalTransfer() {
@@ -92,7 +92,7 @@ public class TransferDaoRepo {
         //TODO implement
     }
 
-    private long addNewTransfer(long sourceFundId, long destFundId, float units, boolean internal){
+    private long createTransfer(long sourceFundId, long destFundId, float units, boolean internal){
         var newTrade = new Transfer(sourceFundId, destFundId, units, internal);
 
         entityManager.persist(newTrade);

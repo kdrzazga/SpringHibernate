@@ -9,7 +9,7 @@
       fx:controller="org.kd.main.client.view.TraderViewController">
     <TabPane fx:id="mainTabPane" maxHeight="575.0" minHeight="520.0" prefHeight="520.0" prefWidth="446.0"
              tabClosingPolicy="UNAVAILABLE">
-        <Tab fx:id="tradeTab" text="Trade">
+        <Tab fx:id="tradeTab" text="Transfer">
             <content>
                 <AnchorPane minHeight="520.0" minWidth="0.0" prefHeight="520.0" prefWidth="200.0">
                     <children>
@@ -27,7 +27,7 @@
                             </rowConstraints>
                             <children>
                                 <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="20.0"
-                                       prefWidth="326.0" text="Trade Input" textAlignment="CENTER"
+                                       prefWidth="326.0" text="Transfer Input" textAlignment="CENTER"
                                        GridPane.columnSpan="2">
                                     <font>
                                         <Font name="Arial Bold" size="16.0"/>
@@ -36,13 +36,13 @@
                                         <Insets bottom="15.0" left="15.0" right="15.0" top="15.0"/>
                                     </padding>
                                 </Label>
-                                <Label text="Party Id :" GridPane.rowIndex="1"/>
-                                <ChoiceBox id="partyId4TradeChoiceBox" fx:id="partyId4TradeChoiceBox"
+                                <Label text="Bank Id :" GridPane.rowIndex="1"/>
+                                <ChoiceBox id="partyId4TradeChoiceBox" fx:id="bankId4TradeChoiceBox"
                                            nodeOrientation="LEFT_TO_RIGHT" prefHeight="14.0" prefWidth="180.0"
                                            GridPane.columnIndex="1" GridPane.rowIndex="1">
 
                                 </ChoiceBox>
-                                <Label text="Fund Id:" GridPane.rowIndex="2"/>
+                                <Label text="Customer Id:" GridPane.rowIndex="2"/>
                                 <ChoiceBox id="fundIdChoiceBox" fx:id="fundId4TradeChoiceBox"
                                            nodeOrientation="LEFT_TO_RIGHT" prefHeight="14.0" prefWidth="180.0"
                                            GridPane.columnIndex="1" GridPane.rowIndex="2">
@@ -60,14 +60,14 @@
                                 <Insets bottom="15.0" left="15.0" right="15.0" top="15.0"/>
                             </padding>
                         </GridPane>
-                        <TableView fx:id="tradeTable" layoutX="23.0" layoutY="255.0" prefHeight="121.0"
+                        <TableView fx:id="transferTable" layoutX="23.0" layoutY="255.0" prefHeight="121.0"
                                    prefWidth="389.0">
                         </TableView>
                     </children>
                 </AnchorPane>
             </content>
         </Tab>
-        <Tab fx:id="cptyTab" text="Party">
+        <Tab fx:id="cptyTab" text="Bank">
             <content>
                 <AnchorPane minHeight="280.0" minWidth="431.0" prefHeight="380.0" prefWidth="200.0">
                     <children>
@@ -89,7 +89,7 @@
                             </rowConstraints>
                             <children>
                                 <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="20.0"
-                                       prefWidth="400.0" text="Party Info" textAlignment="CENTER"
+                                       prefWidth="400.0" text="Bank Info" textAlignment="CENTER"
                                        GridPane.columnSpan="2">
                                     <font>
                                         <Font name="Arial Bold" size="16.0"/>
@@ -98,41 +98,41 @@
                                         <Insets bottom="15.0" left="15.0" right="15.0" top="15.0"/>
                                     </padding>
                                 </Label>
-                                <Label alignment="CENTER_RIGHT" text="Party Name : " GridPane.rowIndex="6">
+                                <Label alignment="CENTER_RIGHT" text="Bank Name : " GridPane.rowIndex="6">
                                     <GridPane.margin>
                                         <Insets top="4.0"/>
                                     </GridPane.margin>
                                 </Label>
-                                <TextField fx:id="cptyNameField" prefHeight="15" minWidth="225" GridPane.columnIndex="1"
+                                <TextField fx:id="bankNameField" prefHeight="15" minWidth="225" GridPane.columnIndex="1"
                                            GridPane.rowIndex="6"/>
                                 <Label alignment="CENTER_RIGHT" text="Short Name : " GridPane.rowIndex="7">
                                     <GridPane.margin>
                                         <Insets top="4.0"/>
                                     </GridPane.margin>
                                 </Label>
-                                <TextField fx:id="shortCptyNameField" prefHeight="15" maxWidth="100"
+                                <TextField fx:id="shortBankNameField" prefHeight="15" maxWidth="100"
                                            GridPane.columnIndex="1"
                                            GridPane.rowIndex="7"/>
-                                <Label alignment="CENTER_RIGHT" text="Funds : " GridPane.rowIndex="8">
+                                <Label alignment="CENTER_RIGHT" text="Customers : " GridPane.rowIndex="8">
                                     <GridPane.margin>
                                         <Insets top="4.0"/>
                                     </GridPane.margin>
                                 </Label>
-                                <TextField fx:id="fundsField" editable="true" prefHeight="60.0" prefWidth="190.0"
+                                <TextField fx:id="customersField" editable="true" prefHeight="60.0" prefWidth="190.0"
                                            GridPane.columnIndex="1" GridPane.rowIndex="8"/>
-                                <Button fx:id="showCptyButton" defaultButton="true" onAction="#handleShowCptyAction"
+                                <Button fx:id="showBankButton" defaultButton="true" onAction="#handleShowCptyAction"
                                         prefHeight="36.0" prefWidth="169.0" text="Show" GridPane.columnSpan="2"
                                         GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.rowSpan="1">
                                     <GridPane.margin>
                                         <Insets bottom="5" top="5"/>
                                     </GridPane.margin>
                                 </Button>
-                                <ChoiceBox id="partyIdChoiceBox" fx:id="partyIdChoiceBox"
+                                <ChoiceBox id="partyIdChoiceBox" fx:id="bankIdChoiceBox"
                                            nodeOrientation="LEFT_TO_RIGHT" prefHeight="14.0" prefWidth="180.0"
                                            GridPane.columnIndex="1" GridPane.rowIndex="2">
 
                                 </ChoiceBox>
-                                <Label text="Party Id :" GridPane.rowIndex="2" layoutX="27.0"/>
+                                <Label text="Bank Id :" GridPane.rowIndex="2" layoutX="27.0"/>
                                 <Button fx:id="savePartyButton" defaultButton="true" layoutX="141.0" layoutY="118.0"
                                         onAction="#handleSavePartyAction" prefHeight="36.0" prefWidth="169.0"
                                         text="Save Changes" textAlignment="CENTER" GridPane.columnSpan="2"
@@ -148,7 +148,7 @@
             </content>
         </Tab>
 
-        <Tab fx:id="fundTab" text="Fund">
+        <Tab fx:id="fundTab" text="Customer">
             <content>
                 <AnchorPane minHeight="280.0" minWidth="0.0" prefHeight="380.0" prefWidth="200.0">
                     <children>
@@ -170,7 +170,7 @@
                             </rowConstraints>
                             <children>
                                 <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="20.0"
-                                       prefWidth="400.0" text="Fund Info" textAlignment="CENTER"
+                                       prefWidth="400.0" text="Customer Info" textAlignment="CENTER"
                                        GridPane.columnSpan="2">
                                     <font>
                                         <Font name="Arial Bold" size="16.0"/>
@@ -179,22 +179,22 @@
                                         <Insets bottom="15.0" left="15.0" right="15.0" top="15.0"/>
                                     </padding>
                                 </Label>
-                                <Label text="Fund Id:" GridPane.rowIndex="1"/>
-                                <ChoiceBox id="fundIdChoiceBox" fx:id="fundIdChoiceBox"
+                                <Label text="Customer Id:" GridPane.rowIndex="1"/>
+                                <ChoiceBox id="fundIdChoiceBox" fx:id="customerIdChoiceBox"
                                            nodeOrientation="LEFT_TO_RIGHT" prefHeight="14.0" prefWidth="180.0"
                                            GridPane.columnIndex="1" GridPane.rowIndex="1">
                                 </ChoiceBox>
-                                <Label alignment="CENTER_RIGHT" text="Fund Name : " GridPane.rowIndex="3"/>
+                                <Label alignment="CENTER_RIGHT" text="Customer Name : " GridPane.rowIndex="3"/>
                                 <Label alignment="CENTER_RIGHT" text="Short Name : " GridPane.rowIndex="4"/>
-                                <TextField fx:id="fundNameField" prefHeight="15" minWidth="225" GridPane.columnIndex="1"
+                                <TextField fx:id="customerNameField" prefHeight="15" minWidth="225" GridPane.columnIndex="1"
                                            GridPane.rowIndex="3"/>
-                                <TextField fx:id="fundShortNameField" editable="true" prefHeight="15" maxWidth="100"
+                                <TextField fx:id="customerShortNameField" editable="true" prefHeight="15" maxWidth="100"
                                            GridPane.columnIndex="1" GridPane.rowIndex="4"/>
-                                <Button fx:id="showFundButton" defaultButton="true" onAction="#handleShowFundAction"
+                                <Button fx:id="showCustomerButton" defaultButton="true" onAction="#handleShowFundAction"
                                         prefHeight="36.0" prefWidth="169.0" text="Show" GridPane.columnSpan="2"
                                         GridPane.halignment="CENTER" GridPane.rowIndex="2"/>
-                                <Label alignment="CENTER_RIGHT" text="Units" GridPane.rowIndex="5"/>
-                                <TextField fx:id="fundUnitsField" editable="true" prefHeight="15" maxWidth="100"
+                                <Label alignment="CENTER_RIGHT" text="Cash Balance" GridPane.rowIndex="5"/>
+                                <TextField fx:id="customerCashField" editable="true" prefHeight="15" maxWidth="100"
                                            GridPane.columnIndex="1" GridPane.rowIndex="5"/>
                                 <Button fx:id="saveFundButton" defaultButton="true" layoutX="141.0" layoutY="118.0"
                                         onAction="#handleSaveFundAction" prefHeight="36.0" prefWidth="169.0"

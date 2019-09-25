@@ -1,6 +1,7 @@
 package org.kd.main.server.model.data.dao;
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.kd.main.server.TraderServer;
@@ -23,33 +24,33 @@ public class TransferDaoRepoTest {
     private TransferDaoRepo transferDaoRepo;
 
     @Autowired
-    private FundDaoRepo fundDaoRepo;
+    private CustomerDaoRepo customerDaoRepo;
 
     @Test
-    public void testGetTradeByPrimaryKey() {
-        assertEquals(3002L, transferDaoRepo.getTransferByPrimaryKey(3002L).getId());
-        assertEquals(3003L, transferDaoRepo.getTransferByPrimaryKey(3003L).getId());
-        assertEquals(3005L, transferDaoRepo.getTransferByPrimaryKey(3005L).getId());
+    public void testGetTransferByPrimaryKey() {
+        assertEquals(3002L, transferDaoRepo.readTransferByPrimaryKey(3002L).getId());
+        assertEquals(3003L, transferDaoRepo.readTransferByPrimaryKey(3003L).getId());
+        assertEquals(3005L, transferDaoRepo.readTransferByPrimaryKey(3005L).getId());
     }
 
     @Test
-    public void testRemoveTradeByPrimaryKey() {
+    public void testRemoveTransferByPrimaryKey() {
         var id = 3006L;
-        transferDaoRepo.removeTransferByPrimaryKey(id);
-        Assert.assertNull(transferDaoRepo.getTransferByPrimaryKey(id));
+        transferDaoRepo.deleteTransferByPrimaryKey(id);
+        Assert.assertNull(transferDaoRepo.readTransferByPrimaryKey(id));
         transferDaoRepo.book(2003, 2004, 30.02f);//books transact again, but id will change
     }
 
     @Test
-    public void testGetTradesForParticularFund() {
-        var tradeForFund2002 = transferDaoRepo.getTransferByFundId(2002);
+    public void testGetTransfersForParticularFund() {
+        var tradeForFund2002 = transferDaoRepo.readTransferByFundId(2002);
         Assert.assertNotNull(tradeForFund2002);
         assertEquals(3, tradeForFund2002.size());
     }
 
     @Test
-    public void testGetAllTrades() {
-        var transacts = transferDaoRepo.getAllTransfers();
+    public void testGetAllTransfers() {
+        var transacts = transferDaoRepo.readAllTransfers();
 
         Assert.assertNotNull(transacts);
         assertThat(transacts, hasSize(greaterThan(0)));
@@ -57,24 +58,25 @@ public class TransferDaoRepoTest {
     }
 
     @Test
-    public void testBookInternalTrade() {
+    public void testBookInternalTransfere() {
         var srcFundId = 2002L;
-        var commonPartyId = fundDaoRepo.get(srcFundId).getParty_id();
+        var commonPartyId = customerDaoRepo.get(srcFundId).getParty_id();
 
-        checkBookingTrade(srcFundId, fund -> fund.getParty_id() == commonPartyId);
+        checkBookingTransfer(srcFundId, fund -> fund.getParty_id() == commonPartyId);
     }
 
+    @Ignore("functionality not implemented yet")
     @Test
-    public void testBookExternalTrade() {
+    public void testBookExternalTransfere() {
         var srcFundId = 2011L;
-        var commonPartyId = fundDaoRepo.get(srcFundId).getParty_id();
+        var commonPartyId = customerDaoRepo.get(srcFundId).getParty_id();
 
-        checkBookingTrade(srcFundId, fund -> fund.getParty_id() != commonPartyId);
+        checkBookingTransfer(srcFundId, fund -> fund.getParty_id() != commonPartyId);
     }
 
-    private void checkBookingTrade(long srcFundId, Predicate<Customer> partyIdComparisonPredicate) {
+    private void checkBookingTransfer(long srcFundId, Predicate<Customer> partyIdComparisonPredicate) {
 
-        var destFund = fundDaoRepo.getAllCustomers()
+        var destFund = customerDaoRepo.getAllCustomers()
                 .stream()
                 .filter(partyIdComparisonPredicate)
                 .findFirst();
@@ -87,11 +89,11 @@ public class TransferDaoRepoTest {
 
         assertNotEquals(errorCode, newTradeId);
 
-        removeBookedTrade(newTradeId);
+        removeBookedTransfer(newTradeId);
     }
 
-    private void removeBookedTrade(long id) {
-        transferDaoRepo.removeTransferByPrimaryKey(id);
+    private void removeBookedTransfer(long id) {
+        transferDaoRepo.deleteTransferByPrimaryKey(id);
     }
 
 }

@@ -1,7 +1,6 @@
 package org.kd.main.server.model.data.dao;
 
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.kd.main.common.entities.Customer;
@@ -23,32 +22,32 @@ public class BankDaoRepoTest {
     private BankDaoRepo bankDaoRepo;
 
     @Test
-    public void testGetAllParties() {
-        var allParties = bankDaoRepo.getAllBanks();
+    public void testGetAllBanks() {
+        var allParties = bankDaoRepo.readAll();
 
         Assert.assertNotNull(allParties);
         assertTrue(allParties.size() > 0);
     }
 
     @Test
-    public void testGetSinglePartyById() {
-        var party = bankDaoRepo.get(1012L);
+    public void testGetSingleBankById() {
+        var bank = bankDaoRepo.read(1012L);
 
-        Assert.assertNotNull(party);
-        assertEquals(1012L, party.getId());
+        Assert.assertNotNull(bank);
+        assertEquals(1012L, bank.getId());
     }
 
     @Test
-    public void testGetSinglePartyByName() {
-        var party = bankDaoRepo.get("BABA");
+    public void testGetSingleBankByName() {
+        var bank = bankDaoRepo.read("BABA");
 
-        Assert.assertNotNull(party);
-        assertEquals("Alibaba Group Holding", party.getName());
+        Assert.assertNotNull(bank);
+        assertEquals("Alibaba Group Holding", bank.getName());
     }
 
     @Test
     public void testGetAssociatedFund() {
-        List<Customer> associatedCustomers = bankDaoRepo.getAssociatedCustomers(1012L);
+        List<Customer> associatedCustomers = bankDaoRepo.readAssociatedCustomers(1012L);
 
         Assert.assertNotNull(associatedCustomers);
         assertTrue(associatedCustomers.size() > 0);
@@ -56,29 +55,19 @@ public class BankDaoRepoTest {
 
     @Test
     public void testInsert(){
-        var partyId = bankDaoRepo.insert(new Bank("Test Bank", "TEST"));
-        assertEquals(partyId, bankDaoRepo.get("TEST").getId());
+        var bankId = bankDaoRepo.insert(new Bank("Test Bank", "TEST"));
+        assertEquals(bankId, bankDaoRepo.read("TEST").getId());
     }
 
-
     @Test
-    public void testPartyUpdate(){
-        var newPartyName = "NEW TEST NAME";
-        var party = bankDaoRepo.get(1012L);
-        party.setName(newPartyName);
-        bankDaoRepo.update(party);
+    public void testBankUpdate(){
+        var newBankName = "NEW TEST NAME";
+        var bank = bankDaoRepo.read(1012L);
+        bank.setName(newBankName);
+        bankDaoRepo.update(bank);
 
-        var readParty = bankDaoRepo.get(1012L);
-        assertEquals(newPartyName, readParty.getName());
-    }
-
-    @Ignore
-    @Test
-    public void testPersistenceAndDetach(){
-        var party = new Bank("Test Bank 3", "TEST3");
-        var partyId = bankDaoRepo.insert(party);
-        bankDaoRepo.detach(party);
-        assertNotEquals(partyId, bankDaoRepo.get("TEST3").getId());
+        var readBank = bankDaoRepo.read(1012L);
+        assertEquals(newBankName, readBank.getName());
     }
 
 }

@@ -17,24 +17,24 @@ import static org.junit.Assert.assertTrue;
 public class CustomerDaoRepoTest {
 
     @Autowired
-    private FundDaoRepo fundDaoRepo;
+    private CustomerDaoRepo customerDaoRepo;
 
     @Test
     public void testPersistenceContextInjection(){
-        assertNotNull(fundDaoRepo.getEntityManager());
+        assertNotNull(customerDaoRepo.getEntityManager());
     }
 
     @Test
-    public void testGetAllFunds() {
-        var allFunds = fundDaoRepo.getAllCustomers();
+    public void testGetAllCustomers() {
+        var allCustomers = customerDaoRepo.getAllCustomers();
 
-        Assert.assertNotNull(allFunds);
-        assertTrue(allFunds.size() > 0);
+        Assert.assertNotNull(allCustomers);
+        assertTrue(allCustomers.size() > 0);
     }
 
     @Test
-    public void testGetSingleFundById() {
-        var fund = fundDaoRepo.get(2012L);
+    public void testGetSingleCustomerById() {
+        var fund = customerDaoRepo.get(2012L);
 
         Assert.assertNotNull(fund);
         assertEquals(2012L, fund.getId());
@@ -43,7 +43,7 @@ public class CustomerDaoRepoTest {
 /*
     @Test
     public void testGet() {
-        var fund = DataModelManagerSingleton.getInstance().getFundDao().get(3016);
+        var fund = DataModelManagerSingleton.getInstance().getCustomerDao().read(3016);
         var possibleFailureCause = "Please first check if DB was changed.";
 
         assertNotNull(possibleFailureCause, fund);
@@ -52,10 +52,10 @@ public class CustomerDaoRepoTest {
     }
 
     @Test
-    public void testGetAvailableFunds(){
-        var allFunds = DataModelManagerSingleton.getInstance().getFundDao().getAvailableFunds();
+    public void testGetAvailableCustomers(){
+        var allCustomers = DataModelManagerSingleton.getInstance().getCustomerDao().getAvailableCustomers();
 
-        assertNotNull(allFunds);
-        assertTrue(allFunds.size() > 0);
+        assertNotNull(allCustomers);
+        assertTrue(allCustomers.size() > 0);
     }
 */}

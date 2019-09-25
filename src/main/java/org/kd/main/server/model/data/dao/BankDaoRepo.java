@@ -25,19 +25,8 @@ public class BankDaoRepo {
         return bank.getId();
     }
 
-    public boolean isPersisted(Bank bank) {
-        return entityManager.contains(bank);
-    }
-
-    public void detach(Bank bank) {
-        entityManager.detach(bank);
-    }
-
     @Transactional
-    public List<Bank> getAllBanks() {
-        /*var query = entityManager.createQuery("SELECT id, name, shortname FROM Bank");
-
-        return query.getResultList();*/
+    public List<Bank> readAll() {
         var session = getSession();
         var builder = session.getCriteriaBuilder();
         var criteria = builder.createQuery(Bank.class);
@@ -47,7 +36,7 @@ public class BankDaoRepo {
     }
 
     @Transactional
-    public Bank get(long id) {
+    public Bank read(long id) {
         var session = getSession();
         var crBuilder = session.getCriteriaBuilder();
         CriteriaQuery<Bank> query = crBuilder.createQuery(Bank.class);
@@ -58,7 +47,7 @@ public class BankDaoRepo {
     }
 
     @Transactional
-    public Bank get(String shortname) {
+    public Bank read(String shortname) {
         var session = getSession();
         var crBuilder = session.getCriteriaBuilder();
         var query = crBuilder.createQuery(Bank.class);
@@ -69,7 +58,7 @@ public class BankDaoRepo {
     }
 
     @Transactional
-    public List<Customer> getAssociatedCustomers(long bankId) {
+    public List<Customer> readAssociatedCustomers(long bankId) {
         var session = getSession();
         var crBuilder = session.getCriteriaBuilder();
         var query = crBuilder.createQuery(Customer.class);

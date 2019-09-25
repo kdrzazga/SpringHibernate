@@ -15,12 +15,12 @@ import javax.persistence.criteria.Root;
 import java.util.List;
 
 @Repository
-public class FundDaoRepo {
+public class CustomerDaoRepo {
 
     @PersistenceContext
     private EntityManager entityManager;
 
-    private Logger log = LoggerFactory.getLogger(FundDaoRepo.class);
+    private Logger log = LoggerFactory.getLogger(CustomerDaoRepo.class);
 
     @Transactional
     public long insert(Customer customer) {
