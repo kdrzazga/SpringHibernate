@@ -25,7 +25,7 @@ public class CustomerDaoRepo {
     @Transactional
     public Customer create(Customer customer) {
 
-        entityManager.persist(customer);
+        getSession().saveOrUpdate(customer);
         return customer;
     }
 
@@ -107,14 +107,8 @@ public class CustomerDaoRepo {
                 || (session = entityManager.unwrap(Session.class)) == null) {
 
             throw new RuntimeException("No entityManager available");
-
         }
         return session;
     }
-
-    public EntityManager getEntityManager() {
-        return entityManager;
-    }
-
 
 }

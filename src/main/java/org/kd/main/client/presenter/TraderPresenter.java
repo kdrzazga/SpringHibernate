@@ -1,9 +1,8 @@
 package org.kd.main.client.presenter;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import org.kd.main.common.RestUtility;
 import org.kd.main.common.TraderConfig;
 import org.kd.main.common.entities.Bank;
@@ -99,16 +98,19 @@ public class TraderPresenter implements PresenterHandler {
         var requestUrl = serviceAddress.concat("/bank");
         requestType = HttpMethod.valueOf("PUT");
 
-        String bankJson = new GsonBuilder().create().toJson(bank);
+        try {
+            String bankJson = new ObjectMapper().writeValueAsString(bank);
 
-        var response = restUtility.processHttpRequest(requestType, bankJson, requestUrl, contentType);
-        if (response == null) {
-            log.error("REST error. Couldn't save bank.");
+            var response = restUtility.processHttpRequest(requestType, bankJson, requestUrl, contentType);
+            if (response == null) {
+                log.error("REST error. Couldn't save bank.");
+            }
+            restUtility.retrieveResponseBodyAndStatusCode(response);
+            if (!"200".equals(restUtility.getResponseStatusCode()))
+                log.error(restUtility.getErrorResponseStatusCode() + " " + restUtility.getErrorResponseBody());
+        } catch (JsonProcessingException e) {
+            System.err.println("You've given shitty JSON");
         }
-        restUtility.retrieveResponseBodyAndStatusCode(response);
-        if (!"200".equals(restUtility.getResponseStatusCode()))
-            log.error(restUtility.getErrorResponseStatusCode() + " " + restUtility.getErrorResponseBody());
-
     }
 
     @Override
@@ -166,14 +168,16 @@ public class TraderPresenter implements PresenterHandler {
         var contentType = "application/json";
         var requestUrl = serviceAddress.concat("/customer");
 
-        Gson gsonBuilder = new GsonBuilder().create();
-        String customerJson = gsonBuilder.toJson(customer);
+        try {
+            String customerJson = new ObjectMapper().writeValueAsString(customer);
+            var response = restUtility.processHttpRequest(HttpMethod.PUT, customerJson, requestUrl, contentType);
 
-        var response = restUtility.processHttpRequest(HttpMethod.PUT, customerJson, requestUrl, contentType);
-
-        restUtility.retrieveResponseBodyAndStatusCode(response);
-        if (!"200".equals(restUtility.getResponseStatusCode()))
-            log.error(restUtility.getErrorResponseStatusCode() + " " + restUtility.getErrorResponseBody());
+            restUtility.retrieveResponseBodyAndStatusCode(response);
+            if (!"200".equals(restUtility.getResponseStatusCode()))
+                log.error(restUtility.getErrorResponseStatusCode() + " " + restUtility.getErrorResponseBody());
+        } catch (JsonProcessingException e) {
+            System.err.println("You provided shitty JSON, bro");
+        }
     }
 
     @Override

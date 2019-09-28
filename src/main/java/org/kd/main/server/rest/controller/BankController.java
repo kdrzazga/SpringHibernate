@@ -2,7 +2,6 @@ package org.kd.main.server.rest.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.kd.main.common.entities.Bank;
-import org.kd.main.common.entities.Customer;
 import org.kd.main.server.model.data.dao.BankDaoRepo;
 import org.kd.main.server.model.data.dao.CustomerDaoRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -25,12 +23,11 @@ public class BankController {
     @PostMapping(path = "/bank", consumes = "application/json", produces = "application/json")
     public ResponseEntity<String> createBank(@RequestBody String bankJson) {
         try {
-            var objectMapper = new ObjectMapper();
             bankJson = bankJson
                     .replaceAll("\r\n", "")
                     .replaceAll("\t", "");
 
-            var bank = objectMapper.readValue(bankJson, Bank.class);
+            var bank = new ObjectMapper().readValue(bankJson, Bank.class);
             bankDao.create(bank);
 
             return ResponseEntity
@@ -41,7 +38,7 @@ public class BankController {
             e.printStackTrace();
             return ResponseEntity
                     .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Couldn't create bank " + bankJson );
+                    .body("Couldn't create bank " + bankJson);
         }
     }
 
@@ -74,7 +71,7 @@ public class BankController {
             e.printStackTrace();
             return ResponseEntity
                     .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Couldn't update bank " + bankJson );
+                    .body("Couldn't update bank " + bankJson);
         }
     }
 

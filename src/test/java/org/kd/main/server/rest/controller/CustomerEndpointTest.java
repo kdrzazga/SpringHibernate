@@ -1,7 +1,8 @@
 package org.kd.main.server.rest.controller;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.kd.main.common.RestUtility;
@@ -33,15 +34,17 @@ public class CustomerEndpointTest {
         var requestUrl = "http://localhost:8080/customer";
         var testCustomer = new Customer("TST", "Test", 0.0, 1002L);
 
-        Gson gsonBuilder = new GsonBuilder().create();
-        String customerJson = gsonBuilder.toJson(testCustomer);
+        try {
+            String customerJson = new ObjectMapper().writeValueAsString(testCustomer);
+            var response = restUtility.processHttpRequest(HttpMethod.PUT, customerJson, requestUrl, contentType);
 
-        var response = restUtility.processHttpRequest(HttpMethod.PUT, customerJson, requestUrl, contentType);
+            restUtility.retrieveResponseBodyAndStatusCode(response);
 
-        restUtility.retrieveResponseBodyAndStatusCode(response);
-
-        assertEquals("Have you started TraderServer? ", "200", restUtility.getResponseStatusCode());
-        assertThat("Wrong response:" + restUtility.getResponseBody(), restUtility.getResponseBody(), containsString(customerJson));
+            assertEquals("Have you started TraderServer? ", "200", restUtility.getResponseStatusCode());
+            assertThat("Wrong response:" + restUtility.getResponseBody(), restUtility.getResponseBody(), containsString(customerJson));
+        } catch (JsonProcessingException e) {
+            Assert.fail(e.getMessage());
+        }
     }
 
 }

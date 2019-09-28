@@ -1,8 +1,9 @@
 package org.kd.main.client.presenter;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.tomakehurst.wiremock.WireMockServer;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -50,15 +51,19 @@ public class PresenterTest {
         wireMockServer.start();
         configureFor("localhost", Integer.parseInt(port));
 
-        Gson gsonBuilder = new GsonBuilder().create();
+        try {
+            var objectMapper = new ObjectMapper();
+            String banksAsJson = objectMapper.writeValueAsString(List.of(bank));
+            String customersAsJson = objectMapper.writeValueAsString(List.of(customer));
+            String transfersAsJson = objectMapper.writeValueAsString(List.of(transfer));
 
-        String banksAsJson = gsonBuilder.toJson(List.of(bank));
-        String customersAsJson = gsonBuilder.toJson(List.of(customer));
-        String transfersAsJson = gsonBuilder.toJson(List.of(transfer));
-
-        createStubForGet(banksAsJson, "/banks");
-        createStubForGet(customersAsJson, "/customers");
-        createStubForGet(transfersAsJson, "/transfers");
+            createStubForGet(banksAsJson, "/banks");
+            createStubForGet(customersAsJson, "/customers");
+            createStubForGet(transfersAsJson, "/transfers");
+        } catch (
+                JsonProcessingException e) {
+            Assert.fail(e.getMessage());
+        }
     }
 
     public void createStubForGet(String banksAsJson, String endpoint) {

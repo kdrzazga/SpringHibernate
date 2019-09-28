@@ -25,7 +25,7 @@ public class BankDaoRepo {
 
     @Transactional
     public long create(Bank bank) {
-        entityManager.persist(bank);
+        getSession().save(bank);
         return bank.getId();
     }
 

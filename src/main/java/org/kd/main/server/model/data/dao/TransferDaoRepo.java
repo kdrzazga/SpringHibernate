@@ -104,9 +104,7 @@ public class TransferDaoRepo {
     private long createTransfer(long sourceFundId, long destFundId, float units, boolean internal) {
         var newTrade = new Transfer(sourceFundId, destFundId, units, internal);
 
-        entityManager.persist(newTrade);
-        entityManager.flush();
-
+        getSession().saveOrUpdate(newTrade);
         return newTrade.getId();
     }
 
@@ -128,9 +126,4 @@ public class TransferDaoRepo {
         }
         return session;
     }
-
-    public EntityManager getEntityManager() {
-        return entityManager;
-    }
-
 }
