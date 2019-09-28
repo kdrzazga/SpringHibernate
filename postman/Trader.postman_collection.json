@@ -6,6 +6,41 @@
 	},
 	"item": [
 		{
+			"name": "createBank",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": \"1000\",\n    \"name\": \"Polska Kasa Oszczednosci SA\",\n    \"shortname\": \"PKOSA\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/bank",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"bank"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "readBank",
 			"request": {
 				"method": "GET",
@@ -100,6 +135,41 @@
 			"response": []
 		},
 		{
+			"name": "createCustomer",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"id\" : 1000,\n\t\"shortname\" : \"Adam\",\n\t\"name\" : \"Adamowicz\",\n\t\"units\" : 1.50,\n\t\"party_id\" : 2001\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/customer",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"customer"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "readCustomer",
 			"request": {
 				"method": "GET",
@@ -152,7 +222,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"id\" : 1002,\n\t\"shortname\" : \"Roger\",\n\t\"name\" : \"Zelazny\",\n\t\"units\" : 3,\n\t\"party_id\" : 2003\n}",
+					"raw": "{\n\t\"id\" : 1002,\n\t\"shortname\" : \"Wiesiek\",\n\t\"name\" : \"Wszywka\",\n\t\"units\" : 3,\n\t\"party_id\" : 2003\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -179,7 +249,7 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/customer/2011",
+					"raw": "http://localhost:8080/customer/2002",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -187,7 +257,42 @@
 					"port": "8080",
 					"path": [
 						"customer",
-						"2011"
+						"2002"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "bookInternalTransfer (create)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": 3000,\n    \"src_fund_id\": 2004,\n    \"dest_fund_id\": 2005,\n    \"units\": 0.01,\n    \"internal\": true\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/transfer",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"transfer"
 					]
 				}
 			},
@@ -227,6 +332,41 @@
 					"port": "8080",
 					"path": [
 						"transfers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "updateTransfer",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"id\" : 3002,\n\t\"src_fund_id\" : 2002,\n\t\"dest_fund_id\" : 2003,\n\t\"units\" : 3.40,\n\t\"internal\" : true\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/transfer",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"transfer"
 					]
 				}
 			},
