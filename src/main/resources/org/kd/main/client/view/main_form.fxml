@@ -9,7 +9,7 @@
       fx:controller="org.kd.main.client.view.TraderViewController">
     <TabPane fx:id="mainTabPane" maxHeight="575.0" minHeight="520.0" prefHeight="520.0" prefWidth="446.0"
              tabClosingPolicy="UNAVAILABLE">
-        <Tab fx:id="tradeTab" text="Transfer">
+        <Tab fx:id="transferTab" text="Transfer">
             <content>
                 <AnchorPane minHeight="520.0" minWidth="0.0" prefHeight="520.0" prefWidth="200.0">
                     <children>
@@ -67,9 +67,10 @@
                 </AnchorPane>
             </content>
         </Tab>
-        <Tab fx:id="cptyTab" text="Bank">
+
+        <Tab fx:id="bankTab" text="Bank">
             <content>
-                <AnchorPane minHeight="280.0" minWidth="431.0" prefHeight="380.0" prefWidth="200.0">
+                <AnchorPane minHeight="280.0" minWidth="0.0" prefHeight="380.0" prefWidth="200.0">
                     <children>
                         <GridPane hgap="3.0" prefHeight="341.0" prefWidth="431.0" vgap="3.0">
                             <columnConstraints>
@@ -98,27 +99,17 @@
                                         <Insets bottom="15.0" left="15.0" right="15.0" top="15.0"/>
                                     </padding>
                                 </Label>
-                                <Label alignment="CENTER_RIGHT" text="Bank Name : " GridPane.rowIndex="6">
-                                    <GridPane.margin>
-                                        <Insets top="4.0"/>
-                                    </GridPane.margin>
-                                </Label>
+                                <Label text="Bank Name : " GridPane.rowIndex="1"/>
                                 <TextField fx:id="bankNameField" prefHeight="15" minWidth="225" GridPane.columnIndex="1"
                                            GridPane.rowIndex="6"/>
-                                <Label alignment="CENTER_RIGHT" text="Short Name : " GridPane.rowIndex="7">
-                                    <GridPane.margin>
-                                        <Insets top="4.0"/>
-                                    </GridPane.margin>
-                                </Label>
-                                <TextField fx:id="shortBankNameField" prefHeight="15" maxWidth="100"
-                                           GridPane.columnIndex="1"
-                                           GridPane.rowIndex="7"/>
+                                <TextField fx:id="shortBankNameField" alignment="CENTER_RIGHT"  prefHeight="15" maxWidth="100"
+                                           GridPane.columnIndex="1" GridPane.rowIndex="7"/>
                                 <Label alignment="CENTER_RIGHT" text="Customers : " GridPane.rowIndex="8">
                                     <GridPane.margin>
                                         <Insets top="4.0"/>
                                     </GridPane.margin>
                                 </Label>
-                                <TextField fx:id="customersField" editable="true" prefHeight="60.0" prefWidth="190.0"
+                                <TextField fx:id="customersField" alignment="CENTER_RIGHT" editable="true" prefHeight="60.0" prefWidth="190.0"
                                            GridPane.columnIndex="1" GridPane.rowIndex="8"/>
                                 <Button fx:id="showBankButton" defaultButton="true" onAction="#handleShowCptyAction"
                                         prefHeight="36.0" prefWidth="169.0" text="Show" GridPane.columnSpan="2"
@@ -130,7 +121,6 @@
                                 <ChoiceBox id="partyIdChoiceBox" fx:id="bankIdChoiceBox"
                                            nodeOrientation="LEFT_TO_RIGHT" prefHeight="14.0" prefWidth="180.0"
                                            GridPane.columnIndex="1" GridPane.rowIndex="2">
-
                                 </ChoiceBox>
                                 <Label text="Bank Id :" GridPane.rowIndex="2" layoutX="27.0"/>
                                 <Button fx:id="savePartyButton" defaultButton="true" layoutX="141.0" layoutY="118.0"
@@ -142,13 +132,17 @@
                                     </GridPane.margin>
                                 </Button>
                             </children>
+                            <padding>
+                                <Insets bottom="15.0" left="15.0" right="15.0" top="15.0"/>
+                            </padding>
                         </GridPane>
                     </children>
                 </AnchorPane>
             </content>
         </Tab>
 
-        <Tab fx:id="fundTab" text="Customer">
+
+        <Tab fx:id="customerTab" text="Customer">
             <content>
                 <AnchorPane minHeight="280.0" minWidth="0.0" prefHeight="380.0" prefWidth="200.0">
                     <children>

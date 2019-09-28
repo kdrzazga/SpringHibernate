@@ -27,7 +27,7 @@ public class CustomerDaoRepoTest {
 
     @Test
     public void testPersistenceContextInjection(){
-        assertNotNull(customerDaoRepo.getEntityManager());
+        assertNotNull(customerDaoRepo.getSession());
     }
 
     @Test
