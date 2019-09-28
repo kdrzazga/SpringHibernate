@@ -3,7 +3,8 @@ package org.kd.main.server.model.data.dao;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.kd.main.common.entities.Bank;
-import org.kd.main.common.entities.Fund;
+import org.kd.main.common.entities.Customer;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,25 +20,17 @@ public class BankDaoRepo {
     @PersistenceContext
     private EntityManager entityManager;
 
+    @Autowired
+    private CustomerDaoRepo customerDaoRepo;
+
     @Transactional
-    public long insert(Bank bank) {
+    public long create(Bank bank) {
         entityManager.persist(bank);
         return bank.getId();
     }
 
-    public boolean isPersisted(Bank bank) {
-        return entityManager.contains(bank);
-    }
-
-    public void detach(Bank bank) {
-        entityManager.detach(bank);
-    }
-
     @Transactional
-    public List<Bank> getAllBanks() {
-        /*var query = entityManager.createQuery("SELECT id, name, shortname FROM Bank");
-
-        return query.getResultList();*/
+    public List<Bank> readAll() {
         var session = getSession();
         var builder = session.getCriteriaBuilder();
         var criteria = builder.createQuery(Bank.class);
@@ -47,18 +40,22 @@ public class BankDaoRepo {
     }
 
     @Transactional
-    public Bank get(long id) {
+    public Bank read(long id) {
+        return readBank(id);
+    }
+
+    public Bank readBank(long id) {
         var session = getSession();
         var crBuilder = session.getCriteriaBuilder();
         CriteriaQuery<Bank> query = crBuilder.createQuery(Bank.class);
         Root<Bank> root = query.from(Bank.class);
-        query.select(root).where(crBuilder.equal(root.get("id"), id));//SELECT from Fund WHERE id=id
+        query.select(root).where(crBuilder.equal(root.get("id"), id));//SELECT from Customer WHERE id=id
         Query<Bank> q = session.createQuery(query);
         return q.getSingleResult();
     }
 
     @Transactional
-    public Bank get(String shortname) {
+    public Bank read(String shortname) {
         var session = getSession();
         var crBuilder = session.getCriteriaBuilder();
         var query = crBuilder.createQuery(Bank.class);
@@ -69,11 +66,15 @@ public class BankDaoRepo {
     }
 
     @Transactional
-    public List<Fund> getAssociatedCustomers(long bankId) {
+    public List<Customer> readAssociatedCustomers(long bankId) {
+        return getAssociatedCustomers(bankId);
+    }
+
+    private List<Customer> getAssociatedCustomers(long bankId) {
         var session = getSession();
         var crBuilder = session.getCriteriaBuilder();
-        var query = crBuilder.createQuery(Fund.class);
-        var root = query.from(Fund.class);
+        var query = crBuilder.createQuery(Customer.class);
+        var root = query.from(Customer.class);
         query.select(root).where(crBuilder.equal(root.get("party_id"), bankId));//SELECT from Funds WHERE party_id=bankId
         var q = session.createQuery(query);
         return q.getResultList();
@@ -83,6 +84,29 @@ public class BankDaoRepo {
     public void update(Bank bank) {
         var session = getSession();
         session.update(bank);
+    }
+
+    @Transactional
+    public boolean deleteWithFkNulling(long id){
+        var bank = readBank(id);
+        getAssociatedCustomers(id).forEach(customer -> {
+            customer.setParty_id(null);
+            customerDaoRepo.update(customer);
+        });
+
+        getSession().delete(bank);
+        return true;
+    }
+
+    @Transactional
+    public boolean deleteWithRelatedCustomers(long id){
+        var bank = readBank(id);
+        getAssociatedCustomers(id).forEach(customer -> {
+            customerDaoRepo.deleteCustomer(customer);
+        });
+
+        getSession().delete(bank);
+        return true;
     }
 
     protected Session getSession() {

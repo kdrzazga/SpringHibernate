@@ -1,26 +1,26 @@
 package org.kd.main.client.presenter;
 
 import org.kd.main.common.entities.Bank;
-import org.kd.main.common.entities.Fund;
+import org.kd.main.common.entities.Customer;
 import org.kd.main.common.entities.Transfer;
 
 import java.util.List;
 
 public interface PresenterHandler {
 
-    List<Bank> loadBanks();
+    List<Bank> readBanks();
 
     void saveBank(Bank bank);
 
-    Bank loadBank(long id);
+    Bank readBank(long id);
 
-    List<Fund> loadFunds();
+    List<Customer> readCustomers();
 
-    Fund loadFund(long id);
+    Customer readCustomer(long id);
 
-    void saveFund(Fund fund);
+    void saveCustomer(Customer customer);
 
-    List<Transfer> loadTransfers();
+    List<Transfer> readTransfers();
 
     void initApplication();
 

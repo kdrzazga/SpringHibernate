@@ -1,8 +1,8 @@
 package org.kd.main.server.model.data;
 
+import org.kd.main.common.entities.Customer;
 import org.kd.main.common.model.data.DataService;
 import org.kd.main.common.entities.Bank;
-import org.kd.main.common.entities.Fund;
 import org.kd.main.common.entities.Transfer;
 import org.kd.main.server.model.data.dao.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,14 +11,14 @@ import java.util.List;
 
 public class DataServiceImpl implements DataService {
 
-    private FundDaoRepo customerDaoRepo;
+    private CustomerDaoRepo customerDaoRepo;
 
     private BankDaoRepo bankDaoRepo;
 
     private TransferDaoRepo transferDaoRepo;
 
     @Autowired
-    public DataServiceImpl(FundDaoRepo customerDaoRepo, BankDaoRepo bankDaoRepo, TransferDaoRepo transferDaoRepo){
+    public DataServiceImpl(CustomerDaoRepo customerDaoRepo, BankDaoRepo bankDaoRepo, TransferDaoRepo transferDaoRepo){
         this.bankDaoRepo = bankDaoRepo;
         this.customerDaoRepo = customerDaoRepo;
         this.transferDaoRepo = transferDaoRepo;
@@ -33,38 +33,38 @@ public class DataServiceImpl implements DataService {
     }
 
     @Override
-    public List<Fund> loadCustomers() {
-        return customerDaoRepo.getAllFunds();
+    public List<Customer> readCustomers() {
+        return customerDaoRepo.readAll();
     }
 
     @Override
-    public List<Bank> loadBanks() {
+    public List<Bank> readBanks() {
 
-        return bankDaoRepo.getAllBanks();
+        return bankDaoRepo.readAll();
     }
 
     @Override
-    public List<Transfer> loadTransfers() {
-        return transferDaoRepo.getAllTransfers();
+    public List<Transfer> readTransfers() {
+        return transferDaoRepo.readAll();
     }
 
     @Override
-    public void saveBank(Bank bank) {
+    public void updateBank(Bank bank) {
         bankDaoRepo.update(bank);
     }
 
     @Override
-    public Fund loadCustomer(long id) {
-        return customerDaoRepo.get(id);
+    public Customer readCustomer(long id) {
+        return customerDaoRepo.read(id);
     }
 
     @Override
-    public void saveCustomer(Fund fund) {
-        customerDaoRepo.update(fund);
+    public void updateCustomer(Customer customer) {
+        customerDaoRepo.update(customer);
     }
 
     @Override
-    public Bank loadBank(long id) {
-        return bankDaoRepo.get(id);
+    public Bank readBank(long id) {
+        return bankDaoRepo.read(id);
     }
 }

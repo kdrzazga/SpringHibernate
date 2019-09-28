@@ -1,6 +1,6 @@
 package org.kd.main.server.rest.config;
 
-import org.kd.main.client.presenter.RestUtility;
+import org.kd.main.common.RestUtility;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

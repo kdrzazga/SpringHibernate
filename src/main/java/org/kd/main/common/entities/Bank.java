@@ -5,6 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.io.Serializable;
+import java.util.Objects;
 
 @Entity
 @Table(name = "parties")
@@ -12,20 +13,20 @@ public class Bank implements Serializable {
 
     @Id
     @GeneratedValue
-    private int id;
+    private Long id;
 
     private String name;
     private String shortname;
 
-    private Bank(){
+    private Bank() {
     }
 
-    public Bank(int id, String name, String shortname){
+    public Bank(long id, String name, String shortname) {
         this(name, shortname);
         this.id = id;
     }
 
-    public Bank(String name, String shortname){
+    public Bank(String name, String shortname) {
         this.name = name;
         this.shortname = shortname;
     }
@@ -34,7 +35,7 @@ public class Bank implements Serializable {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -57,5 +58,20 @@ public class Bank implements Serializable {
     @Override
     public String toString() {
         return "Bank " + getId() + " " + getShortname() + " " + getName();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Bank)) return false;
+        Bank bank = (Bank) o;
+        return Objects.equals(id, bank.id) &&
+                Objects.equals(name, bank.name) &&
+                Objects.equals(shortname, bank.shortname);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, shortname);
     }
 }
