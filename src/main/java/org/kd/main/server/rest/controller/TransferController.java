@@ -40,13 +40,35 @@ public class TransferController {
     }
 
     @GetMapping(path = "/transfer/{id}")
-    public Transfer readTransfer(@PathVariable long id) {
-        return transferDao.readByPrimaryKey(id);
+    public ResponseEntity<Transfer> readTransfer(@PathVariable long id) {
+
+        var transfer = transferDao.readByPrimaryKey(id);
+
+        return transfer != null ?
+                ResponseEntity
+                        .status(HttpStatus.OK)
+                        .body(transfer)
+                :
+                ResponseEntity
+                        .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                        .header("message", "Error reading list of Transfers")
+                        .build();
     }
 
     @GetMapping(path = "/transfers")
-    public List<Transfer> readTransfers() {
-        return transferDao.readAll();
+    public ResponseEntity<List<Transfer>> readTransfers() {
+        var allTransfers = transferDao.readAll();
+
+        return allTransfers != null ?
+                ResponseEntity
+                        .status(HttpStatus.OK)
+                        .body(allTransfers)
+                :
+                ResponseEntity
+                        .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                        .header("message", "Error reading list of Transfers")
+                        .build();
+
     }
 
     @PutMapping(path = "/transfer", consumes = "application/json", produces = "application/json")

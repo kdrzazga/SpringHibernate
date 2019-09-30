@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 public class BankController {
@@ -43,24 +44,43 @@ public class BankController {
     }
 
     @GetMapping(path = "/bank/{id}")
-    public Bank readBank(@PathVariable long id) {
-        return bankDao.read(id);
+    public ResponseEntity<String> readBank(@PathVariable long id) {
+        var bank = bankDao.read(id);
+
+        return bank != null ?
+                ResponseEntity
+                        .status(HttpStatus.OK)
+                        .body(bank.toString())
+                :
+                ResponseEntity
+                        .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                        .body("Error reading Bank with id = " + id);
     }
 
     @GetMapping(path = "/banks")
-    public List<Bank> readBanks() {
-        return bankDao.readAll();
+    public ResponseEntity<List<Bank>> readBanks() {
+        var allBanks = bankDao.readAll();
+
+        return allBanks != null ?
+                ResponseEntity
+                        .status(HttpStatus.OK)
+                        .body(allBanks)
+                :
+                ResponseEntity
+                        .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                        .header("message", "Error reading list of Banks")
+                        .build();
+
     }
 
     @PutMapping(path = "/bank", consumes = "application/json", produces = "application/json")
     public ResponseEntity<String> updateBank(@RequestBody String bankJson) {
         try {
-            var objectMapper = new ObjectMapper();
             bankJson = bankJson
                     .replaceAll("\r\n", "")
                     .replaceAll("\t", "");
 
-            var bank = objectMapper.readValue(bankJson, Bank.class);
+            var bank = new ObjectMapper().readValue(bankJson, Bank.class);
             bankDao.update(bank);
 
             return ResponseEntity

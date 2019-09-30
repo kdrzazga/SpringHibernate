@@ -17,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 import java.util.Vector;
 
 @Import(TraderConfig.class)
@@ -68,7 +69,16 @@ public class TraderPresenter implements PresenterHandler {
     }
 
     @Override
-    public Bank readBank(long id) {
+    public void createBank(String name, String shortname) {
+        var contentType = "application/json";
+        var requestUrl = serviceAddress.concat("/bank");
+        requestType = HttpMethod.valueOf("POST");
+
+        saveBank(new Bank(name, shortname), contentType, requestUrl);
+    }
+
+    @Override
+    public Bank readBank(Long id) {
         requestType = HttpMethod.valueOf("GET");
         requestUrl = serviceAddress.concat("/bank/").concat(Long.valueOf(id).toString());
         requestAsString = "";
@@ -93,24 +103,12 @@ public class TraderPresenter implements PresenterHandler {
     }
 
     @Override
-    public void saveBank(Bank bank) {
+    public void updateBank(Bank bank) {
         var contentType = "application/json";
         var requestUrl = serviceAddress.concat("/bank");
         requestType = HttpMethod.valueOf("PUT");
 
-        try {
-            String bankJson = new ObjectMapper().writeValueAsString(bank);
-
-            var response = restUtility.processHttpRequest(requestType, bankJson, requestUrl, contentType);
-            if (response == null) {
-                log.error("REST error. Couldn't save bank.");
-            }
-            restUtility.retrieveResponseBodyAndStatusCode(response);
-            if (!"200".equals(restUtility.getResponseStatusCode()))
-                log.error(restUtility.getErrorResponseStatusCode() + " " + restUtility.getErrorResponseBody());
-        } catch (JsonProcessingException e) {
-            System.err.println("You've given shitty JSON");
-        }
+        saveBank(bank, contentType, requestUrl);
     }
 
     @Override
@@ -139,7 +137,7 @@ public class TraderPresenter implements PresenterHandler {
     }
 
     @Override
-    public Customer readCustomer(long id) {
+    public Customer readCustomer(Long id) {
         requestType = HttpMethod.valueOf("GET");
         requestUrl = serviceAddress.concat("/customer/").concat(Long.valueOf(id).toString());
         requestAsString = "";
@@ -164,7 +162,7 @@ public class TraderPresenter implements PresenterHandler {
     }
 
     @Override
-    public void saveCustomer(Customer customer) {
+    public void updateCustomer(Customer customer) {
         var contentType = "application/json";
         var requestUrl = serviceAddress.concat("/customer");
 
@@ -204,10 +202,81 @@ public class TraderPresenter implements PresenterHandler {
     }
 
     @Override
+    public void deleteTransfer(Long id) {
+        requestType = HttpMethod.valueOf("DELETE");
+        requestUrl = serviceAddress.concat("/bank/").concat(Long.valueOf(id).toString());
+        requestAsString = "";
+
+        ResponseEntity<String> response = restUtility.processHttpRequest(requestType, requestAsString, requestUrl, "application/json");
+        log.info(response.getBody());
+    }
+
+    @Override
+    public void deleteBank(Long id) {
+        requestType = HttpMethod.valueOf("DELETE");
+        requestUrl = serviceAddress.concat("/bank/").concat(Long.valueOf(id).toString());
+        requestAsString = "";
+
+        ResponseEntity<String> response = restUtility.processHttpRequest(requestType, requestAsString, requestUrl, "application/json");
+        log.info(response.getBody());
+    }
+
+    @Override
+    public void createCustomer(String name, String shortname, Double units, Long bankId) {
+
+    }
+
+    @Override
+    public void deleteCustomer(Long id) {
+        requestType = HttpMethod.valueOf("DELETE");
+        requestUrl = serviceAddress.concat("/customer/").concat(Long.valueOf(id).toString());
+        requestAsString = "";
+
+        ResponseEntity<String> response = restUtility.processHttpRequest(requestType, requestAsString, requestUrl, "application/json");
+        Optional.ofNullable(response.getBody()).ifPresent(msg -> log.info(msg));
+    }
+
+    @Override
+    public void bookTransfer() {
+        //TODO log.info("Book Transfer not finished");
+        requestType = HttpMethod.valueOf("POST");
+        requestUrl = serviceAddress.concat("/transfer/");
+        requestAsString = "";
+
+        ResponseEntity<String> response = restUtility.processHttpRequest(requestType, requestAsString, requestUrl, "application/json");
+        Optional.ofNullable(response.getBody()).ifPresent(msg -> log.info(msg));
+
+    }
+
+    @Override
+    public void stopServer() {
+        requestType = HttpMethod.valueOf("POST");
+        requestUrl = serviceAddress.concat("/stop");
+        requestAsString = "";
+        restUtility.processHttpRequest(requestType, requestAsString, requestUrl, "application/json");
+    }
+
+    @Override
     public void initApplication() {
     }
 
     @Override
     public void saveDb() {
+    }
+
+    private void saveBank(Bank bank, String contentType, String requestUrl) {
+        try {
+            String bankJson = new ObjectMapper().writeValueAsString(bank);
+
+            var response = restUtility.processHttpRequest(requestType, bankJson, requestUrl, contentType);
+            if (response == null) {
+                log.error("REST error. Couldn't save bank.");
+            }
+            restUtility.retrieveResponseBodyAndStatusCode(response);
+            if (!"200".equals(restUtility.getResponseStatusCode()))
+                log.error(restUtility.getErrorResponseStatusCode() + " " + restUtility.getErrorResponseBody());
+        } catch (JsonProcessingException e) {
+            System.err.println("You've given shitty JSON");
+        }
     }
 }

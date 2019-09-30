@@ -8,21 +8,35 @@ import java.util.List;
 
 public interface PresenterHandler {
 
+    void createBank(String name, String shortname);
+
+    Bank readBank(Long id);
+
     List<Bank> readBanks();
 
-    void saveBank(Bank bank);
+    void updateBank(Bank bank);
 
-    Bank readBank(long id);
+    void deleteBank(Long id);
+
+    void createCustomer(String name, String shortname, Double units, Long bankId);
+
+    Customer readCustomer(Long id);
 
     List<Customer> readCustomers();
 
-    Customer readCustomer(long id);
+    void updateCustomer(Customer customer);
 
-    void saveCustomer(Customer customer);
+    void deleteCustomer(Long id);
+
+    void bookTransfer();
 
     List<Transfer> readTransfers();
 
+    void deleteTransfer(Long id);
+    
     void initApplication();
 
     void saveDb();
+
+    void stopServer();
 }

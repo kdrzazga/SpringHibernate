@@ -8,7 +8,6 @@ import javafx.stage.Stage;
 import org.kd.main.client.presenter.PresenterHandler;
 import org.kd.main.client.view.lib.PropertiesReader;
 import org.kd.main.common.TraderConfig;
-import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 public class Trader extends Application {
@@ -30,8 +29,8 @@ public class Trader extends Application {
 
         TraderViewController.setHandler(this.handler);
 
-        ((TraderViewController)loader.getController()).loadParties();
-        ((TraderViewController)loader.getController()).loadFunds();
+        ((TraderViewController)loader.getController()).loadBanks();
+        ((TraderViewController)loader.getController()).loadCustomers();
         ((TraderViewController)loader.getController()).loadTrades();
     }
 

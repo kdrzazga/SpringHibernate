@@ -58,8 +58,19 @@ public class CustomerController {
     }
 
     @GetMapping(path = "/customers")
-    public List<Customer> readCustomers() {
-        return customerDao.readAll();
+    public ResponseEntity<List<Customer>> readCustomers() {
+        var allCustomers = customerDao.readAll();
+
+        return allCustomers != null ?
+                ResponseEntity
+                        .status(HttpStatus.OK)
+                        .body(allCustomers)
+                :
+                ResponseEntity
+                        .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                        .header("message", "Error reading list of Customers")
+                        .build();
+
     }
 
     @PutMapping(path = "/customer", consumes = "application/json", produces = "application/json")
