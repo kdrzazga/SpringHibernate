@@ -222,7 +222,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"id\" : 1002,\n\t\"shortname\" : \"Wiesiek\",\n\t\"name\" : \"Wszywka\",\n\t\"units\" : 3,\n\t\"party_id\" : 2003\n}",
+					"raw": "{\n\t\"id\" : 1002,\n\t\"shortname\" : \"Wiesiek\",\n\t\"name\" : \"Wszywka\",\n\t\"units\" : 3,\n\t\"bank_id\" : 2003\n}",
 					"options": {
 						"raw": {
 							"language": "json"

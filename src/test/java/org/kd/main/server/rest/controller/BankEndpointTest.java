@@ -29,10 +29,10 @@ public class BankEndpointTest {
 
     @Test
     public void testUpdateBank() {
-        TraderServer.start();
+        TraderServer.getInstance().start();
         var contentType = "application/json";
         var requestUrl = "http://localhost:8080/bank";
-        var testBank = new Bank(2, "Test Bank", "TST-B");
+        var testBank = new Bank(2L, "Test Bank", "TST-B");
         try {
             String customerJson = new ObjectMapper().writeValueAsString(testBank);
 

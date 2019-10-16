@@ -90,7 +90,7 @@ public class BankDaoRepo {
     public boolean deleteWithFkNulling(long id){
         var bank = readBank(id);
         getAssociatedCustomers(id).forEach(customer -> {
-            customer.setParty_id(null);
+            customer.setBank_id(null);
             customerDaoRepo.update(customer);
         });
 

@@ -60,8 +60,6 @@ public class TraderViewController {
     @FXML
     private Button showCustomerButton;
 
-    private final Window window = showBankButton.getScene().getWindow();
-
     @FXML
     public void initialize() {
         devTab.setDisable(new PropertiesReader().readKey("dev-mode").equals("false"));

@@ -35,26 +35,26 @@ public class TransferDaoRepoTest {
     @Order(value = 1)
     public void testBookInternalTransfer() {
         var srcCustomerId = 2002L;
-        var commonBankId = customerDaoRepo.read(srcCustomerId).getParty_id();
+        var commonBankId = customerDaoRepo.read(srcCustomerId).getBank_id();
 
-        checkBookingTransfer(srcCustomerId, customer -> Objects.equals(customer.getParty_id(), commonBankId));
+        checkBookingTransfer(srcCustomerId, customer -> Objects.equals(customer.getBank_id(), commonBankId));
     }
 
     @Ignore("functionality not implemented yet")
     @Test
     public void testBookExternalTransfer() {
         var srcCustomerId = 2011L;
-        var commonBankId = customerDaoRepo.read(srcCustomerId).getParty_id();
+        var commonBankId = customerDaoRepo.read(srcCustomerId).getBank_id();
 
-        checkBookingTransfer(srcCustomerId, customer -> !Objects.equals(customer.getParty_id(), commonBankId));
+        checkBookingTransfer(srcCustomerId, customer -> !Objects.equals(customer.getBank_id(), commonBankId));
     }
 
     @Test
     @Order(value = 2)
     public void testReadByPrimaryKey() {
-        assertEquals(3002L, transferDaoRepo.readByPrimaryKey(3002L).getId());
-        assertEquals(3003L, transferDaoRepo.readByPrimaryKey(3003L).getId());
-        assertEquals(3005L, transferDaoRepo.readByPrimaryKey(3005L).getId());
+        assertEquals(Long.valueOf(3002), transferDaoRepo.readByPrimaryKey(3002L).getId());
+        assertEquals(Long.valueOf(3003), transferDaoRepo.readByPrimaryKey(3003L).getId());
+        assertEquals(Long.valueOf(3005), transferDaoRepo.readByPrimaryKey(3005L).getId());
     }
 
     @Test

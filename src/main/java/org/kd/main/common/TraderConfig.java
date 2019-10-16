@@ -2,6 +2,7 @@ package org.kd.main.common;
 
 import org.kd.main.client.presenter.PresenterHandler;
 import org.kd.main.client.presenter.TraderPresenter;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,6 +12,9 @@ import org.springframework.web.client.RestTemplate;
 @EntityScan(basePackages = "org.kd.main.common.entities")
 public class TraderConfig {
 
+    @Value("${server_port}")
+    private String port;
+
     @Bean
     public RestUtility restUtility(){
         return new RestUtility();
@@ -19,6 +23,11 @@ public class TraderConfig {
     @Bean
     public RestTemplate restTemplate(){
         return new RestTemplate();
+    }
+
+    @Bean(name="server_port")
+    public String port(){
+        return port;
     }
 
     @Bean

@@ -41,7 +41,7 @@ public class CustomerController {
         }
     }
 
-    @GetMapping(path = "/customer/{id}")
+    @GetMapping(path = "/customer/{id}", produces = "application/json")
     public ResponseEntity<Customer> readCustomer(@PathVariable long id) {
         var customer = customerDao.read(id);
 

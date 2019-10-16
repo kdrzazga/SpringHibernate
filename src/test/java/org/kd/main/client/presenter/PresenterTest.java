@@ -36,7 +36,7 @@ public class PresenterTest {
     @Value("${port:8080}")
     private String port;
 
-    private final Bank bank = new Bank(1, "Test Bank", "TST");
+    private final Bank bank = new Bank(1L, "Test Bank", "TST");
     private final Customer customer = new Customer("IK", "Ian Kovalsky", 1.0, 1L);
     private final Transfer transfer = new Transfer(1, 1, 2, true);
 

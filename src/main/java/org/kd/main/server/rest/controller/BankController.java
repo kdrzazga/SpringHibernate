@@ -10,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 public class BankController {
@@ -43,18 +42,19 @@ public class BankController {
         }
     }
 
-    @GetMapping(path = "/bank/{id}")
-    public ResponseEntity<String> readBank(@PathVariable long id) {
+    @GetMapping(path = "/bank/{id}", produces = "application/json")
+    public ResponseEntity<Bank> readBank(@PathVariable long id) {
         var bank = bankDao.read(id);
 
         return bank != null ?
                 ResponseEntity
                         .status(HttpStatus.OK)
-                        .body(bank.toString())
+                        .body(bank)
                 :
                 ResponseEntity
                         .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                        .body("Error reading Bank with id = " + id);
+                        .header("message", "Couldn't read bank with id = " + id)
+                        .build();
     }
 
     @GetMapping(path = "/banks")
@@ -70,7 +70,6 @@ public class BankController {
                         .status(HttpStatus.INTERNAL_SERVER_ERROR)
                         .header("message", "Error reading list of Banks")
                         .build();
-
     }
 
     @PutMapping(path = "/bank", consumes = "application/json", produces = "application/json")

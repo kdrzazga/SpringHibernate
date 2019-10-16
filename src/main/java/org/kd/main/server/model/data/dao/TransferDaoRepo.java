@@ -32,7 +32,7 @@ public class TransferDaoRepo {
 
         if (destFund == null || sourceFund == null) return -1;
 
-        return (Objects.equals(destFund.getParty_id(), sourceFund.getParty_id()))
+        return (Objects.equals(destFund.getBank_id(), sourceFund.getBank_id()))
                 ? bookInternalTransfer(sourceFund, destFund, units)
                 : bookExternalTransfer();
     }

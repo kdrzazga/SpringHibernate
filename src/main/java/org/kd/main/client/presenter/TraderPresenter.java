@@ -3,6 +3,7 @@ package org.kd.main.client.presenter;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.kd.main.client.view.lib.PropertiesReader;
 import org.kd.main.common.RestUtility;
 import org.kd.main.common.TraderConfig;
 import org.kd.main.common.entities.Bank;
@@ -11,6 +12,7 @@ import org.kd.main.common.entities.Transfer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +27,10 @@ public class TraderPresenter implements PresenterHandler {
 
     @Autowired
     private RestUtility restUtility;
-    private String serviceAddress = "http://localhost:8080";
+
+    private final String port = new PropertiesReader().readKey("server_port");
+
+    private String serviceAddress;
     private HttpMethod requestType;
     private String requestAsString;
     private String requestUrl;
@@ -45,6 +50,7 @@ public class TraderPresenter implements PresenterHandler {
 
     @Override
     public List<Bank> readBanks() {
+
         requestType = HttpMethod.valueOf("GET");
         requestUrl = serviceAddress.concat("/banks");
         requestAsString = "";
@@ -70,6 +76,7 @@ public class TraderPresenter implements PresenterHandler {
 
     @Override
     public void createBank(String name, String shortname) {
+
         var contentType = "application/json";
         var requestUrl = serviceAddress.concat("/bank");
         requestType = HttpMethod.valueOf("POST");
@@ -79,6 +86,7 @@ public class TraderPresenter implements PresenterHandler {
 
     @Override
     public Bank readBank(Long id) {
+
         requestType = HttpMethod.valueOf("GET");
         requestUrl = serviceAddress.concat("/bank/").concat(Long.valueOf(id).toString());
         requestAsString = "";
@@ -104,6 +112,7 @@ public class TraderPresenter implements PresenterHandler {
 
     @Override
     public void updateBank(Bank bank) {
+
         var contentType = "application/json";
         var requestUrl = serviceAddress.concat("/bank");
         requestType = HttpMethod.valueOf("PUT");
@@ -113,6 +122,7 @@ public class TraderPresenter implements PresenterHandler {
 
     @Override
     public List<Customer> readCustomers() {
+
         requestType = HttpMethod.valueOf("GET");
         requestUrl = serviceAddress.concat("/customers");
         requestAsString = "";
@@ -138,6 +148,7 @@ public class TraderPresenter implements PresenterHandler {
 
     @Override
     public Customer readCustomer(Long id) {
+
         requestType = HttpMethod.valueOf("GET");
         requestUrl = serviceAddress.concat("/customer/").concat(Long.valueOf(id).toString());
         requestAsString = "";
@@ -163,6 +174,7 @@ public class TraderPresenter implements PresenterHandler {
 
     @Override
     public void updateCustomer(Customer customer) {
+
         var contentType = "application/json";
         var requestUrl = serviceAddress.concat("/customer");
 
@@ -180,6 +192,7 @@ public class TraderPresenter implements PresenterHandler {
 
     @Override
     public List<Transfer> readTransfers() {
+
         requestType = HttpMethod.valueOf("GET");
         requestUrl = serviceAddress.concat("/transfers");
         requestAsString = "";
@@ -203,8 +216,9 @@ public class TraderPresenter implements PresenterHandler {
 
     @Override
     public void deleteTransfer(Long id) {
+
         requestType = HttpMethod.valueOf("DELETE");
-        requestUrl = serviceAddress.concat("/bank/").concat(Long.valueOf(id).toString());
+        requestUrl = serviceAddress.concat("/transfer/").concat(Long.valueOf(id).toString());
         requestAsString = "";
 
         ResponseEntity<String> response = restUtility.processHttpRequest(requestType, requestAsString, requestUrl, "application/json");
@@ -223,11 +237,12 @@ public class TraderPresenter implements PresenterHandler {
 
     @Override
     public void createCustomer(String name, String shortname, Double units, Long bankId) {
-
+        //TODO
     }
 
     @Override
     public void deleteCustomer(Long id) {
+
         requestType = HttpMethod.valueOf("DELETE");
         requestUrl = serviceAddress.concat("/customer/").concat(Long.valueOf(id).toString());
         requestAsString = "";
@@ -258,6 +273,7 @@ public class TraderPresenter implements PresenterHandler {
 
     @Override
     public void initApplication() {
+        serviceAddress = "http://localhost:" + port;
     }
 
     @Override

@@ -9,6 +9,6 @@ public class AdminController {
 
     @PostMapping(path = "/stop")
     public void stop() {
-        TraderServer.stop();
+        TraderServer.getInstance().stop();
     }
 }

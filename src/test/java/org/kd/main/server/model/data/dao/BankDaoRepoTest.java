@@ -31,7 +31,7 @@ public class BankDaoRepoTest {
 
     @Test
     public void testCreate() {
-        var bankId = bankDaoRepo.create(new Bank("Test Bank", "TEST"));
+        Long bankId = bankDaoRepo.create(new Bank("Test Bank", "TEST"));
         assertEquals(bankId, bankDaoRepo.read("TEST").getId());
     }
 
@@ -45,7 +45,7 @@ public class BankDaoRepoTest {
 
     @Test
     public void testGetSingleBankById() {
-        var id = 1012L;
+        var id = Long.valueOf(1012);
         var bank = bankDaoRepo.read(id);
 
         Assert.assertNotNull(bank);

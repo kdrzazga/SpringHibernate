@@ -25,7 +25,7 @@ public class TransferController {
                     .replaceAll("\t", "");
 
             var transfer = objectMapper.readValue(transferJson, Transfer.class);
-            transferDao.book(transfer.getSrc_fund_id(), transfer.getDest_fund_id(), transfer.getUnits());
+            transferDao.book(transfer.getSrc_customer_id(), transfer.getDest_customer_id(), transfer.getUnits());
 
             return ResponseEntity
                     .status(HttpStatus.OK)
