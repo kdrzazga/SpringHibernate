@@ -5,7 +5,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.Window;
 import org.kd.main.client.presenter.PresenterHandler;
 import org.kd.main.client.view.lib.PropertiesReader;
 import org.kd.main.common.entities.Bank;

@@ -12,7 +12,6 @@ import org.kd.main.common.entities.Transfer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -248,7 +247,7 @@ public class TraderPresenter implements PresenterHandler {
         requestAsString = "";
 
         ResponseEntity<String> response = restUtility.processHttpRequest(requestType, requestAsString, requestUrl, "application/json");
-        Optional.ofNullable(response.getBody()).ifPresent(msg -> log.info(msg));
+        Optional.ofNullable(response.getBody()).ifPresent(log::info);
     }
 
     @Override
@@ -259,7 +258,7 @@ public class TraderPresenter implements PresenterHandler {
         requestAsString = "";
 
         ResponseEntity<String> response = restUtility.processHttpRequest(requestType, requestAsString, requestUrl, "application/json");
-        Optional.ofNullable(response.getBody()).ifPresent(msg -> log.info(msg));
+        Optional.ofNullable(response.getBody()).ifPresent(log::info);
 
     }
 

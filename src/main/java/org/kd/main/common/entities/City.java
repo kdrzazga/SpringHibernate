@@ -16,7 +16,6 @@ import java.io.Serializable;
 public class City implements Serializable {
 
     @Id
-    //@GeneratedValue
     private Long id;
 
     private String name;

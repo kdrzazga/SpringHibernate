@@ -2,6 +2,7 @@ package org.kd.main.server.model.data.dao;
 
 import org.hibernate.Session;
 import org.kd.main.common.entities.Customer;
+import org.kd.main.common.entities.InternalTransfer;
 import org.kd.main.common.entities.Transfer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -24,6 +25,12 @@ public class TransferDaoRepo {
     @Autowired
     private CustomerDaoRepo customerDaoRepo;
 
+    @Autowired
+    private InternalTransferDaoRepo internalTransferDaoRepo;
+
+    @Autowired
+    private ExternalTransferDaoRepo externalTransferDaoRepo;
+
     @Transactional
     public long book(long srcCustomerId, long destCustomerId, float units) {
 
@@ -45,14 +52,10 @@ public class TransferDaoRepo {
 
     @Transactional
     public List<Transfer> readAll() {
-        var session = entityManager.unwrap(Session.class);
-        var builder = session.getCriteriaBuilder();
-        var criteria = builder.createQuery(Transfer.class);
-        criteria.from(Transfer.class);
-
-        var transacts = session.createQuery(criteria).getResultList();
-        session.close();
-        return transacts;
+        var allTransfers = internalTransferDaoRepo.readAllNoTransact();
+        allTransfers.addAll(externalTransferDaoRepo.readAllNoTransact());
+        entityManager.unwrap(Session.class).close();
+        return allTransfers;
     }
 
     @Transactional
@@ -93,7 +96,7 @@ public class TransferDaoRepo {
 
         customerDaoRepo.update(sourceCustomer);
         customerDaoRepo.update(destCustomer);
-        return createTransfer(sourceCustomer.getId(), destCustomer.getId(), units, true);
+        return createInternalTransfer(sourceCustomer.getId(), destCustomer.getId(), units);
     }
 
     private long bookExternalTransfer() {
@@ -101,8 +104,8 @@ public class TransferDaoRepo {
         //TODO implement
     }
 
-    private long createTransfer(long sourceFundId, long destFundId, float units, boolean internal) {
-        var newTrade = new Transfer(sourceFundId, destFundId, units, internal);
+    private long createInternalTransfer(long sourceFundId, long destFundId, float units) {
+        var newTrade = new InternalTransfer(sourceFundId, destFundId, units);
 
         getSession().saveOrUpdate(newTrade);
         return newTrade.getId();

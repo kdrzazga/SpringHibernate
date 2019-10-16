@@ -13,7 +13,6 @@ import java.io.Serializable;
 public class Bank implements Serializable {
 
     @Id
-    //@GeneratedValue
     private Long id;
 
     private String name;
