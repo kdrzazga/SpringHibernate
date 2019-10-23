@@ -393,6 +393,44 @@
 			"response": []
 		},
 		{
+			"name": "start-currency-updates",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/stop-currency-updates",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"stop-currency-updates"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "stop-currency-updates",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/stop-currency-updates",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"stop-currency-updates"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "STOP",
 			"request": {
 				"method": "POST",
