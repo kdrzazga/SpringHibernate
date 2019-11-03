@@ -18,6 +18,7 @@ import org.springframework.http.ResponseEntity;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 import java.util.Vector;
 
 @Import(TraderConfig.class)
@@ -25,7 +26,7 @@ public class TraderPresenter implements PresenterHandler {
 
     @Autowired
     private RestUtility restUtility;
-    private String serviceAddress = "http://localhost:8080";
+    private final String serviceAddress = "http://localhost:8080";
     private HttpMethod requestType;
     private String requestAsString;
     private String requestUrl;
@@ -45,11 +46,10 @@ public class TraderPresenter implements PresenterHandler {
 
     @Override
     public List<Bank> readBanks() {
-        requestType = HttpMethod.valueOf("GET");
         requestUrl = serviceAddress.concat("/banks");
         requestAsString = "";
 
-        ResponseEntity<String> response = restUtility.processHttpRequest(requestType, requestAsString, requestUrl, "application/json");
+        ResponseEntity<String> response = restUtility.processHttpRequest(HttpMethod.GET, requestAsString, requestUrl, "application/json");
         if (response == null) {
             log.error("REST error. Couldn't read banks from server.");
             return new Vector<>();
@@ -57,8 +57,9 @@ public class TraderPresenter implements PresenterHandler {
         restUtility.retrieveResponseBodyAndStatusCode(response);
         List<Bank> banks;
         try {
+            var responseBody = Optional.ofNullable(response.getBody()).orElse("");
             banks = new ObjectMapper()
-                    .readValue(response.getBody()
+                    .readValue(responseBody
                             , bankListTypeReference);
         } catch (IOException e) {
             e.printStackTrace();
@@ -70,20 +71,21 @@ public class TraderPresenter implements PresenterHandler {
 
     @Override
     public Bank readBank(long id) {
-        requestType = HttpMethod.valueOf("GET");
+        requestType = HttpMethod.GET;
         requestUrl = serviceAddress.concat("/bank/").concat(Long.valueOf(id).toString());
         requestAsString = "";
 
-        ResponseEntity<String> response = restUtility.processHttpRequest(requestType, requestAsString, requestUrl, "application/json");
+        ResponseEntity<String> response = restUtility.processHttpRequest(HttpMethod.GET, requestAsString, requestUrl, "application/json");
         if (response == null) {
             log.error("REST error. Couldn't read bank with id={} from server.", id);
             return null;
         }
         restUtility.retrieveResponseBodyAndStatusCode(response);
         Bank bank;
+        var responseBody = Optional.ofNullable(response.getBody()).orElse("");
         try {
             bank = new ObjectMapper()
-                    .readValue(response.getBody()
+                    .readValue(responseBody
                             , bankTypeReference);
         } catch (IOException e) {
             e.printStackTrace();
@@ -113,20 +115,21 @@ public class TraderPresenter implements PresenterHandler {
 
     @Override
     public List<Customer> readCustomers() {
-        requestType = HttpMethod.valueOf("GET");
+        requestType = HttpMethod.GET;
         requestUrl = serviceAddress.concat("/customers");
         requestAsString = "";
 
-        ResponseEntity<String> response = restUtility.processHttpRequest(requestType, requestAsString, requestUrl, "application/json");
+        ResponseEntity<String> response = restUtility.processHttpRequest(HttpMethod.GET, requestAsString, requestUrl, "application/json");
         if (response == null) {
             log.error("REST error. Couldn't read customers from server.");
             return new Vector<>();
         }
         restUtility.retrieveResponseBodyAndStatusCode(response);
         List<Customer> customers;
+        var responseBody = Optional.ofNullable(response.getBody()).orElse("");
         try {
             customers = new ObjectMapper()
-                    .readValue(response.getBody()
+                    .readValue(responseBody
                             , customerListTypeReference);
         } catch (IOException e) {
             e.printStackTrace();
@@ -138,20 +141,21 @@ public class TraderPresenter implements PresenterHandler {
 
     @Override
     public Customer readCustomer(long id) {
-        requestType = HttpMethod.valueOf("GET");
+        requestType = HttpMethod.GET;
         requestUrl = serviceAddress.concat("/customer/").concat(Long.valueOf(id).toString());
         requestAsString = "";
 
-        ResponseEntity<String> response = restUtility.processHttpRequest(requestType, requestAsString, requestUrl, "application/json");
+        ResponseEntity<String> response = restUtility.processHttpRequest(HttpMethod.GET, requestAsString, requestUrl, "application/json");
         if (response == null) {
             log.error("REST error. Couldn't read customer with id={} from server.", id);
             return null;
         }
         restUtility.retrieveResponseBodyAndStatusCode(response);
         Customer customer;
+        var responseBody = Optional.ofNullable(response.getBody()).orElse("");
         try {
             customer = new ObjectMapper()
-                    .readValue(response.getBody()
+                    .readValue(responseBody
                             , customerTypeReference);
         } catch (IOException e) {
             e.printStackTrace();
@@ -178,7 +182,7 @@ public class TraderPresenter implements PresenterHandler {
 
     @Override
     public List<Transfer> readTransfers() {
-        requestType = HttpMethod.valueOf("GET");
+        requestType = HttpMethod.GET;
         requestUrl = serviceAddress.concat("/transfers");
         requestAsString = "";
 
@@ -189,8 +193,9 @@ public class TraderPresenter implements PresenterHandler {
         }
         restUtility.retrieveResponseBodyAndStatusCode(response);
         List<Transfer> transfers;
+        var responseBody = Optional.ofNullable(response.getBody()).orElse("");
         try {
-            transfers = new ObjectMapper().readValue(response.getBody(), transferListTypeReference);
+            transfers = new ObjectMapper().readValue(responseBody, transferListTypeReference);
         } catch (IOException e) {
             e.printStackTrace();
             return new Vector<>();

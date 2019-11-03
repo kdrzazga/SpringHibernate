@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 @RestController
@@ -27,8 +28,17 @@ public class Controller {
     private TransferDaoRepo transferDao;
 
     @GetMapping(path = "/customer/{id}")
-    public Customer readCustomer(@PathVariable long id) {
-        return customerDao.get(id);
+    public ResponseEntity<Customer> readCustomer(@PathVariable long id) {
+        try {
+            var customer = customerDao.get(id);
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body(customer);
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .header("error", e.getMessage())
+                    .body(null);
+
+        }
     }
 
     @GetMapping(path = "/customers")
