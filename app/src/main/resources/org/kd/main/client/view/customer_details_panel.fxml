@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane prefHeight="494.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.kd.main.client.view.CustomerDetailsPanel">
+   <children>
+      <TabPane layoutX="14.0" layoutY="71.0" prefHeight="321.0" prefWidth="569.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab text="Debit Cards">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <ListView id="debitcardlist" layoutX="14.0" layoutY="14.0" prefHeight="282.0" prefWidth="569.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+          <Tab text="Credit Cards">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <ListView id="creditcardlist" prefHeight="282.0" prefWidth="569.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+            <Tab text="Credits">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="350.0" prefWidth="567.0">
+                     <children>
+                        <ListView id="creditlist" prefHeight="282.0" prefWidth="569.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+        </tabs>
+      </TabPane>
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="14.0" layoutY="27.0" prefHeight="21.0" prefWidth="569.0" text="Customer: Jan Kovalsky (id = 0)" />
+   </children>
+</AnchorPane>

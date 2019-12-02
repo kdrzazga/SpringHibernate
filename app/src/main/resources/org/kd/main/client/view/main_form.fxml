@@ -60,7 +60,7 @@
                                 <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                             </padding>
                         </GridPane>
-                        <TableView fx:id="transferTable" layoutX="23.0" layoutY="255.0" prefHeight="121.0" prefWidth="389.0">
+                        <TableView fx:id="transferTable" layoutX="23.0" layoutY="255.0" prefHeight="283.0" prefWidth="389.0">
                         </TableView>
                     </children>
                 </AnchorPane>
@@ -101,7 +101,7 @@
                                         <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                                     </padding>
                                 </Label>
-                                <Label text="Bank Name : " GridPane.rowIndex="1" />
+                                <Label text="Bank Name : " GridPane.rowIndex="5" />
                                 <TextField fx:id="bankNameField" minWidth="225" prefHeight="15" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                                 <TextField fx:id="shortBankNameField" alignment="CENTER_RIGHT" maxWidth="100" prefHeight="15" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                                 <Label alignment="CENTER_RIGHT" text="Customers : " GridPane.rowIndex="7">
@@ -131,6 +131,7 @@
                            <GridPane.margin>
                               <Insets bottom="5.0" top="5.0" />
                            </GridPane.margin></Button>
+                        <Label layoutX="25.0" layoutY="219.0" text="Short Name : " GridPane.rowIndex="6" />
                             </children>
                             <padding>
                                 <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
@@ -197,6 +198,7 @@
                               <Insets />
                            </GridPane.margin>
                         </Button>
+                        <Button id="details-button" fx:id="saveFundButton111" defaultButton="true" layoutX="141.0" layoutY="397.0" onAction="#showDetailsPanel" prefHeight="36.0" prefWidth="80.0" text="DETAILS" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
                             </children>
                             <padding>
                                 <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />

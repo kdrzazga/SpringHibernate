@@ -1,5 +1,6 @@
 package org.kd.main.client.view;
 
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -8,7 +9,6 @@ import javafx.stage.Stage;
 import org.kd.main.client.presenter.PresenterHandler;
 import org.kd.main.client.view.lib.PropertiesReader;
 import org.kd.main.common.TraderConfig;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 public class Trader extends Application {
 
@@ -24,10 +24,13 @@ public class Trader extends Application {
 
         var loader = new FXMLLoader(getClass().getResource("main_form.fxml"));
         Parent root = loader.load();
-        
+        loader.getClass().getResource("customer_details_panel.fxml");
+
         setupPrimaryStage(primaryStage, root);
+        //setupSecondaryStage()
 
         TraderViewController.setHandler(this.handler);
+        CustomerDetailsPanel.setHandler(this.handler);
 
         ((TraderViewController)loader.getController()).loadBanks();
         ((TraderViewController)loader.getController()).loadCustomers();
@@ -37,7 +40,15 @@ public class Trader extends Application {
     private void setupPrimaryStage(Stage primaryStage, Parent root) {
         primaryStage.setTitle(new PropertiesReader().readKey("app.title"));
         primaryStage.setIconified(false);
-        primaryStage.setScene(new Scene(root, 450, 415));
+        primaryStage.setScene(new Scene(root, 450, 565));
+        primaryStage.setOnCloseRequest(event -> exit());
+
+        primaryStage.show();
+    }
+    private void setupSecondaryStage(Stage primaryStage, Parent root) {
+        primaryStage.setTitle(new PropertiesReader().readKey("app.title"));
+        primaryStage.setIconified(false);
+        primaryStage.setScene(new Scene(root, 450, 565));
         primaryStage.setOnCloseRequest(event -> exit());
 
         primaryStage.show();

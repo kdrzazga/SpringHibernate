@@ -11,6 +11,7 @@ import org.kd.main.common.entities.Bank;
 import org.kd.main.common.entities.Customer;
 import org.kd.main.common.entities.Transfer;
 
+import javax.swing.*;
 import java.util.Optional;
 import java.util.OptionalDouble;
 import java.util.OptionalLong;
@@ -113,6 +114,10 @@ public class TraderViewController {
             this.customerShortNameField.setText(customer.getShortname());
             this.customerCashField.setText(String.valueOf(customer.getUnits()));
         }
+    }
+    @FXML
+    protected void showDetailsPanel(ActionEvent e){
+
     }
 
     @FXML
