@@ -32,8 +32,7 @@ public class InternalTransferDaoRepo {
 
         var internalTransfers = session.createQuery(criteria).getResultList();
 
-        var transfers = new ArrayList<Transfer>(internalTransfers);
-        return transfers;
+        return new ArrayList<Transfer>(internalTransfers);
     }
 
     Transfer readTransferByPrimaryKey(long id) {

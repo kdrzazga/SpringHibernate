@@ -31,8 +31,7 @@ public class ExternalTransferDaoRepo {
         criteria.from(ExternalTransfer.class);
 
         var externalTransfers = session.createQuery(criteria).getResultList();
-        var transfers = new ArrayList<Transfer>(externalTransfers);
-        return transfers;
+        return new ArrayList<Transfer>(externalTransfers);
     }
 
     Transfer readTransferByPrimaryKey(long id) {
