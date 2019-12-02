@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Trader</title>
+    <link rel="stylesheet" href="style/general_styles.css"/>
+    <link rel="stylesheet" href="style/padstyle.css"/>
+</head>
+<body class="default-background">
+<div class="container">
+    <!-- Tabs -->
+    <table id="nav-tab" class="nav">
+        <tr>
+            <td class="active"><a href="#transfer">Transfer</a></td>
+            <td><a href="#bank">Bank</a></td>
+            <td><a href="#customer">Customer</a></td>
+            <td><a href="#dev">DEV</a></td>
+        </tr>
+    </table>
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <div class="tab-pane active" id="transfer">
+            <h4>Transfer Input</h4>
+            <div id="transfer-bank-id-select">Bank Id:
+                <div class="dropdown">
+                    <button class="dropbtn">Bank</button>
+                    <div class="dropdown-content">
+                        <a href="#">Bank 1</a>
+                        <a href="#">Bank 2</a>
+                        <a href="#">Bank 3</a>
+                    </div>
+                </div>
+            </div>
+            <div id="transfer-customer-id-select">Customer Id:
+                <div class="dropdown">
+                    <button class="dropbtn">Customer</button>
+                    <div class="dropdown-content">
+                        <a href="#">Customer 1</a>
+                        <a href="#">Customer 2</a>
+                        <a href="#">Customer 3</a>
+                    </div>
+                </div>
+            </div>
+            <p></p>
+            <button id="book-trade" class="default-button">Book</button>
+        </div>
+
+        <div class="tab-pane" id="bank">
+            <h4>Bank Info</h4>
+            <div id="bank-id-select">Bank Id:
+                <div class="dropdown">
+                    <button class="dropbtn">Bank</button>
+                    <div class="dropdown-content">
+                        <a href="#">Bank 1</a>
+                        <a href="#">Bank 2</a>
+                        <a href="#">Bank 3</a>
+                    </div>
+                </div>
+            </div>
+            <p></p>
+            <button id="show-bank" class="default-button">Show</button>
+            <div>Bank Name:<label for="bank-name">Bank Name:</label><input id="bank-name"/></div>
+            <div>Short Name:<label for="bank=short-name">Short Name:</label><input id="bank=short-name"/></div>
+            <div>Customers:<br/><textarea id="bank-customers" readonly></textarea></div>
+            <p></p>
+            <button id="bank-save-changes" class="default-button">Save changes</button>
+        </div>
+
+        <div class="tab-pane" id="customer">
+            <h4>Customer Info</h4>
+            <div id="customer-id-select">Customer Id:
+                <div class="dropdown">
+                    <button class="dropbtn">Customer</button>
+                    <div class="dropdown-content">
+                        <a href="#">Customer 1</a>
+                        <a href="#">Customer 2</a>
+                        <a href="#">Customer 3</a>
+                    </div>
+                </div>
+                <button id="show-customer" class="default-button">Show</button>
+                <p></p>
+                <div>Customer Name:<label for="customer-name">Customer Name:</label><input id="customer-name"/></div>
+                <div>Short Name<label for="customer-shortname">Short Name</label><input id="customer-shortname"/></div>
+                <div>Cash Balance<label for="customer-cash-balance">Cash Balance</label><input id="customer-cash-balance"/></div>
+            </div>
+            <p></p>
+            <button id="customer-save-changes" class="default-button">Save changes</button>
+            <p></p>
+            <button id="customer-delete" class="default-button">Delete Customer</button>
+        </div>
+
+        <div class="tab-pane" id="dev">
+            <h4>Developer's Panel</h4>
+            <div><a href="http://localhost:8081/h2-console" target="_blank">DB link</a></div>
+            <p></p>
+            <div><a href="#" onclick="stopApplication()">Stop</a></div>
+        </div>
+    </div>
+</div>
+
+<script src="script/tabs.js"></script>
+<script src="script/include.js"></script>
+<script src="script/requests.js"></script>
+
+</body>
+</html>

@@ -3,6 +3,7 @@ package org.kd.main.server.rest.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.kd.main.common.RestUtility;
@@ -22,6 +23,7 @@ import static org.junit.Assert.assertEquals;
 @SpringBootTest(classes = {TraderServer.class})
 @RunWith(SpringJUnit4ClassRunner.class)
 @Import(TraderConfig.class)
+@Ignore
 public class CustomerEndpointTest {
 
     @Autowired

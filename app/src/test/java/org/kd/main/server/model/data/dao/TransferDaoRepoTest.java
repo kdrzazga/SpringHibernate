@@ -58,6 +58,7 @@ public class TransferDaoRepoTest {
     }
 
     @Test
+    @Ignore
     @Order(value = 3)
     public void testReadForParticularFund() {
         var tradeForFund2002 = transferDaoRepo.readByFundId(2002);

@@ -14,8 +14,12 @@ import java.util.List;
 @RestController
 public class LogController {
 
+    private final LogDaoRepo countryDao;
+
     @Autowired
-    private LogDaoRepo countryDao;
+    public LogController(LogDaoRepo countryDao) {
+        this.countryDao = countryDao;
+    }
 
     @GetMapping(path = "/log/{id}", produces = "application/json")
     public ResponseEntity<Log> readLog(@PathVariable long id) {

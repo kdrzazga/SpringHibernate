@@ -14,8 +14,12 @@ import java.util.List;
 @RestController
 public class CustomerController {
 
+    private final CustomerDaoRepo customerDao;
+
     @Autowired
-    private CustomerDaoRepo customerDao;
+    public CustomerController(CustomerDaoRepo customerDao) {
+        this.customerDao = customerDao;
+    }
 
     @PostMapping(path = "/customer", consumes = "application/json", produces = "application/json")
     public ResponseEntity<String> createCustomer(@RequestBody String customerJson) {

@@ -14,8 +14,12 @@ import java.util.List;
 @RestController
 public class RealEstateController {
 
+    private final RealEstateDaoRepo realEstateDao;
+
     @Autowired
-    private RealEstateDaoRepo realEstateDao;
+    public RealEstateController(RealEstateDaoRepo realEstateDao) {
+        this.realEstateDao = realEstateDao;
+    }
 
     @GetMapping(path = "/realestate/{id}", produces = "application/json")
     public ResponseEntity<RealEstate> readRealEstate(@PathVariable long id) {

@@ -20,8 +20,12 @@ public class BankDaoRepo {
     @PersistenceContext
     private EntityManager entityManager;
 
+    private final CustomerDaoRepo customerDaoRepo;
+
     @Autowired
-    private CustomerDaoRepo customerDaoRepo;
+    public BankDaoRepo(CustomerDaoRepo customerDaoRepo) {
+        this.customerDaoRepo = customerDaoRepo;
+    }
 
     @Transactional
     public long create(Bank bank) {

@@ -14,8 +14,12 @@ import java.util.List;
 @RestController
 public class CurrencyController {
 
+    private final CurrencyDaoRepo cityDao;
+
     @Autowired
-    private CurrencyDaoRepo cityDao;
+    public CurrencyController(CurrencyDaoRepo cityDao) {
+        this.cityDao = cityDao;
+    }
 
     @GetMapping(path = "/currency/{id}", produces = "application/json")
     public ResponseEntity<Currency> readCurrency(@PathVariable long id) {

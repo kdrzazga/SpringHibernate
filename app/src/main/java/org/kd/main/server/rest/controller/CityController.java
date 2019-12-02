@@ -14,8 +14,12 @@ import java.util.List;
 @RestController
 public class CityController {
 
+    private final CityDaoRepo cityDao;
+
     @Autowired
-    private CityDaoRepo cityDao;
+    public CityController(CityDaoRepo cityDao) {
+        this.cityDao = cityDao;
+    }
 
     @GetMapping(path = "/city/{id}", produces = "application/json")
     public ResponseEntity<City> readCity(@PathVariable long id) {

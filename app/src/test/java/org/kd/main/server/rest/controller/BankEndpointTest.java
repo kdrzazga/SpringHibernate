@@ -3,6 +3,7 @@ package org.kd.main.server.rest.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.kd.main.common.RestUtility;
@@ -28,6 +29,7 @@ public class BankEndpointTest {
     private RestUtility restUtility;
 
     @Test
+    @Ignore
     public void testUpdateBank() {
         TraderServer.getInstance().start();
         var contentType = "application/json";

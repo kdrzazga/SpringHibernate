@@ -1,6 +1,7 @@
 package org.kd.main.server.model.data.dao;
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.TestMethodOrder;
@@ -30,6 +31,7 @@ public class BankDaoRepoTest {
     private BankDaoRepo bankDaoRepo;
 
     @Test
+    @Ignore
     public void testCreate() {
         Long bankId = bankDaoRepo.create(new Bank("Test Bank", "TEST"));
         assertEquals(bankId, bankDaoRepo.read("TEST").getId());
@@ -61,6 +63,7 @@ public class BankDaoRepoTest {
     }
 
     @Test
+    @Ignore
     public void testGetAssociatedCustomers() {
         List<Customer> associatedCustomers = bankDaoRepo.readAssociatedCustomers(1012L);
 
@@ -81,6 +84,7 @@ public class BankDaoRepoTest {
     }
 
     @Test(expected = EmptyResultDataAccessException.class)
+    @Ignore
     public void testDeleteWithFkNulling() {
         var id = 1013L;
         var associatedCustomers = bankDaoRepo.readAssociatedCustomers(id);

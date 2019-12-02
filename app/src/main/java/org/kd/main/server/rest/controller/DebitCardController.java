@@ -14,8 +14,12 @@ import java.util.List;
 @RestController
 public class DebitCardController {
 
+    private final DebitCardDaoRepo debitCardDao;
+
     @Autowired
-    private DebitCardDaoRepo debitCardDao;
+    public DebitCardController(DebitCardDaoRepo debitCardDao) {
+        this.debitCardDao = debitCardDao;
+    }
 
     @GetMapping(path = "/debitcard/{id}", produces = "application/json")
     public ResponseEntity<DebitCard> readDebitCard(@PathVariable long id) {

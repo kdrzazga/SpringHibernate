@@ -14,8 +14,12 @@ import java.util.List;
 @RestController
 public class CountryController {
 
+    private final CountryDaoRepo countryDao;
+
     @Autowired
-    private CountryDaoRepo countryDao;
+    public CountryController(CountryDaoRepo countryDao) {
+        this.countryDao = countryDao;
+    }
 
     @GetMapping(path = "/country/{id}", produces = "application/json")
     public ResponseEntity<Country> readCountry(@PathVariable long id) {

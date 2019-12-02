@@ -14,8 +14,12 @@ import java.util.List;
 @RestController
 public class CreditController {
 
+    private final CreditDaoRepo creditCardDao;
+
     @Autowired
-    private CreditDaoRepo creditCardDao;
+    public CreditController(CreditDaoRepo creditCardDao) {
+        this.creditCardDao = creditCardDao;
+    }
 
     @GetMapping(path = "/credit/{id}", produces = "application/json")
     public ResponseEntity<Credit> readCredit(@PathVariable long id) {

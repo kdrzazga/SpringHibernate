@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.tomakehurst.wiremock.WireMockServer;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.kd.main.client.presenter.config.TestClientConfig;
@@ -29,6 +30,7 @@ import static org.junit.Assert.*;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {TraderConfig.class, TestClientConfig.class})
 @PropertySource("classpath:application.properties")
+@Ignore
 public class PresenterTest {
 
     //don't start Tests when Server is running -> port is busy

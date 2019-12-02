@@ -13,8 +13,12 @@ import java.util.List;
 @RestController
 public class TransferController {
 
+    private final TransferDaoRepo transferDao;
+
     @Autowired
-    private TransferDaoRepo transferDao;
+    public TransferController(TransferDaoRepo transferDao) {
+        this.transferDao = transferDao;
+    }
 
     @PostMapping(path = "/transfer", consumes = "application/json", produces = "application/json")
     public ResponseEntity<String> bookTransfer(@RequestBody String transferJson) {
