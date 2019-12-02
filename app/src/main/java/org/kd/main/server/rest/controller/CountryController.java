@@ -23,12 +23,12 @@ public class CountryController {
 
     @GetMapping(path = "/country/{id}", produces = "application/json")
     public ResponseEntity<Country> readCountry(@PathVariable long id) {
-        var city = countryDao.read(id);
+        var country = countryDao.read(id);
 
-        return city != null ?
+        return country != null ?
                 ResponseEntity
                         .status(HttpStatus.OK)
-                        .body(city)
+                        .body(country)
                 :
                 ResponseEntity
                         .status(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -37,7 +37,7 @@ public class CountryController {
     }
 
     @GetMapping(path = "/countries")
-    public ResponseEntity<List<Country>> readBanks() {
+    public ResponseEntity<List<Country>> readCountries() {
         var allCountries = countryDao.readAll();
 
         return allCountries != null ?

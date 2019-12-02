@@ -23,12 +23,12 @@ public class RealEstateController {
 
     @GetMapping(path = "/realestate/{id}", produces = "application/json")
     public ResponseEntity<RealEstate> readRealEstate(@PathVariable long id) {
-        var city = realEstateDao.read(id);
+        var realEstate = realEstateDao.read(id);
 
-        return city != null ?
+        return realEstate != null ?
                 ResponseEntity
                         .status(HttpStatus.OK)
-                        .body(city)
+                        .body(realEstate)
                 :
                 ResponseEntity
                         .status(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -38,12 +38,12 @@ public class RealEstateController {
 
     @GetMapping(path = "/realestates")
     public ResponseEntity<List<RealEstate>> readRealEstates() {
-        var allBanks = realEstateDao.readAll();
+        var realEstates = realEstateDao.readAll();
 
-        return allBanks != null ?
+        return realEstates != null ?
                 ResponseEntity
                         .status(HttpStatus.OK)
-                        .body(allBanks)
+                        .body(realEstates)
                 :
                 ResponseEntity
                         .status(HttpStatus.INTERNAL_SERVER_ERROR)

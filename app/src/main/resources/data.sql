@@ -118,7 +118,8 @@ INSERT INTO credit(id, customer_id, bank_id, amount, currency_id) VALUES (40001,
 INSERT INTO credit_card (id, customer_id, bank_id, currency_id, balance, credit_limit) VALUES (100001, 2001, 1001, 30001, 123455.33, 350000);
 INSERT INTO debit_card (id, customer_id, bank_id, currency_id, balance) VALUES (100001, 2001, 1001, 30001, 455.33);
 INSERT INTO real_estate(id, address, city_id) VALUES (55001, 'Powstancow Slaskich 33', 20001);
-INSERT INTO log(id, created) VALUES (130101, '2019-10-15');
+INSERT INTO log(id, created, file_path) VALUES (130101, '2019-10-15 00:00:01', 'c:/log.txt');
+INSERT INTO log(created, file_path) VALUES ('2019-12-02 14:39:47', null);
 
 INSERT INTO bank(shortname, name) VALUES('AAC', 'Aac Holdings Inc');
 INSERT INTO bank(shortname, name) VALUES('AAN', 'Aarons Inc');

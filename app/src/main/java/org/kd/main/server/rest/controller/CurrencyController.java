@@ -14,21 +14,21 @@ import java.util.List;
 @RestController
 public class CurrencyController {
 
-    private final CurrencyDaoRepo cityDao;
+    private final CurrencyDaoRepo currencyDaoRepo;
 
     @Autowired
-    public CurrencyController(CurrencyDaoRepo cityDao) {
-        this.cityDao = cityDao;
+    public CurrencyController(CurrencyDaoRepo currencyDaoRepo) {
+        this.currencyDaoRepo = currencyDaoRepo;
     }
 
     @GetMapping(path = "/currency/{id}", produces = "application/json")
     public ResponseEntity<Currency> readCurrency(@PathVariable long id) {
-        var city = cityDao.read(id);
+        var currency = currencyDaoRepo.read(id);
 
-        return city != null ?
+        return currency != null ?
                 ResponseEntity
                         .status(HttpStatus.OK)
-                        .body(city)
+                        .body(currency)
                 :
                 ResponseEntity
                         .status(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -37,13 +37,13 @@ public class CurrencyController {
     }
 
     @GetMapping(path = "/currencies")
-    public ResponseEntity<List<Currency>> readBanks() {
-        var allBanks = cityDao.readAll();
+    public ResponseEntity<List<Currency>> readCurrencies() {
+        var currencyList = currencyDaoRepo.readAll();
 
-        return allBanks != null ?
+        return currencyList != null ?
                 ResponseEntity
                         .status(HttpStatus.OK)
-                        .body(allBanks)
+                        .body(currencyList)
                 :
                 ResponseEntity
                         .status(HttpStatus.INTERNAL_SERVER_ERROR)

@@ -93,7 +93,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"id\" : 2002,\n\t\"name\" : \"PKO BP\",\n\t\"shortname\" : \"PKO\"\n}",
+					"raw": "{\n\t\"id\" : 1002,\n\t\"name\" : \"PKO BP\",\n\t\"shortname\" : \"PKO\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -135,6 +135,201 @@
 			"response": []
 		},
 		{
+			"name": "readCity",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/city/20001",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"city",
+						"20001"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "readCities",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/cities",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"cities"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "readCountry",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/country/10001",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"country",
+						"10001"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "readCountries",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/countries",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"countries"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "readCreditCard",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/creditcard/100001",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"creditcard",
+						"100001"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "readCreditCards",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/creditcards",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"creditcards"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "readCredit",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/credit/40001",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"credit",
+						"40001"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "readCredits",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/credits",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"credits"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "readCurrency",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/currency/30001",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"currency",
+						"30001"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "readCurrencies",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/currencies",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"currencies"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "createCustomer",
 			"request": {
 				"method": "POST",
@@ -148,7 +343,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"id\" : 1000,\n\t\"shortname\" : \"Adam\",\n\t\"name\" : \"Adamowicz\",\n\t\"units\" : 1.50,\n\t\"party_id\" : 2001\n}",
+					"raw": "{\n\t\"id\" : 1000,\n\t\"shortname\" : \"Adam\",\n\t\"name\" : \"Adamowicz\",\n\t\"units\" : 1.50,\n\t\"bank_id\" : 2001\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -264,6 +459,123 @@
 			"response": []
 		},
 		{
+			"name": "readDebitCard",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/debitcard/100001",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"debitcard",
+						"100001"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "readDebitCards",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/debitcards",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"debitcards"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "readLog",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/log/130101",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"log",
+						"130101"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "readLogs",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/logs",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"logs"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "readRealEstate",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/realestate/55001",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"realestate",
+						"55001"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "readRealEstates",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/realestates",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"realestates"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "bookInternalTransfer (create)",
 			"request": {
 				"method": "POST",
@@ -277,7 +589,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"id\": 3000,\n    \"src_fund_id\": 2004,\n    \"dest_fund_id\": 2005,\n    \"units\": 0.01,\n    \"internal\": true\n}",
+					"raw": "{\n    \"id\": 3000,\n    \"src_customer_id\": 2004,\n    \"dest_customer_id\": 2005,\n    \"units\": 0.01,\n    \"internal\": true\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -351,7 +663,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"id\" : 3002,\n\t\"src_fund_id\" : 2002,\n\t\"dest_fund_id\" : 2003,\n\t\"units\" : 3.40,\n\t\"internal\" : true\n}",
+					"raw": "{\n\t\"id\" : 3002,\n\t\"src_customer_id\" : 2002,\n\t\"dest_customer_id\" : 2003,\n\t\"units\" : 3.40,\n\t\"internal\" : true\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -393,7 +705,26 @@
 			"response": []
 		},
 		{
-			"name": "start-currency-updates",
+			"name": "admin-start-currency-updates",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/start-currency-updates",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"start-currency-updates"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "admin-stop-currency-updates",
 			"request": {
 				"method": "POST",
 				"header": [],
@@ -412,26 +743,7 @@
 			"response": []
 		},
 		{
-			"name": "stop-currency-updates",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:8080/stop-currency-updates",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"stop-currency-updates"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "STOP",
+			"name": "admin-stop",
 			"request": {
 				"method": "POST",
 				"header": [],

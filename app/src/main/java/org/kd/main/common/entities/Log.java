@@ -8,7 +8,7 @@ import lombok.Setter;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.io.Serializable;
-import java.sql.Date;
+import java.sql.Timestamp;
 
 @Entity
 @NoArgsConstructor
@@ -20,11 +20,11 @@ public class Log implements Serializable {
     @Id
     private Long id;
 
-    private Date timestamp;
+    private Timestamp created;
     private String file_path;
 
-    public Log(Date timestamp, String file_path) {
-        this.timestamp = timestamp;
+    public Log(Timestamp created, String file_path) {
+        this.created = created;
         this.file_path = file_path;
     }
 }

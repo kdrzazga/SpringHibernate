@@ -14,21 +14,21 @@ import java.util.List;
 @RestController
 public class CreditController {
 
-    private final CreditDaoRepo creditCardDao;
+    private final CreditDaoRepo creditDaoRepo;
 
     @Autowired
-    public CreditController(CreditDaoRepo creditCardDao) {
-        this.creditCardDao = creditCardDao;
+    public CreditController(CreditDaoRepo creditDaoRepo) {
+        this.creditDaoRepo = creditDaoRepo;
     }
 
     @GetMapping(path = "/credit/{id}", produces = "application/json")
     public ResponseEntity<Credit> readCredit(@PathVariable long id) {
-        var city = creditCardDao.read(id);
+        var credit = creditDaoRepo.read(id);
 
-        return city != null ?
+        return credit != null ?
                 ResponseEntity
                         .status(HttpStatus.OK)
-                        .body(city)
+                        .body(credit)
                 :
                 ResponseEntity
                         .status(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -38,12 +38,12 @@ public class CreditController {
 
     @GetMapping(path = "/credits")
     public ResponseEntity<List<Credit>> readCredits() {
-        var allCountries = creditCardDao.readAll();
+        var creditList = creditDaoRepo.readAll();
 
-        return allCountries != null ?
+        return creditList != null ?
                 ResponseEntity
                         .status(HttpStatus.OK)
-                        .body(allCountries)
+                        .body(creditList)
                 :
                 ResponseEntity
                         .status(HttpStatus.INTERNAL_SERVER_ERROR)

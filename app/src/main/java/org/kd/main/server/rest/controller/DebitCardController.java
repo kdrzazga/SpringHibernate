@@ -23,12 +23,12 @@ public class DebitCardController {
 
     @GetMapping(path = "/debitcard/{id}", produces = "application/json")
     public ResponseEntity<DebitCard> readDebitCard(@PathVariable long id) {
-        var city = debitCardDao.read(id);
+        var debitCard = debitCardDao.read(id);
 
-        return city != null ?
+        return debitCard != null ?
                 ResponseEntity
                         .status(HttpStatus.OK)
-                        .body(city)
+                        .body(debitCard)
                 :
                 ResponseEntity
                         .status(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -38,12 +38,12 @@ public class DebitCardController {
 
     @GetMapping(path = "/debitcards")
     public ResponseEntity<List<DebitCard>> readDebitCards() {
-        var allCountries = debitCardDao.readAll();
+        var debitCards = debitCardDao.readAll();
 
-        return allCountries != null ?
+        return debitCards != null ?
                 ResponseEntity
                         .status(HttpStatus.OK)
-                        .body(allCountries)
+                        .body(debitCards)
                 :
                 ResponseEntity
                         .status(HttpStatus.INTERNAL_SERVER_ERROR)

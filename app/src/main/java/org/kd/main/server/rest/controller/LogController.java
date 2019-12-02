@@ -14,21 +14,21 @@ import java.util.List;
 @RestController
 public class LogController {
 
-    private final LogDaoRepo countryDao;
+    private final LogDaoRepo logDaoRepo;
 
     @Autowired
-    public LogController(LogDaoRepo countryDao) {
-        this.countryDao = countryDao;
+    public LogController(LogDaoRepo logDaoRepo) {
+        this.logDaoRepo = logDaoRepo;
     }
 
     @GetMapping(path = "/log/{id}", produces = "application/json")
     public ResponseEntity<Log> readLog(@PathVariable long id) {
-        var city = countryDao.read(id);
+        var log = logDaoRepo.read(id);
 
-        return city != null ?
+        return log != null ?
                 ResponseEntity
                         .status(HttpStatus.OK)
-                        .body(city)
+                        .body(log)
                 :
                 ResponseEntity
                         .status(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -37,13 +37,13 @@ public class LogController {
     }
 
     @GetMapping(path = "/logs")
-    public ResponseEntity<List<Log>> readBanks() {
-        var allCountries = countryDao.readAll();
+    public ResponseEntity<List<Log>> readLogs() {
+        var logList = logDaoRepo.readAll();
 
-        return allCountries != null ?
+        return logList != null ?
                 ResponseEntity
                         .status(HttpStatus.OK)
-                        .body(allCountries)
+                        .body(logList)
                 :
                 ResponseEntity
                         .status(HttpStatus.INTERNAL_SERVER_ERROR)

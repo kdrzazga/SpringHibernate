@@ -60,7 +60,7 @@ public class TransferController {
     }
 
     @GetMapping(path = "/transfers")
-    public ResponseEntity<List<Transfer>> readTransfers() {
+    public ResponseEntity<List<Transfer>> readAll() {
         var allTransfers = transferDao.readAll();
 
         return allTransfers != null ?

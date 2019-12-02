@@ -23,12 +23,12 @@ public class CreditCardController {
 
     @GetMapping(path = "/creditcard/{id}", produces = "application/json")
     public ResponseEntity<CreditCard> readCreditCard(@PathVariable long id) {
-        var city = creditCardDao.read(id);
+        var creditCard = creditCardDao.read(id);
 
-        return city != null ?
+        return creditCard != null ?
                 ResponseEntity
                         .status(HttpStatus.OK)
-                        .body(city)
+                        .body(creditCard)
                 :
                 ResponseEntity
                         .status(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -38,12 +38,12 @@ public class CreditCardController {
 
     @GetMapping(path = "/creditcards")
     public ResponseEntity<List<CreditCard>> readCreditCards() {
-        var allCountries = creditCardDao.readAll();
+        var creditCards = creditCardDao.readAll();
 
-        return allCountries != null ?
+        return creditCards != null ?
                 ResponseEntity
                         .status(HttpStatus.OK)
-                        .body(allCountries)
+                        .body(creditCards)
                 :
                 ResponseEntity
                         .status(HttpStatus.INTERNAL_SERVER_ERROR)
