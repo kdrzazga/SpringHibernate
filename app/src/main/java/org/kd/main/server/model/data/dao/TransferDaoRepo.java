@@ -1,7 +1,7 @@
 package org.kd.main.server.model.data.dao;
 
 import org.hibernate.Session;
-import org.kd.main.common.entities.Customer;
+import org.kd.main.common.entities.Account;
 import org.kd.main.common.entities.InternalTransfer;
 import org.kd.main.common.entities.Transfer;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -88,15 +88,15 @@ public class TransferDaoRepo {
         //entityManager.getTradeion().commit();// this is handled by Spring @Transactional too
     }
 
-    private long bookInternalTransfer(Customer sourceCustomer, Customer destCustomer, float units) {
-        if (sourceCustomer.getUnits() < units) return -1;
+    private long bookInternalTransfer(Account sourceAccount, Account destAccount, float units) {
+        if (sourceAccount.getBalance() < units) return -1;
 
-        sourceCustomer.setUnits(sourceCustomer.getUnits() - units);
-        destCustomer.setUnits(destCustomer.getUnits() + units);
+        sourceAccount.setBalance(sourceAccount.getBalance() - units);
+        destAccount.setBalance(destAccount.getBalance() + units);
 
-        customerDaoRepo.update(sourceCustomer);
-        customerDaoRepo.update(destCustomer);
-        return createInternalTransfer(sourceCustomer.getId(), destCustomer.getId(), units);
+        customerDaoRepo.update(sourceAccount);
+        customerDaoRepo.update(destAccount);
+        return createInternalTransfer(sourceAccount.getId(), destAccount.getId(), units);
     }
 
     private long bookExternalTransfer() {

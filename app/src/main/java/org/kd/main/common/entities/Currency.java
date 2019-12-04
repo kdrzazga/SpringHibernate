@@ -22,10 +22,6 @@ public class Currency implements Serializable {
     private String name;
     private String shortname;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "country_id")
-    private Country country;
-
     public Currency(String name, String shortname) {
         this.name = name;
         this.shortname = shortname;

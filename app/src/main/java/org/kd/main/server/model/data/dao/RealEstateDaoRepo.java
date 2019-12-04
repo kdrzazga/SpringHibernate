@@ -44,7 +44,7 @@ public class RealEstateDaoRepo {
         var crBuilder = session.getCriteriaBuilder();
         CriteriaQuery<RealEstate> query = crBuilder.createQuery(RealEstate.class);
         Root<RealEstate> root = query.from(RealEstate.class);
-        query.select(root).where(crBuilder.equal(root.get("id"), id));//SELECT from Customer WHERE id=id
+        query.select(root).where(crBuilder.equal(root.get("id"), id));//SELECT from Account WHERE id=id
         Query<RealEstate> q = session.createQuery(query);
         return q.getSingleResult();
     }

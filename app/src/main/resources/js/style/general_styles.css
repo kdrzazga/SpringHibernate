@@ -2,10 +2,14 @@
 .default-button {background-color: #a6cfe3; display: block}
 
 /* Change color of dropdown links on hover */
-.dropdown-content a:hover {background-color: #ddd;}
+.dropdown-content a:hover {background-color: #000ddd;}
 
 /* Show the dropdown menu on hover */
 .dropdown:hover .dropdown-content {display: block;}
 
 /* Change the background color of the dropdown button when the dropdown content is shown */
 .dropdown:hover .dropbtn {background-color: #cccccc;}
+
+.default-table {border: 1px solid;}
+
+.table-td {border: 1px solid;}

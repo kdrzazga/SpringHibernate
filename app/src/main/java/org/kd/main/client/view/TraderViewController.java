@@ -7,11 +7,11 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import org.kd.main.client.presenter.PresenterHandler;
 import org.kd.main.client.view.lib.PropertiesReader;
+import org.kd.main.common.entities.Account;
 import org.kd.main.common.entities.Bank;
-import org.kd.main.common.entities.Customer;
+import org.kd.main.common.entities.CorporateAccount;
 import org.kd.main.common.entities.Transfer;
 
-import javax.swing.*;
 import java.util.Optional;
 import java.util.OptionalDouble;
 import java.util.OptionalLong;
@@ -112,7 +112,7 @@ public class TraderViewController {
         if (customer != null) {
             this.customerNameField.setText(customer.getName());
             this.customerShortNameField.setText(customer.getShortname());
-            this.customerCashField.setText(String.valueOf(customer.getUnits()));
+            this.customerCashField.setText(String.valueOf(customer.getBalance()));
         }
     }
     @FXML
@@ -135,7 +135,7 @@ public class TraderViewController {
         if (isNoneElementSelected(customerIdChoiceBox, showCustomerButton, errorMsgCustomer)
                 | isNoneElementSelected(bankIdChoiceBox, showCustomerButton, errorMsgBank)) return;
 
-        handler.updateCustomer(new Customer(readCustomerShortName(), readCustomerName(), readCustomerUnits(), readBankId()));
+        handler.updateCustomer(new CorporateAccount(readCustomerShortName(), readCustomerName(), readCustomerUnits(), readBankId()));
     }
 
     @FXML
@@ -177,7 +177,7 @@ public class TraderViewController {
         var list = FXCollections.observableArrayList(
                 handler.readCustomers()
                         .stream()
-                        .map(Customer::getId)
+                        .map(Account::getId)
                         .map(Object::toString)
                         .collect(Collectors.toList()));
 

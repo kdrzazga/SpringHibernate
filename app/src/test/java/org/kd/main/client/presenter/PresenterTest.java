@@ -10,9 +10,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.kd.main.client.presenter.config.TestClientConfig;
 import org.kd.main.common.TraderConfig;
-import org.kd.main.common.entities.Bank;
-import org.kd.main.common.entities.Customer;
-import org.kd.main.common.entities.Transfer;
+import org.kd.main.common.entities.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
@@ -39,8 +37,8 @@ public class PresenterTest {
     private String port;
 
     private final Bank bank = new Bank(1L, "Test Bank", "TST");
-    private final Customer customer = new Customer("IK", "Ian Kovalsky", 1.0, 1L);
-    private final Transfer transfer = new Transfer(1, 1, 2, true);
+    private final Account account = new CorporateAccount("IK", "Ian Kovalsky", 1.0, 1L);
+    private final Transfer transfer = new InternalTransfer(1L, 1L, 2f);
 
     @Autowired
     private WireMockServer wireMockServer;
@@ -56,7 +54,7 @@ public class PresenterTest {
         try {
             var objectMapper = new ObjectMapper();
             String banksAsJson = objectMapper.writeValueAsString(List.of(bank));
-            String customersAsJson = objectMapper.writeValueAsString(List.of(customer));
+            String customersAsJson = objectMapper.writeValueAsString(List.of(account));
             String transfersAsJson = objectMapper.writeValueAsString(List.of(transfer));
 
             createStubForGet(banksAsJson, "/banks");
@@ -91,7 +89,7 @@ public class PresenterTest {
         var customers = presenterHandler.readCustomers();
         assertNotNull(customers);
         assertThat(customers, hasSize(greaterThan(0)));
-        assertEquals(customer, customers.get(0));
+        assertEquals(account, customers.get(0));
     }
 
     @Test

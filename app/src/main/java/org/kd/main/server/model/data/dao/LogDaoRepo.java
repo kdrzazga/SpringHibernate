@@ -44,7 +44,7 @@ public class LogDaoRepo {
         var crBuilder = session.getCriteriaBuilder();
         CriteriaQuery<Log> query = crBuilder.createQuery(Log.class);
         Root<Log> root = query.from(Log.class);
-        query.select(root).where(crBuilder.equal(root.get("id"), id));//SELECT from Customer WHERE id=id
+        query.select(root).where(crBuilder.equal(root.get("id"), id));//SELECT from Account WHERE id=id
         Query<Log> q = session.createQuery(query);
         return q.getSingleResult();
     }

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Trader - Customer Details</title>
+    <link rel="stylesheet" href="style/padstyle.css"/>
+    <link rel="stylesheet" href="style/general_styles.css"/>
+</head>
+<body>
+<div>
+    <div id="header">
+        <div align="center">Customer: Jan Kovalsky (id = 0)</div>
+    </div>
+    <div class="container">
+        <!-- Tabs -->
+        <table id="nav-tab" class="nav">
+            <tr>
+                <td class="active"><a href="#debit-cards">Debit Cards</a></td>
+                <td><a href="#credit-cards">Credit Cards</a></td>
+                <td><a href="#credits">Credits</a></td>
+            </tr>
+        </table>
+        <div class="tab-content">
+            <div class="tab-pane active" id="debit-cards">
+                <table>
+                    <thead>
+                    <td class="table-td">id</td>
+                    <td class="table-td">Customer</td>
+                    <td class="table-td">Bank</td>
+                    <td class="table-td">Currency</td>
+                    <td class="table-td">Balance</td>
+                    </thead>
+                    <tr></tr>
+                </table>
+            </div>
+            <div class="tab-pane" id="credit-cards">
+                <table>
+                    <thead>
+                    <td class="table-td">id</td>
+                    <td class="table-td">Customer</td>
+                    <td class="table-td">Bank</td>
+                    <td class="table-td">Currency</td>
+                    <td class="table-td">Balance</td>
+                    <td class="table-td">Credit Limit</td>
+                    </thead>
+                </table>
+            </div>
+            <div class="tab-pane" id="credits">
+                <table>
+                    <thead>
+                    <td class="table-td">id</td>
+                    <td class="table-td">Customer</td>
+                    <td class="table-td">Bank</td>
+                    <td class="table-td">Amount</td>
+                    <td class="table-td">Currency</td>
+                    </thead>
+                    <tr>
+                        <td class="table-td">1</td>
+                        <td class="table-td">2</td>
+                        <td class="table-td">3</td>
+                        <td class="table-td">4</td>
+                        <td class="table-td">5</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="script/tabs.js"></script>
+</body>
+</html>

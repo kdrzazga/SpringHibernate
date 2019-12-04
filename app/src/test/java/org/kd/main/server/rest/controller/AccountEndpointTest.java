@@ -8,7 +8,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.kd.main.common.RestUtility;
 import org.kd.main.common.TraderConfig;
-import org.kd.main.common.entities.Customer;
+import org.kd.main.common.entities.CorporateAccount;
 import org.kd.main.server.TraderServer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -24,7 +24,7 @@ import static org.junit.Assert.assertEquals;
 @RunWith(SpringJUnit4ClassRunner.class)
 @Import(TraderConfig.class)
 @Ignore
-public class CustomerEndpointTest {
+public class AccountEndpointTest {
 
     @Autowired
     private RestUtility restUtility;
@@ -34,7 +34,7 @@ public class CustomerEndpointTest {
         TraderServer.getInstance().start();
         var contentType = "application/json";
         var requestUrl = "http://localhost:8080/customer";
-        var testCustomer = new Customer("TST", "Test", 0.0, 1002L);
+        var testCustomer = new CorporateAccount("TST", "Test", 0.0, 1002L);
 
         try {
             String customerJson = new ObjectMapper().writeValueAsString(testCustomer);

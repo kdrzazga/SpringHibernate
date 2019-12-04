@@ -1,7 +1,7 @@
 package org.kd.main.client.presenter;
 
+import org.kd.main.common.entities.Account;
 import org.kd.main.common.entities.Bank;
-import org.kd.main.common.entities.Customer;
 import org.kd.main.common.entities.Transfer;
 
 import java.util.List;
@@ -20,11 +20,11 @@ public interface PresenterHandler {
 
     void createCustomer(String name, String shortname, Double units, Long bankId);
 
-    Customer readCustomer(Long id);
+    Account readCustomer(Long id);
 
-    List<Customer> readCustomers();
+    List<Account> readCustomers();
 
-    void updateCustomer(Customer customer);
+    void updateCustomer(Account account);
 
     void deleteCustomer(Long id);
 

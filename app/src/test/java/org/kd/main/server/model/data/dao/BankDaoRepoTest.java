@@ -7,7 +7,7 @@ import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.runner.RunWith;
 import org.kd.main.common.entities.Bank;
-import org.kd.main.common.entities.Customer;
+import org.kd.main.common.entities.Account;
 import org.kd.main.server.TraderServer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -65,11 +65,11 @@ public class BankDaoRepoTest {
     @Test
     @Ignore
     public void testGetAssociatedCustomers() {
-        List<Customer> associatedCustomers = bankDaoRepo.readAssociatedCustomers(1012L);
+        List<Account> associatedAccounts = bankDaoRepo.readAssociatedCustomers(1012L);
 
-        Assert.assertNotNull(associatedCustomers);
-        assertThat(associatedCustomers.size(), greaterThan(0));
-        assertThat(associatedCustomers, hasSize(4));
+        Assert.assertNotNull(associatedAccounts);
+        assertThat(associatedAccounts.size(), greaterThan(0));
+        assertThat(associatedAccounts, hasSize(4));
     }
 
     @Test

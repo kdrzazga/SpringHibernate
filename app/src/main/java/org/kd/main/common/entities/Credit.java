@@ -20,7 +20,7 @@ public class Credit {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "customer_id", referencedColumnName = "id")
-    private Customer customer;
+    private Account account;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "bank_id", referencedColumnName = "id")

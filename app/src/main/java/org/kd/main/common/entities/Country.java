@@ -5,8 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
@@ -22,9 +21,14 @@ public class Country implements Serializable {
     private String name;
     private String shortname;
 
-    public Country(String name, String shortname) {
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "currency_id")
+    private Currency currency;
+
+    public Country(String name, String shortname, Currency currency) {
         this.name = name;
         this.shortname = shortname;
+        this.currency = currency;
     }
 
     @Override

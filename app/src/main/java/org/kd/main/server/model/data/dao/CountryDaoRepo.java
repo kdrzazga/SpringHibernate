@@ -44,7 +44,7 @@ public class CountryDaoRepo {
         var crBuilder = session.getCriteriaBuilder();
         CriteriaQuery<Country> query = crBuilder.createQuery(Country.class);
         Root<Country> root = query.from(Country.class);
-        query.select(root).where(crBuilder.equal(root.get("id"), id));//SELECT from Customer WHERE id=id
+        query.select(root).where(crBuilder.equal(root.get("id"), id));//SELECT from Account WHERE id=id
         Query<Country> q = session.createQuery(query);
         return q.getSingleResult();
     }

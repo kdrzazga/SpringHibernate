@@ -14,7 +14,7 @@ import java.io.Serializable;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "internal",
         discriminatorType = DiscriminatorType.STRING)
-public class Transfer implements Serializable {
+public abstract class Transfer implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

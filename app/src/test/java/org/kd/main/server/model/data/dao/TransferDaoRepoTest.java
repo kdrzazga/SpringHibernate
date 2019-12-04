@@ -6,8 +6,8 @@ import org.junit.Test;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.runner.RunWith;
+import org.kd.main.common.entities.Account;
 import org.kd.main.server.TraderServer;
-import org.kd.main.common.entities.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.annotation.Order;
@@ -86,15 +86,15 @@ public class TransferDaoRepoTest {
         //transferDaoRepo.book(2003L, 2004L, 30.02f);//books transact again, but id will change
     }
 
-    private void checkBookingTransfer(long srcFundId, Predicate<Customer> partyIdComparisonPredicate) {
+    private void checkBookingTransfer(long srcFundId, Predicate<Account> partyIdComparisonPredicate) {
 
-        var destCustomer = customerDaoRepo.readAll()
+        var destCustomer = customerDaoRepo.readAllCorporate()
                 .stream()
                 .filter(partyIdComparisonPredicate)
                 .findFirst();
 
         if (!destCustomer.isPresent())
-            fail("Wrong test data. Cannot book Transfer. Only one customer with appropriate bank id ");
+            fail("Wrong test data. Cannot book Transfer. Only one account with appropriate bank id ");
 
         final int errorCode = -1;
         final long newTransferId =  transferDaoRepo.book(srcFundId, destCustomer.get().getId(), 0.5f);

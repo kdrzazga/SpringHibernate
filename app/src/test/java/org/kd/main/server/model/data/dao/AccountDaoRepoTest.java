@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @SpringBootTest(classes = {TraderServer.class})
 @RunWith(SpringJUnit4ClassRunner.class)
-public class CustomerDaoRepoTest {
+public class AccountDaoRepoTest {
 
     @Autowired
     private CustomerDaoRepo customerDaoRepo;
@@ -32,7 +32,7 @@ public class CustomerDaoRepoTest {
 
     @Test
     public void testGetAllCustomers() {
-        var allCustomers = customerDaoRepo.readAll();
+        var allCustomers = customerDaoRepo.readAllCorporate();
 
         Assert.assertNotNull(allCustomers);
         assertTrue(allCustomers.size() > 0);

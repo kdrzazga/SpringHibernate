@@ -385,19 +385,38 @@
 			"response": []
 		},
 		{
-			"name": "readAllCustomers",
+			"name": "readAllCorporateAccounts",
 			"request": {
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/customers",
+					"raw": "http://localhost:8080/corporate-customers",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"customers"
+						"corporate-customers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "readAllIndividualAccounts",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/individual-accounts",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"individual-accounts"
 					]
 				}
 			},
@@ -756,6 +775,25 @@
 					"port": "8080",
 					"path": [
 						"stop"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "readAllCorporateCustomers Copy",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/corporate-customers",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"corporate-customers"
 					]
 				}
 			},

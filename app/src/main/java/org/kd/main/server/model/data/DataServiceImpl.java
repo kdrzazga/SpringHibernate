@@ -1,6 +1,7 @@
 package org.kd.main.server.model.data;
 
-import org.kd.main.common.entities.Customer;
+import org.kd.main.common.entities.Account;
+import org.kd.main.common.entities.CorporateAccount;
 import org.kd.main.common.model.data.DataService;
 import org.kd.main.common.entities.Bank;
 import org.kd.main.common.entities.Transfer;
@@ -33,8 +34,8 @@ public class DataServiceImpl implements DataService {
     }
 
     @Override
-    public List<Customer> readCustomers() {
-        return customerDaoRepo.readAll();
+    public List<CorporateAccount> readCustomers() {
+        return customerDaoRepo.readAllCorporate();
     }
 
     @Override
@@ -54,13 +55,13 @@ public class DataServiceImpl implements DataService {
     }
 
     @Override
-    public Customer readCustomer(long id) {
+    public Account readCustomer(long id) {
         return customerDaoRepo.read(id);
     }
 
     @Override
-    public void updateCustomer(Customer customer) {
-        customerDaoRepo.update(customer);
+    public void updateCustomer(Account account) {
+        customerDaoRepo.update(account);
     }
 
     @Override

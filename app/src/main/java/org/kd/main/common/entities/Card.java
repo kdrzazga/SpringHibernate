@@ -18,7 +18,7 @@ public abstract class Card implements Serializable {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "customer_id", referencedColumnName = "id")
-    protected Customer customer;
+    protected Account account;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "bank_id", referencedColumnName = "id")
@@ -27,6 +27,9 @@ public abstract class Card implements Serializable {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "currency_id", referencedColumnName = "id")
     protected Currency currency;
+
+    @Column(name = "is_active")
+    protected Boolean active;
 
     protected Float balance;
 }

@@ -2,7 +2,9 @@ package org.kd.main.server.model.data.dao;
 
 import org.hibernate.Session;
 import org.hibernate.query.Query;
-import org.kd.main.common.entities.Customer;
+import org.kd.main.common.entities.CorporateAccount;
+import org.kd.main.common.entities.Account;
+import org.kd.main.common.entities.IndividualAccount;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
@@ -23,78 +25,90 @@ public class CustomerDaoRepo {
     private Logger log = LoggerFactory.getLogger(CustomerDaoRepo.class);
 
     @Transactional
-    public Customer create(Customer customer) {
+    public Account create(Account account) {
 
-        getSession().saveOrUpdate(customer);
-        return customer;
+        getSession().saveOrUpdate(account);
+        return account;
     }
 
     @Transactional
-    public Customer read(long id) {
+    public Account read(long id) {
         return readCustomer(id);
     }
 
     @Transactional
-    public List<Customer> readAll() {
+    public List<CorporateAccount> readAllCorporate() {
         var session = getSession();
         var crBuilder = session.getCriteriaBuilder();
-        CriteriaQuery<Customer> query = crBuilder.createQuery(Customer.class);
-        Root<Customer> root = query.from(Customer.class);
+        CriteriaQuery<CorporateAccount> query = crBuilder.createQuery(CorporateAccount.class);
+        Root<CorporateAccount> root = query.from(CorporateAccount.class);
         query.select(root);
-        Query<Customer> q = session.createQuery(query);
+        Query<CorporateAccount> q = session.createQuery(query);
 
         return q.getResultList();
     }
 
     @Transactional
-    public void update(Customer customer) {
+    public List<IndividualAccount> readAllIndividual() {
         var session = getSession();
-        log.info("Logging session: " + session + " updating customer " + customer);
-        session.update(customer);
+        var crBuilder = session.getCriteriaBuilder();
+        CriteriaQuery<IndividualAccount> query = crBuilder.createQuery(IndividualAccount.class);
+        Root<IndividualAccount> root = query.from(IndividualAccount.class);
+        query.select(root);
+        Query<IndividualAccount> q = session.createQuery(query);
+
+        return q.getResultList();
     }
 
     @Transactional
-    public Customer delete(long id) {
+    public void update(Account account) {
+        var session = getSession();
+        log.info("Logging session: " + session + " updating account " + account);
+        session.update(account);
+    }
+
+    @Transactional
+    public Account delete(long id) {
         var customer = readCustomer(id);
         deleteCustomer(customer);
         return customer; //TODO: reconsider this
     }
 
-    public boolean isPersisted(Customer customer) {
-        return entityManager.contains(customer);
+    public boolean isPersisted(Account account) {
+        return entityManager.contains(account);
     }
 
     @Transactional
-    public void detach(Customer customer) {
-        entityManager.detach(customer);
+    public void detach(Account account) {
+        entityManager.detach(account);
     }
 
 
-    public Customer readCustomer(long id) {
+    public Account readCustomer(long id) {
         var session = getSession();
         var crBuilder = session.getCriteriaBuilder();
-        CriteriaQuery<Customer> query = crBuilder.createQuery(Customer.class);
-        Root<Customer> root = query.from(Customer.class);
-        query.select(root).where(crBuilder.equal(root.get("id"), id));//SELECT from Customer WHERE id=id
-        Query<Customer> q = session.createQuery(query);
+        CriteriaQuery<Account> query = crBuilder.createQuery(Account.class);
+        Root<Account> root = query.from(Account.class);
+        query.select(root).where(crBuilder.equal(root.get("id"), id));//SELECT from Account WHERE id=id
+        Query<Account> q = session.createQuery(query);
         return q.getSingleResult();
     }
 
     @Transactional
-    public Customer read(String shortname) {
+    public Account read(String shortname) {
         var session = getSession();
         var crBuilder = session.getCriteriaBuilder();
-        var query = crBuilder.createQuery(Customer.class);
-        var root = query.from(Customer.class);
-        query.select(root).where(crBuilder.equal(root.get("shortname"), shortname));//SELECT from Customer WHERE id=id
+        var query = crBuilder.createQuery(Account.class);
+        var root = query.from(Account.class);
+        query.select(root).where(crBuilder.equal(root.get("shortname"), shortname));//SELECT from Account WHERE id=id
         var q = session.createQuery(query);
         return q.getSingleResult();
     }
 
-    void deleteCustomer(Customer customer) {
+    void deleteCustomer(Account account) {
         var session = getSession();
         /*TODO: nulling customers required*/
-        session.delete(customer);
+        session.delete(account);
     }
 
     Session getSession() {

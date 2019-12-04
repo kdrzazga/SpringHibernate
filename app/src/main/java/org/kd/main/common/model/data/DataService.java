@@ -1,7 +1,8 @@
 package org.kd.main.common.model.data;
 
-import org.kd.main.common.entities.Customer;
+import org.kd.main.common.entities.Account;
 import org.kd.main.common.entities.Bank;
+import org.kd.main.common.entities.CorporateAccount;
 import org.kd.main.common.entities.Transfer;
 
 import java.util.List;
@@ -15,7 +16,7 @@ public interface DataService {
      */
     void saveDb();
 
-    List<Customer> readCustomers();
+    List<CorporateAccount> readCustomers();
 
     List<Bank> readBanks();
 
@@ -23,9 +24,9 @@ public interface DataService {
 
     void updateBank(Bank bank);
 
-    Customer readCustomer(long id);
+    Account readCustomer(long id);
 
-    void updateCustomer(Customer customer);
+    void updateCustomer(Account account);
 
     Bank readBank(long id);
 }

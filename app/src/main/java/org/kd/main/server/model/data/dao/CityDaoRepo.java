@@ -44,7 +44,7 @@ public class CityDaoRepo {
         var crBuilder = session.getCriteriaBuilder();
         CriteriaQuery<City> query = crBuilder.createQuery(City.class);
         Root<City> root = query.from(City.class);
-        query.select(root).where(crBuilder.equal(root.get("id"), id));//SELECT from Customer WHERE id=id
+        query.select(root).where(crBuilder.equal(root.get("id"), id));//SELECT from Account WHERE id=id
         Query<City> q = session.createQuery(query);
         return q.getSingleResult();
     }

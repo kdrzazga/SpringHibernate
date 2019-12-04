@@ -6,8 +6,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.kd.main.client.view.lib.PropertiesReader;
 import org.kd.main.common.RestUtility;
 import org.kd.main.common.TraderConfig;
+import org.kd.main.common.entities.Account;
 import org.kd.main.common.entities.Bank;
-import org.kd.main.common.entities.Customer;
 import org.kd.main.common.entities.Transfer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,7 +29,7 @@ public class TraderPresenter implements PresenterHandler {
 
     private final String port = new PropertiesReader().readKey("server_port");
 
-    private String serviceAddress;
+    private String serviceAddress = "http://localhost:" + port;
     private HttpMethod requestType;
     private String requestAsString;
     private String requestUrl;
@@ -38,11 +38,11 @@ public class TraderPresenter implements PresenterHandler {
 
     private final TypeReference<Bank> bankTypeReference = new TypeReference<>() {
     };
-    private final TypeReference<Customer> customerTypeReference = new TypeReference<>() {
+    private final TypeReference<Account> customerTypeReference = new TypeReference<>() {
     };
     private final TypeReference<List<Bank>> bankListTypeReference = new TypeReference<>() {
     };
-    private final TypeReference<List<Customer>> customerListTypeReference = new TypeReference<>() {
+    private final TypeReference<List<Account>> customerListTypeReference = new TypeReference<>() {
     };
     private final TypeReference<List<Transfer>> transferListTypeReference = new TypeReference<>() {
     };
@@ -120,21 +120,21 @@ public class TraderPresenter implements PresenterHandler {
     }
 
     @Override
-    public List<Customer> readCustomers() {
+    public List<Account> readCustomers() {
 
         requestType = HttpMethod.valueOf("GET");
-        requestUrl = serviceAddress.concat("/customers");
+        requestUrl = serviceAddress.concat("/accounts");
         requestAsString = "";
 
         ResponseEntity<String> response = restUtility.processHttpRequest(requestType, requestAsString, requestUrl, "application/json");
         if (response == null) {
-            log.error("REST error. Couldn't read customers from server.");
+            log.error("REST error. Couldn't read accounts from server.");
             return new Vector<>();
         }
         restUtility.retrieveResponseBodyAndStatusCode(response);
-        List<Customer> customers;
+        List<Account> accounts;
         try {
-            customers = new ObjectMapper()
+            accounts = new ObjectMapper()
                     .readValue(response.getBody()
                             , customerListTypeReference);
         } catch (IOException e) {
@@ -142,25 +142,25 @@ public class TraderPresenter implements PresenterHandler {
             return new Vector<>();
         }
 
-        return customers;
+        return accounts;
     }
 
     @Override
-    public Customer readCustomer(Long id) {
+    public Account readCustomer(Long id) {
 
         requestType = HttpMethod.valueOf("GET");
-        requestUrl = serviceAddress.concat("/customer/").concat(id.toString());
+        requestUrl = serviceAddress.concat("/account/").concat(id.toString());
         requestAsString = "";
 
         ResponseEntity<String> response = restUtility.processHttpRequest(requestType, requestAsString, requestUrl, "application/json");
         if (response == null) {
-            log.error("REST error. Couldn't read customer with id={} from server.", id);
+            log.error("REST error. Couldn't read account with id={} from server.", id);
             return null;
         }
         restUtility.retrieveResponseBodyAndStatusCode(response);
-        Customer customer;
+        Account account;
         try {
-            customer = new ObjectMapper()
+            account = new ObjectMapper()
                     .readValue(response.getBody()
                             , customerTypeReference);
         } catch (IOException e) {
@@ -168,17 +168,17 @@ public class TraderPresenter implements PresenterHandler {
             return null;
         }
 
-        return customer;
+        return account;
     }
 
     @Override
-    public void updateCustomer(Customer customer) {
+    public void updateCustomer(Account account) {
 
         var contentType = "application/json";
-        var requestUrl = serviceAddress.concat("/customer");
+        var requestUrl = serviceAddress.concat("/account");
 
         try {
-            String customerJson = new ObjectMapper().writeValueAsString(customer);
+            String customerJson = new ObjectMapper().writeValueAsString(account);
             var response = restUtility.processHttpRequest(HttpMethod.PUT, customerJson, requestUrl, contentType);
 
             restUtility.retrieveResponseBodyAndStatusCode(response);
@@ -243,7 +243,7 @@ public class TraderPresenter implements PresenterHandler {
     public void deleteCustomer(Long id) {
 
         requestType = HttpMethod.valueOf("DELETE");
-        requestUrl = serviceAddress.concat("/customer/").concat(id.toString());
+        requestUrl = serviceAddress.concat("/account/").concat(id.toString());
         requestAsString = "";
 
         ResponseEntity<String> response = restUtility.processHttpRequest(requestType, requestAsString, requestUrl, "application/json");
