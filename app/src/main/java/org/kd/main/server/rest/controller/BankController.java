@@ -1,9 +1,11 @@
 package org.kd.main.server.rest.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.kd.main.common.RestUtility;
+import org.kd.main.common.entities.Account;
 import org.kd.main.common.entities.Bank;
 import org.kd.main.server.model.data.dao.BankDaoRepo;
-import org.kd.main.server.model.data.dao.CustomerDaoRepo;
+import org.kd.main.server.model.data.dao.AccountDaoRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,17 +13,22 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+
 @RestController
-public class BankController {
+class BankController {
 
     @Autowired
-    private CustomerDaoRepo customerDao;
+    private AccountDaoRepo accountDaoRepo;
 
     @Autowired
     private BankDaoRepo bankDao;
 
-    @PostMapping(path = "/bank", consumes = "application/json", produces = "application/json")
-    public ResponseEntity<String> createBank(@RequestBody String bankJson) {
+    @Autowired
+    private RestUtility restUtility;
+
+    @PostMapping(path = "/bank", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> create(@RequestBody String bankJson) {
         try {
             bankJson = bankJson
                     .replaceAll("\r\n", "")
@@ -42,8 +49,8 @@ public class BankController {
         }
     }
 
-    @GetMapping(path = "/bank/{id}", produces = "application/json")
-    public ResponseEntity<Bank> readBank(@PathVariable long id) {
+    @GetMapping(path = "/bank/{id}", produces = APPLICATION_JSON_VALUE)
+    public ResponseEntity<Bank> read(@PathVariable long id) {
         var bank = bankDao.read(id);
 
         return bank != null ?
@@ -58,7 +65,7 @@ public class BankController {
     }
 
     @GetMapping(path = "/banks")
-    public ResponseEntity<List<Bank>> readBanks() {
+    public ResponseEntity<List<Bank>> readAll() {
         var allBanks = bankDao.readAll();
 
         return allBanks != null ?
@@ -72,8 +79,24 @@ public class BankController {
                         .build();
     }
 
-    @PutMapping(path = "/bank", consumes = "application/json", produces = "application/json")
-    public ResponseEntity<String> updateBank(@RequestBody String bankJson) {
+    @GetMapping(path = "/associatedAccounts/{bankId}")
+    public ResponseEntity<List<Account>> getAssociatedAccounts(@PathVariable Long bankId) {
+        var associatedAccounts = accountDaoRepo.readAccountsOfBank(bankId);
+
+        return associatedAccounts.size() > 0 ?
+                ResponseEntity
+                        .status(HttpStatus.OK)
+                        .body(associatedAccounts)
+                :
+                ResponseEntity
+                        .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                        .header("message", "Error reading associated accounts of bank with id" + bankId)
+                        .build();
+    }
+
+
+    @PutMapping(path = "/bank", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
+    public ResponseEntity<String> update(@RequestBody String bankJson) {
         try {
             bankJson = bankJson
                     .replaceAll("\r\n", "")
@@ -99,7 +122,7 @@ public class BankController {
         return (bankDao.deleteWithFkNulling(id))
                 ? ResponseEntity
                 .status(HttpStatus.OK)
-                .body("Bank " + id + " deleted. All bank customers are not related now.")
+                .body("Bank " + id + " deleted. All bank accounts are not related now.")
 
                 : ResponseEntity
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)

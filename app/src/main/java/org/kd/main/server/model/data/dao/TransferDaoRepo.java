@@ -2,6 +2,7 @@ package org.kd.main.server.model.data.dao;
 
 import org.hibernate.Session;
 import org.kd.main.common.entities.Account;
+import org.kd.main.common.entities.ExternalTransfer;
 import org.kd.main.common.entities.InternalTransfer;
 import org.kd.main.common.entities.Transfer;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,7 @@ public class TransferDaoRepo {
     private BankDaoRepo bankDaoRepo;
 
     @Autowired
-    private CustomerDaoRepo customerDaoRepo;
+    private AccountDaoRepo accountDaoRepo;
 
     @Autowired
     private InternalTransferDaoRepo internalTransferDaoRepo;
@@ -32,23 +33,22 @@ public class TransferDaoRepo {
     private ExternalTransferDaoRepo externalTransferDaoRepo;
 
     @Transactional
-    public long book(long srcCustomerId, long destCustomerId, float units) {
+    public long book(long srcAccountId, long destAccountId, float units) {
 
-        var destFund = customerDaoRepo.read(destCustomerId);
-        var sourceFund = customerDaoRepo.read(srcCustomerId);
+        var destAccount = accountDaoRepo.read(destAccountId);
+        var srcAccount = accountDaoRepo.read(srcAccountId);
 
-        if (destFund == null || sourceFund == null) return -1;
+        if (destAccount == null || srcAccount == null) return -1;
 
-        return (Objects.equals(destFund.getBank_id(), sourceFund.getBank_id()))
-                ? bookInternalTransfer(sourceFund, destFund, units)
-                : bookExternalTransfer();
+        return (Objects.equals(destAccount.getBankId(), srcAccount.getBankId()))
+                ? bookInternalTransfer(srcAccount, destAccount, units)
+                : bookExternalTransfer(srcAccount, destAccount, units);
     }
 
     @Transactional
     public Transfer readByPrimaryKey(long id) {
         return readTransferByPrimaryKey(id);
     }
-
 
     @Transactional
     public List<Transfer> readAll() {
@@ -87,21 +87,28 @@ public class TransferDaoRepo {
         return entity;
         //entityManager.getTradeion().commit();// this is handled by Spring @Transactional too
     }
-
+    
     private long bookInternalTransfer(Account sourceAccount, Account destAccount, float units) {
         if (sourceAccount.getBalance() < units) return -1;
 
         sourceAccount.setBalance(sourceAccount.getBalance() - units);
         destAccount.setBalance(destAccount.getBalance() + units);
 
-        customerDaoRepo.update(sourceAccount);
-        customerDaoRepo.update(destAccount);
+        accountDaoRepo.update(sourceAccount);
+        accountDaoRepo.update(destAccount);
         return createInternalTransfer(sourceAccount.getId(), destAccount.getId(), units);
     }
 
-    private long bookExternalTransfer() {
-        throw new RuntimeException("Not implemented yet");
-        //TODO implement
+    private long bookExternalTransfer(Account sourceAccount, Account destAccount, float units) {
+        if (sourceAccount.getBalance() < units) return -1;
+
+        sourceAccount.setBalance(sourceAccount.getBalance() - units);
+        destAccount.setBalance(destAccount.getBalance() + units);
+
+        accountDaoRepo.update(sourceAccount);
+        accountDaoRepo.update(destAccount);
+        //TODO introduce differences btween internal and external transfer
+        return createExternalTransfer(sourceAccount.getId(), destAccount.getId(), units);
     }
 
     private long createInternalTransfer(long sourceFundId, long destFundId, float units) {
@@ -111,11 +118,18 @@ public class TransferDaoRepo {
         return newTrade.getId();
     }
 
-    Transfer readTransferByPrimaryKey(long id) {
+    private long createExternalTransfer(long sourceFundId, long destFundId, float units) {
+        var newTrade = new ExternalTransfer(sourceFundId, destFundId, units);
+
+        getSession().saveOrUpdate(newTrade);
+        return newTrade.getId();
+    }
+
+    private Transfer readTransferByPrimaryKey(long id) {
         return entityManager.find(Transfer.class, id);
     }
 
-    Session getSession() {
+    private Session getSession() {
         /*
         Container like Spring is not resposible for maintaing the life cycle for the EntityManager created from it. But you can @Autowire EntityManagerFactory directly as the bean is already configured in the applicationContext. Hence this could be simple like this emf.createEntityManager().unwrap(Session.class)' to get Session`
          */

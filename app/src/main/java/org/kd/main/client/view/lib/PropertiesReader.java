@@ -17,7 +17,7 @@ public class PropertiesReader {
         return readKey("application.properties", key);
     }
 
-    public String readKey(String propertiesFilename, String key) {
+    private String readKey(String propertiesFilename, String key) {
         var commonProperties = new Properties();
         if (propertiesFilename != null && !propertiesFilename.trim().isEmpty()
                 && key != null && !key.trim().isEmpty()) {

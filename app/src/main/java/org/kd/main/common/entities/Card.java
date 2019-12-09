@@ -11,17 +11,17 @@ import java.io.Serializable;
 @Getter
 @Setter
 @NoArgsConstructor
-public abstract class Card implements Serializable {
+abstract class Card implements Serializable {
 
     @Id
     protected Long id;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "customer_id", referencedColumnName = "id")
+    @JoinColumn(name = "account_id", referencedColumnName = "id")
     protected Account account;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "bank_id", referencedColumnName = "id")
+    @JoinColumn(name = "bankId", referencedColumnName = "id")
     protected Bank bank;
 
     @OneToOne(cascade = CascadeType.ALL)

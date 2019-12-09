@@ -20,11 +20,11 @@ public class BankDaoRepo {
     @PersistenceContext
     private EntityManager entityManager;
 
-    private final CustomerDaoRepo customerDaoRepo;
+    private final AccountDaoRepo accountDaoRepo;
 
     @Autowired
-    public BankDaoRepo(CustomerDaoRepo customerDaoRepo) {
-        this.customerDaoRepo = customerDaoRepo;
+    public BankDaoRepo(AccountDaoRepo accountDaoRepo) {
+        this.accountDaoRepo = accountDaoRepo;
     }
 
     @Transactional
@@ -48,7 +48,7 @@ public class BankDaoRepo {
         return readBank(id);
     }
 
-    public Bank readBank(long id) {
+    private Bank readBank(long id) {
         var session = getSession();
         var crBuilder = session.getCriteriaBuilder();
         CriteriaQuery<Bank> query = crBuilder.createQuery(Bank.class);
@@ -75,13 +75,7 @@ public class BankDaoRepo {
     }
 
     private List<Account> getAssociatedCustomers(long bankId) {
-        var session = getSession();
-        var crBuilder = session.getCriteriaBuilder();
-        var query = crBuilder.createQuery(Account.class);
-        var root = query.from(Account.class);
-        query.select(root).where(crBuilder.equal(root.get("party_id"), bankId));//SELECT from Funds WHERE party_id=bankId
-        var q = session.createQuery(query);
-        return q.getResultList();
+        return accountDaoRepo.readAccountsOfBank(bankId);
     }
 
     @Transactional
@@ -94,8 +88,8 @@ public class BankDaoRepo {
     public boolean deleteWithFkNulling(long id){
         var bank = readBank(id);
         getAssociatedCustomers(id).forEach(customer -> {
-            customer.setBank_id(null);
-            customerDaoRepo.update(customer);
+            customer.setBankId(null);
+            accountDaoRepo.update(customer);
         });
 
         getSession().delete(bank);
@@ -105,13 +99,13 @@ public class BankDaoRepo {
     @Transactional
     public boolean deleteWithRelatedCustomers(long id){
         var bank = readBank(id);
-        getAssociatedCustomers(id).forEach(customerDaoRepo::deleteCustomer);
+        getAssociatedCustomers(id).forEach(accountDaoRepo::deleteCustomer);
 
         getSession().delete(bank);
         return true;
     }
 
-    protected Session getSession() {
+    private Session getSession() {
         Session session;
         if (entityManager == null
                 || (session = entityManager.unwrap(Session.class)) == null) {

@@ -29,24 +29,24 @@ public class TransferDaoRepoTest {
     private TransferDaoRepo transferDaoRepo;
 
     @Autowired
-    private CustomerDaoRepo customerDaoRepo;
+    private AccountDaoRepo accountDaoRepo;
 
     @Test
     @Order(value = 1)
     public void testBookInternalTransfer() {
         var srcCustomerId = 2002L;
-        var commonBankId = customerDaoRepo.read(srcCustomerId).getBank_id();
+        var commonBankId = accountDaoRepo.read(srcCustomerId).getBankId();
 
-        checkBookingTransfer(srcCustomerId, customer -> Objects.equals(customer.getBank_id(), commonBankId));
+        checkBookingTransfer(srcCustomerId, customer -> Objects.equals(customer.getBankId(), commonBankId));
     }
 
     @Ignore("functionality not implemented yet")
     @Test
     public void testBookExternalTransfer() {
         var srcCustomerId = 2011L;
-        var commonBankId = customerDaoRepo.read(srcCustomerId).getBank_id();
+        var commonBankId = accountDaoRepo.read(srcCustomerId).getBankId();
 
-        checkBookingTransfer(srcCustomerId, customer -> !Objects.equals(customer.getBank_id(), commonBankId));
+        checkBookingTransfer(srcCustomerId, customer -> !Objects.equals(customer.getBankId(), commonBankId));
     }
 
     @Test
@@ -88,7 +88,7 @@ public class TransferDaoRepoTest {
 
     private void checkBookingTransfer(long srcFundId, Predicate<Account> partyIdComparisonPredicate) {
 
-        var destCustomer = customerDaoRepo.readAllCorporate()
+        var destCustomer = accountDaoRepo.readAllCorporate()
                 .stream()
                 .filter(partyIdComparisonPredicate)
                 .findFirst();

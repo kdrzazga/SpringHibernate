@@ -16,11 +16,6 @@ public class TraderConfig {
     private String port;
 
     @Bean
-    public RestUtility restUtility(){
-        return new RestUtility();
-    }
-
-    @Bean
     public RestTemplate restTemplate(){
         return new RestTemplate();
     }

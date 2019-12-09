@@ -15,7 +15,7 @@ import java.io.Serializable;
 @Setter
 @EqualsAndHashCode
 @NoArgsConstructor
-public abstract class Account implements Serializable {
+public class Account implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -26,17 +26,19 @@ public abstract class Account implements Serializable {
     private String shortname;
     private String name;
     private Double balance;
-    private Long bank_id;
 
-    public Account(Boolean corporate, String shortname, String name, Double units, Long bank_id) {
+    @Column(name = "bankId")
+    private Long bankId;
+
+    public Account(Boolean corporate, String shortname, String name, Double units, Long bankId) {
         this.corporate = corporate;
         this.shortname = shortname;
         this.name = name;
         this.balance = units;
-        this.bank_id = bank_id;
+        this.bankId = bankId;
     }
 
-      @Override
+    @Override
     public String toString() {
         return "Account " + this.id + " " + this.shortname + " " + this.name + " with units: " + this.balance;
     }

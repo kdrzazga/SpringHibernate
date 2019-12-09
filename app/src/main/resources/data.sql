@@ -112,7 +112,7 @@ create TABLE log(
 );
 
 insert into bank(id, shortname, name) values (1001, 'A', 'Agilent Technologies');
-insert into account(id, shortname, name, balance, bank_id) values (2001, 'MUSA', 'Murphy USA Inc', 2001.24, 1001);
+insert into account(id, corporate, shortname, name, balance, bank_id) values (2001, TRUE, 'MUSA', 'Murphy USA Inc', 2001.24, 1001);
 insert into transfer(id, src_account_id, dest_account_id, units, internal) values (3001, 2002, 2001, 123.44, TRUE);
 insert into currency(id, name, shortname) values (30001, 'Polish Zloty', 'PLN');
 insert into country(id, name, shortname, currency_id) values (10001, 'Poland', 'PL', 30001);
@@ -121,7 +121,7 @@ insert into credit(id, account_id, bank_id, amount, currency_id) values (40001, 
 insert into credit_card (id, account_id, is_active, bank_id, currency_id, balance, credit_limit) values (100001, 2001, TRUE, 1001, 30001, 123455.33, 350000);
 insert into debit_card (id, account_id, is_active, bank_id, currency_id, balance) values (100001, 2001, TRUE, 1001, 30001, 455.33);
 insert into real_estate(id, address, city_id) values (55001, 'Powstancow Slaskich 33', 20001);
-insert into log(id, created, file_path) values (130101, '2019-10-15 00:00:01', 'c:/log.txt');
+insert into log(id, created, file_path) values (130101, '2019-10-15 00:00:01', null);
 
 insert into bank(shortname, name) values('AAC', 'Aac Holdings Inc');
 insert into bank(shortname, name) values('AAN', 'Aarons Inc');
@@ -174,7 +174,6 @@ insert into bank(shortname, name) values('MT', 'Arcelormittal');
 insert into bank(shortname, name) values('MTB', 'M&T Bank Corp');
 insert into bank(shortname, name) values('MTB-C', 'M&T Bank Corporation Fixed Rate');
 insert into bank(shortname, name) values('MTB.P', 'M&T Bank Corporation Fixed Rate');
-
 
 insert into account(corporate, shortname, name, balance, bank_id) values (true, 'RAD', 'Rite Aid Corp', 0.7100, 1011);
 insert into account(corporate, shortname, name, balance, bank_id) values (true, 'RAMP', 'Liveramp Holdings Inc.', 38.35, 1011);
@@ -405,4 +404,4 @@ insert into credit_card (account_id, is_active, bank_id, currency_id, balance, c
 insert into credit_card (account_id, is_active, bank_id, currency_id, balance, credit_limit) values (2049, FALSE, 1044, 30005, 422.40, 600932);
 insert into credit_card (account_id, is_active, bank_id, currency_id, balance, credit_limit) values (2046, FALSE, 1052, 30006, 129932, 390000);
 
-insert into log(created, file_path) values ('2019-12-02 14:39:47', null);
+insert into log(created, file_path) values ('2019-12-02 14:39:47', 'log1.txt');

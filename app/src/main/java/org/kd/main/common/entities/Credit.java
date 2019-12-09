@@ -19,7 +19,7 @@ public class Credit {
     private Float amount;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "customer_id", referencedColumnName = "id")
+    @JoinColumn(name = "account_id", referencedColumnName = "id")
     private Account account;
 
     @OneToOne(cascade = CascadeType.ALL)

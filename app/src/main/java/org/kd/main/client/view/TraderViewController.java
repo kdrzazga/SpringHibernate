@@ -17,7 +17,7 @@ import java.util.OptionalDouble;
 import java.util.OptionalLong;
 import java.util.stream.Collectors;
 
-public class TraderViewController {
+class TraderViewController {
 
     private static PresenterHandler handler;
 

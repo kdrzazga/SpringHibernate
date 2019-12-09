@@ -80,6 +80,26 @@
 			"response": []
 		},
 		{
+			"name": "readAccountsOfBank",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/associatedAccounts/1005",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"associatedAccounts",
+						"1005"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "updateBank",
 			"request": {
 				"method": "PUT",
@@ -101,14 +121,14 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/customer",
+					"raw": "http://localhost:8080/bank",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"customer"
+						"bank"
 					]
 				}
 			},
@@ -330,20 +350,20 @@
 			"response": []
 		},
 		{
-			"name": "createCustomer",
+			"name": "createAccount",
 			"request": {
 				"method": "POST",
 				"header": [
 					{
 						"key": "Content-Type",
 						"name": "Content-Type",
-						"value": "application/json",
-						"type": "text"
+						"type": "text",
+						"value": "application/json"
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"id\" : 1000,\n\t\"shortname\" : \"Adam\",\n\t\"name\" : \"Adamowicz\",\n\t\"units\" : 1.50,\n\t\"bank_id\" : 2001\n}",
+					"raw": "{\n\t\"id\" : 1000,\n\t\"corporate\" : false,\n\t\"shortname\" : \"Adam\",\n\t\"name\" : \"Adamowicz\",\n\t\"balance\" : 1.50,\n\t\"bank_id\" : 2001\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -351,33 +371,33 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/customer",
+					"raw": "http://localhost:8080/account",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"customer"
+						"account"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "readCustomer",
+			"name": "readAccount",
 			"request": {
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/customer/2003",
+					"raw": "http://localhost:8080/account/2003",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"customer",
+						"account",
 						"2003"
 					]
 				}
@@ -390,14 +410,14 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/corporate-customers",
+					"raw": "http://localhost:8080/corporate-accounts",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"corporate-customers"
+						"corporate-accounts"
 					]
 				}
 			},
@@ -423,7 +443,7 @@
 			"response": []
 		},
 		{
-			"name": "updateCustomer",
+			"name": "updateAccount",
 			"request": {
 				"method": "PUT",
 				"header": [
@@ -444,33 +464,33 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/customer",
+					"raw": "http://localhost:8080/account",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"customer"
+						"account"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "deleteCustomer",
+			"name": "deleteAccount",
 			"request": {
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/customer/2002",
+					"raw": "http://localhost:8080/account/2002",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"customer",
+						"account",
 						"2002"
 					]
 				}
@@ -517,6 +537,26 @@
 			"response": []
 		},
 		{
+			"name": "createEmptyLog",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/log/newlog",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"log",
+						"newlog"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "readLog",
 			"request": {
 				"method": "GET",
@@ -550,6 +590,48 @@
 					"port": "8080",
 					"path": [
 						"logs"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "recentLog",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/recentLog",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"recentLog"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "writeMessageToRecentLog",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "1"
+				},
+				"url": {
+					"raw": "http://localhost:8080/addEntryToRecentLog",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"addEntryToRecentLog"
 					]
 				}
 			},
@@ -595,6 +677,41 @@
 			"response": []
 		},
 		{
+			"name": "bookExternalTransfer (create)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"srcAccountId\": 2002,\n    \"destAccountId\": 2007,\n    \"units\": 0.00,\n    \"internal\": false\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/transfer",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"transfer"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "bookInternalTransfer (create)",
 			"request": {
 				"method": "POST",
@@ -608,7 +725,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"id\": 3000,\n    \"src_customer_id\": 2004,\n    \"dest_customer_id\": 2005,\n    \"units\": 0.01,\n    \"internal\": true\n}",
+					"raw": "{\n    \"srcAccountId\": 2004,\n    \"destAccountId\": 2002,\n    \"units\": 30,\n    \"internal\": true\n}\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -775,25 +892,6 @@
 					"port": "8080",
 					"path": [
 						"stop"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "readAllCorporateCustomers Copy",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:8080/corporate-customers",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"corporate-customers"
 					]
 				}
 			},

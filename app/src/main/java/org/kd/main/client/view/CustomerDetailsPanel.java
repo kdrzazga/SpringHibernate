@@ -2,7 +2,7 @@ package org.kd.main.client.view;
 
 import org.kd.main.client.presenter.PresenterHandler;
 
-public class CustomerDetailsPanel {
+class CustomerDetailsPanel {
 
     private static PresenterHandler handler;
 
