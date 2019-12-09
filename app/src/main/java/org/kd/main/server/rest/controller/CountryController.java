@@ -11,8 +11,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+
 @RestController
-public class CountryController {
+class CountryController {
 
     private final CountryDaoRepo countryDao;
 
@@ -21,8 +23,8 @@ public class CountryController {
         this.countryDao = countryDao;
     }
 
-    @GetMapping(path = "/country/{id}", produces = "application/json")
-    public ResponseEntity<Country> readCountry(@PathVariable long id) {
+    @GetMapping(path = "/country/{id}", produces = APPLICATION_JSON_VALUE)
+    public ResponseEntity<Country> read(@PathVariable long id) {
         var country = countryDao.read(id);
 
         return country != null ?
@@ -37,7 +39,7 @@ public class CountryController {
     }
 
     @GetMapping(path = "/countries")
-    public ResponseEntity<List<Country>> readCountries() {
+    public ResponseEntity<List<Country>> readAll() {
         var allCountries = countryDao.readAll();
 
         return allCountries != null ?

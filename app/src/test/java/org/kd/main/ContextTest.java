@@ -4,7 +4,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.kd.main.server.TraderServer;
 import org.kd.main.server.model.data.dao.BankDaoRepo;
-import org.kd.main.server.model.data.dao.CustomerDaoRepo;
+import org.kd.main.server.model.data.dao.AccountDaoRepo;
 import org.kd.main.server.model.data.dao.TransferDaoRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -17,7 +17,7 @@ import static org.junit.Assert.assertNotNull;
 public class ContextTest {
 
     @Autowired
-    private CustomerDaoRepo customerDao;
+    private AccountDaoRepo customerDao;
 
     @Autowired
     private BankDaoRepo bankDao;

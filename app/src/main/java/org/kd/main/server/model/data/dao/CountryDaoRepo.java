@@ -39,7 +39,7 @@ public class CountryDaoRepo {
         return readCountry(id);
     }
 
-    public Country readCountry(long id) {
+    private Country readCountry(long id) {
         var session = getSession();
         var crBuilder = session.getCriteriaBuilder();
         CriteriaQuery<Country> query = crBuilder.createQuery(Country.class);
@@ -67,7 +67,7 @@ public class CountryDaoRepo {
     }
 
 
-    protected Session getSession() {
+    private Session getSession() {
         Session session;
         if (entityManager == null
                 || (session = entityManager.unwrap(Session.class)) == null) {

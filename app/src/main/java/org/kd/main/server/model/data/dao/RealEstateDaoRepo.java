@@ -39,7 +39,7 @@ public class RealEstateDaoRepo {
         return readRealEstate(id);
     }
 
-    public RealEstate readRealEstate(long id) {
+    private RealEstate readRealEstate(long id) {
         var session = getSession();
         var crBuilder = session.getCriteriaBuilder();
         CriteriaQuery<RealEstate> query = crBuilder.createQuery(RealEstate.class);
@@ -66,7 +66,7 @@ public class RealEstateDaoRepo {
         session.update(bank);
     }
 
-    protected Session getSession() {
+    private Session getSession() {
         Session session;
         if (entityManager == null
                 || (session = entityManager.unwrap(Session.class)) == null) {

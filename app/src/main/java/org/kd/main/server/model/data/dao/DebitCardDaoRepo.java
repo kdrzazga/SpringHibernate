@@ -12,6 +12,7 @@ import java.util.List;
 public class DebitCardDaoRepo {
 
     @PersistenceContext
+    private
     EntityManager entityManager;
 
     public DebitCard read(long id) {
@@ -33,7 +34,7 @@ public class DebitCardDaoRepo {
         return session.createQuery(criteria).getResultList();
     }
 
-    Session getSession() {
+    private Session getSession() {
         Session session;
         if (entityManager == null
                 || (session = entityManager.unwrap(Session.class)) == null) {

@@ -44,6 +44,7 @@ public class PresenterTest {
     private WireMockServer wireMockServer;
 
     @Autowired
+    private
     PresenterHandler presenterHandler;
 
     @Before

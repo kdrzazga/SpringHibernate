@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class AdminController {
+class AdminController {
 
     @PostMapping(path = "/stop")
     public void stop() {

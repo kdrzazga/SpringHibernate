@@ -39,7 +39,7 @@ public class CurrencyDaoRepo {
         return readCurrency(id);
     }
 
-    public Currency readCurrency(long id) {
+    private Currency readCurrency(long id) {
         var session = getSession();
         var crBuilder = session.getCriteriaBuilder();
         CriteriaQuery<Currency> query = crBuilder.createQuery(Currency.class);
@@ -66,7 +66,7 @@ public class CurrencyDaoRepo {
         session.update(bank);
     }
 
-    protected Session getSession() {
+    private Session getSession() {
         Session session;
         if (entityManager == null
                 || (session = entityManager.unwrap(Session.class)) == null) {

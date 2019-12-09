@@ -11,8 +11,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+
 @RestController
-public class DebitCardController {
+class DebitCardController {
 
     private final DebitCardDaoRepo debitCardDao;
 
@@ -21,8 +23,8 @@ public class DebitCardController {
         this.debitCardDao = debitCardDao;
     }
 
-    @GetMapping(path = "/debitcard/{id}", produces = "application/json")
-    public ResponseEntity<DebitCard> readDebitCard(@PathVariable long id) {
+    @GetMapping(path = "/debitcard/{id}", produces = APPLICATION_JSON_VALUE)
+    public ResponseEntity<DebitCard> read(@PathVariable long id) {
         var debitCard = debitCardDao.read(id);
 
         return debitCard != null ?
@@ -37,7 +39,7 @@ public class DebitCardController {
     }
 
     @GetMapping(path = "/debitcards")
-    public ResponseEntity<List<DebitCard>> readDebitCards() {
+    public ResponseEntity<List<DebitCard>> readAll() {
         var debitCards = debitCardDao.readAll();
 
         return debitCards != null ?

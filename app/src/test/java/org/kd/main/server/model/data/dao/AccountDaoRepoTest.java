@@ -23,16 +23,16 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class AccountDaoRepoTest {
 
     @Autowired
-    private CustomerDaoRepo customerDaoRepo;
+    private AccountDaoRepo accountDaoRepo;
 
     @Test
     public void testPersistenceContextInjection(){
-        assertNotNull(customerDaoRepo.getSession());
+        assertNotNull(accountDaoRepo.getSession());
     }
 
     @Test
     public void testGetAllCustomers() {
-        var allCustomers = customerDaoRepo.readAllCorporate();
+        var allCustomers = accountDaoRepo.readAllCorporate();
 
         Assert.assertNotNull(allCustomers);
         assertTrue(allCustomers.size() > 0);
@@ -40,7 +40,7 @@ public class AccountDaoRepoTest {
 
     @Test
     public void testGetSingleCustomerById() {
-        var customer = customerDaoRepo.read(2012L);
+        var customer = accountDaoRepo.read(2012L);
 
         Assert.assertNotNull(customer);
         assertEquals(Long.valueOf(2012L), customer.getId());
@@ -49,9 +49,9 @@ public class AccountDaoRepoTest {
     @Test(expected = EmptyResultDataAccessException.class)
     public void testDeleteCustomer(){
         var id = 2013L;
-        customerDaoRepo.delete(id);
+        accountDaoRepo.delete(id);
 
-        customerDaoRepo.read(id);
+        accountDaoRepo.read(id);
     }
 
 /*

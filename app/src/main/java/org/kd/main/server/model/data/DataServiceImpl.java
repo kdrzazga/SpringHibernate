@@ -12,16 +12,16 @@ import java.util.List;
 
 public class DataServiceImpl implements DataService {
 
-    private CustomerDaoRepo customerDaoRepo;
+    private AccountDaoRepo accountDaoRepo;
 
     private BankDaoRepo bankDaoRepo;
 
     private TransferDaoRepo transferDaoRepo;
 
     @Autowired
-    public DataServiceImpl(CustomerDaoRepo customerDaoRepo, BankDaoRepo bankDaoRepo, TransferDaoRepo transferDaoRepo){
+    public DataServiceImpl(AccountDaoRepo accountDaoRepo, BankDaoRepo bankDaoRepo, TransferDaoRepo transferDaoRepo){
         this.bankDaoRepo = bankDaoRepo;
-        this.customerDaoRepo = customerDaoRepo;
+        this.accountDaoRepo = accountDaoRepo;
         this.transferDaoRepo = transferDaoRepo;
     }
 
@@ -35,7 +35,7 @@ public class DataServiceImpl implements DataService {
 
     @Override
     public List<CorporateAccount> readCustomers() {
-        return customerDaoRepo.readAllCorporate();
+        return accountDaoRepo.readAllCorporate();
     }
 
     @Override
@@ -56,12 +56,12 @@ public class DataServiceImpl implements DataService {
 
     @Override
     public Account readCustomer(long id) {
-        return customerDaoRepo.read(id);
+        return accountDaoRepo.read(id);
     }
 
     @Override
     public void updateCustomer(Account account) {
-        customerDaoRepo.update(account);
+        accountDaoRepo.update(account);
     }
 
     @Override

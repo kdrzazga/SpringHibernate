@@ -39,7 +39,7 @@ public class CityDaoRepo {
         return readCity(id);
     }
 
-    public City readCity(long id) {
+    private City readCity(long id) {
         var session = getSession();
         var crBuilder = session.getCriteriaBuilder();
         CriteriaQuery<City> query = crBuilder.createQuery(City.class);
@@ -66,7 +66,7 @@ public class CityDaoRepo {
         session.update(bank);
     }
 
-    protected Session getSession() {
+    private Session getSession() {
         Session session;
         if (entityManager == null
                 || (session = entityManager.unwrap(Session.class)) == null) {

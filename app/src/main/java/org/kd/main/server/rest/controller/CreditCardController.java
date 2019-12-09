@@ -11,8 +11,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+
 @RestController
-public class CreditCardController {
+class CreditCardController {
 
     private final CreditCardDaoRepo creditCardDao;
 
@@ -21,8 +23,8 @@ public class CreditCardController {
         this.creditCardDao = creditCardDao;
     }
 
-    @GetMapping(path = "/creditcard/{id}", produces = "application/json")
-    public ResponseEntity<CreditCard> readCreditCard(@PathVariable long id) {
+    @GetMapping(path = "/creditcard/{id}", produces = APPLICATION_JSON_VALUE)
+    public ResponseEntity<CreditCard> read(@PathVariable long id) {
         var creditCard = creditCardDao.read(id);
 
         return creditCard != null ?
@@ -37,7 +39,7 @@ public class CreditCardController {
     }
 
     @GetMapping(path = "/creditcards")
-    public ResponseEntity<List<CreditCard>> readCreditCards() {
+    public ResponseEntity<List<CreditCard>> readAll() {
         var creditCards = creditCardDao.readAll();
 
         return creditCards != null ?

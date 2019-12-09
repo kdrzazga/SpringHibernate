@@ -23,7 +23,7 @@ public class CreditCardDaoRepo {
         return readCreditCard(id);
     }
 
-    public CreditCard readCreditCard(long id) {
+    private CreditCard readCreditCard(long id) {
         var session = getSession();
         var crBuilder = session.getCriteriaBuilder();
         CriteriaQuery<CreditCard> query = crBuilder.createQuery(CreditCard.class);
@@ -43,7 +43,7 @@ public class CreditCardDaoRepo {
         return session.createQuery(criteria).getResultList();
     }
 
-    protected Session getSession() {
+    private Session getSession() {
         Session session;
         if (entityManager == null
                 || (session = entityManager.unwrap(Session.class)) == null) {

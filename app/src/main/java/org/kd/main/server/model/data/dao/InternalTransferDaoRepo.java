@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class InternalTransferDaoRepo {
+class InternalTransferDaoRepo {
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -32,7 +32,7 @@ public class InternalTransferDaoRepo {
 
         var internalTransfers = session.createQuery(criteria).getResultList();
 
-        return new ArrayList<Transfer>(internalTransfers);
+        return new ArrayList<>(internalTransfers);
     }
 
     Transfer readTransferByPrimaryKey(long id) {
@@ -41,7 +41,9 @@ public class InternalTransferDaoRepo {
 
     Session getSession() {
         /*
-        Container like Spring is not resposible for maintaing the life cycle for the EntityManager created from it. But you can @Autowire EntityManagerFactory directly as the bean is already configured in the applicationContext. Hence this could be simple like this emf.createEntityManager().unwrap(Session.class)' to get Session`
+        Container like Spring is not responsible for maintaining the life cycle for the EntityManager created from it.
+        But you can @Autowire EntityManagerFactory directly as the bean is already configured in the applicationContext.
+         Hence this could be simple like this emf.createEntityManager().unwrap(Session.class)' to get Session`
          */
 
         Session session;

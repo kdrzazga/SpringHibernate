@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class ExternalTransferDaoRepo {
+class ExternalTransferDaoRepo {
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -31,7 +31,7 @@ public class ExternalTransferDaoRepo {
         criteria.from(ExternalTransfer.class);
 
         var externalTransfers = session.createQuery(criteria).getResultList();
-        return new ArrayList<Transfer>(externalTransfers);
+        return new ArrayList<>(externalTransfers);
     }
 
     Transfer readTransferByPrimaryKey(long id) {

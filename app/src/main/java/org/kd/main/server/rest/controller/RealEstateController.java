@@ -11,8 +11,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+
 @RestController
-public class RealEstateController {
+class RealEstateController {
 
     private final RealEstateDaoRepo realEstateDao;
 
@@ -21,8 +23,8 @@ public class RealEstateController {
         this.realEstateDao = realEstateDao;
     }
 
-    @GetMapping(path = "/realestate/{id}", produces = "application/json")
-    public ResponseEntity<RealEstate> readRealEstate(@PathVariable long id) {
+    @GetMapping(path = "/realestate/{id}", produces = APPLICATION_JSON_VALUE)
+    public ResponseEntity<RealEstate> read(@PathVariable long id) {
         var realEstate = realEstateDao.read(id);
 
         return realEstate != null ?
@@ -37,7 +39,7 @@ public class RealEstateController {
     }
 
     @GetMapping(path = "/realestates")
-    public ResponseEntity<List<RealEstate>> readRealEstates() {
+    public ResponseEntity<List<RealEstate>> readAll() {
         var realEstates = realEstateDao.readAll();
 
         return realEstates != null ?

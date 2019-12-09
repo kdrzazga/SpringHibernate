@@ -11,8 +11,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+
 @RestController
-public class CityController {
+class CityController {
 
     private final CityDaoRepo cityDao;
 
@@ -21,8 +23,8 @@ public class CityController {
         this.cityDao = cityDao;
     }
 
-    @GetMapping(path = "/city/{id}", produces = "application/json")
-    public ResponseEntity<City> readCity(@PathVariable long id) {
+    @GetMapping(path = "/city/{id}", produces = APPLICATION_JSON_VALUE)
+    public ResponseEntity<City> read(@PathVariable long id) {
         var city = cityDao.read(id);
 
         return city != null ?
@@ -37,7 +39,7 @@ public class CityController {
     }
 
     @GetMapping(path = "/cities")
-    public ResponseEntity<List<City>> readCities() {
+    public ResponseEntity<List<City>> readAll() {
         var allBanks = cityDao.readAll();
 
         return allBanks != null ?

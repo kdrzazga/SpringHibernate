@@ -11,8 +11,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+
 @RestController
-public class CurrencyController {
+class CurrencyController {
 
     private final CurrencyDaoRepo currencyDaoRepo;
 
@@ -21,8 +23,8 @@ public class CurrencyController {
         this.currencyDaoRepo = currencyDaoRepo;
     }
 
-    @GetMapping(path = "/currency/{id}", produces = "application/json")
-    public ResponseEntity<Currency> readCurrency(@PathVariable long id) {
+    @GetMapping(path = "/currency/{id}", produces = APPLICATION_JSON_VALUE)
+    public ResponseEntity<Currency> read(@PathVariable long id) {
         var currency = currencyDaoRepo.read(id);
 
         return currency != null ?
@@ -37,7 +39,7 @@ public class CurrencyController {
     }
 
     @GetMapping(path = "/currencies")
-    public ResponseEntity<List<Currency>> readCurrencies() {
+    public ResponseEntity<List<Currency>> readAll() {
         var currencyList = currencyDaoRepo.readAll();
 
         return currencyList != null ?

@@ -23,7 +23,7 @@ public class CreditDaoRepo {
         return readCredit(id);
     }
 
-    public Credit readCredit(long id) {
+    private Credit readCredit(long id) {
         var session = getSession();
         var crBuilder = session.getCriteriaBuilder();
         CriteriaQuery<Credit> query = crBuilder.createQuery(Credit.class);
@@ -43,7 +43,7 @@ public class CreditDaoRepo {
         return session.createQuery(criteria).getResultList();
     }
 
-    protected Session getSession() {
+    private Session getSession() {
         Session session;
         if (entityManager == null
                 || (session = entityManager.unwrap(Session.class)) == null) {
