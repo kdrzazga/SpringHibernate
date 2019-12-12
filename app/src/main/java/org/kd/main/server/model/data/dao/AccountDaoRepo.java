@@ -125,10 +125,6 @@ public class AccountDaoRepo {
     }
 
     Session getSession() {
-        /*
-        Container like Spring is not resposible for maintaing the life cycle for the EntityManager created from it. But you can @Autowire EntityManagerFactory directly as the bean is already configured in the applicationContext. Hence this could be simple like this emf.createEntityManager().unwrap(Session.class)' to get Session`
-         */
-
         Session session;
         if (entityManager == null
                 || (session = entityManager.unwrap(Session.class)) == null) {
