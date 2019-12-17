@@ -93,7 +93,7 @@ public class TransferDaoRepoTest {
                 .filter(partyIdComparisonPredicate)
                 .findFirst();
 
-        if (!destCustomer.isPresent())
+        if (destCustomer.isEmpty())
             fail("Wrong test data. Cannot book Transfer. Only one account with appropriate bank id ");
 
         final int errorCode = -1;

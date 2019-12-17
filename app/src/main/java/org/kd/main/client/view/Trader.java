@@ -104,4 +104,8 @@ public class Trader extends Application {
     public static Trader getInstance() {
         return instance;
     }
+
+    public Stage getWindow() {
+        return window;
+    }
 }

@@ -5,34 +5,35 @@ import org.kd.main.common.entities.Bank;
 import org.kd.main.common.entities.Transfer;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface PresenterHandler {
 
-    void createBank(String name, String shortname);
+    boolean createBank(String name, String shortname);
 
-    Bank readBank(Long id);
+    Optional<Bank> readBank(Long id);
 
     List<Bank> readBanks();
 
-    void updateBank(Bank bank);
+    boolean updateBank(Bank bank);
 
     boolean deleteBank(Long id);
 
-    void createAccount(String name, String shortname, Double units, Long bankId);
+    boolean createAccount(String name, String shortname, Double units, Long bankId);
 
-    Account readAccount(Long id);
+    Optional<Account> readAccount(Long id);
 
     List<Account> readAccounts();
 
-    void updateAccount(Account account);
+    boolean updateAccount(Account account);
 
-    void deleteAccount(Long id);
+    boolean deleteAccount(Long id);
 
     boolean bookTransfer();
 
     List<Transfer> readTransfers();
 
-    void deleteTransfer(Long id);
+    boolean deleteTransfer(Long id);
     
     void initApplication();
 

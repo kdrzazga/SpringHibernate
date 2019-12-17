@@ -12,11 +12,11 @@ import java.util.List;
 
 public class DataServiceImpl implements DataService {
 
-    private AccountDaoRepo accountDaoRepo;
+    private final AccountDaoRepo accountDaoRepo;
 
-    private BankDaoRepo bankDaoRepo;
+    private final BankDaoRepo bankDaoRepo;
 
-    private TransferDaoRepo transferDaoRepo;
+    private final TransferDaoRepo transferDaoRepo;
 
     @Autowired
     public DataServiceImpl(AccountDaoRepo accountDaoRepo, BankDaoRepo bankDaoRepo, TransferDaoRepo transferDaoRepo){

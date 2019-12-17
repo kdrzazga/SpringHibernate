@@ -110,7 +110,7 @@
                                     </GridPane.margin>
                                 </Label>
                                 <TextField fx:id="accountsField" alignment="CENTER_RIGHT" editable="true" prefHeight="60.0" prefWidth="190.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-                                <Button fx:id="showBankButton" defaultButton="true" onAction="#handleShowCptyAction" prefHeight="36.0" prefWidth="169.0" text="Show" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.rowSpan="1">
+                                <Button fx:id="showBankButton" defaultButton="true" onAction="#handleShowBankAction" prefHeight="36.0" prefWidth="169.0" text="Show" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.rowSpan="1">
                                     <GridPane.margin>
                                         <Insets bottom="5" top="5" />
                                     </GridPane.margin>

@@ -79,17 +79,17 @@ public class TraderPresenter implements PresenterHandler {
     }
 
     @Override
-    public void createBank(String name, String shortname) {
+    public boolean createBank(String name, String shortname) {
 
         var contentType = APPLICATION_JSON_VALUE;
         var requestUrl = serviceAddress.concat("/bank");
         requestType = HttpMethod.POST;
 
-        saveBank(new Bank(name, shortname), contentType, requestUrl);
+        return saveBank(new Bank(name, shortname), contentType, requestUrl);
     }
 
     @Override
-    public Bank readBank(Long id) {
+    public Optional<Bank> readBank(Long id) {
 
         requestType = HttpMethod.GET;
         requestUrl = serviceAddress.concat("/bank/").concat(id.toString());
@@ -98,7 +98,7 @@ public class TraderPresenter implements PresenterHandler {
         ResponseEntity<String> response = restUtility.processHttpRequest(requestType, requestAsString, requestUrl, APPLICATION_JSON_VALUE);
         if (response == null) {
             log.error("REST error. Couldn't read bank with id={} from server.", id);
-            return null;
+            return Optional.empty();
         }
         restUtility.retrieveResponseBodyAndStatusCode(response);
         Bank bank;
@@ -108,20 +108,20 @@ public class TraderPresenter implements PresenterHandler {
                             , bankTypeReference);
         } catch (IOException e) {
             e.printStackTrace();
-            return null;
+            return Optional.empty();
         }
 
-        return bank;
+        return Optional.of(bank);
     }
 
     @Override
-    public void updateBank(Bank bank) {
+    public boolean updateBank(Bank bank) {
 
         var contentType = APPLICATION_JSON_VALUE;
         var requestUrl = serviceAddress.concat("/bank");
         requestType = HttpMethod.PUT;
 
-        saveBank(bank, contentType, requestUrl);
+        return saveBank(bank, contentType, requestUrl);
     }
 
     @Override
@@ -151,7 +151,7 @@ public class TraderPresenter implements PresenterHandler {
     }
 
     @Override
-    public Account readAccount(Long id) {
+    public Optional<Account> readAccount(Long id) {
 
         requestType = HttpMethod.GET;
         requestUrl = serviceAddress.concat("/account/").concat(id.toString());
@@ -160,7 +160,7 @@ public class TraderPresenter implements PresenterHandler {
         ResponseEntity<String> response = restUtility.processHttpRequest(requestType, requestAsString, requestUrl, APPLICATION_JSON_VALUE);
         if (response == null) {
             log.error("REST error. Couldn't read account with id={} from server.", id);
-            return null;
+            return Optional.empty();
         }
         restUtility.retrieveResponseBodyAndStatusCode(response);
         Account account;
@@ -170,14 +170,14 @@ public class TraderPresenter implements PresenterHandler {
                             , customerTypeReference);
         } catch (IOException e) {
             e.printStackTrace();
-            return null;
+            return Optional.empty();
         }
 
-        return account;
+        return Optional.of(account);
     }
 
     @Override
-    public void updateAccount(Account account) {
+    public boolean updateAccount(Account account) {
 
         var contentType = APPLICATION_JSON_VALUE;
         var requestUrl = serviceAddress.concat("/account");
@@ -187,10 +187,13 @@ public class TraderPresenter implements PresenterHandler {
             var response = restUtility.processHttpRequest(HttpMethod.PUT, customerJson, requestUrl, contentType);
 
             restUtility.retrieveResponseBodyAndStatusCode(response);
-            if (!"200".equals(restUtility.getResponseStatusCode()))
+            if (!HttpStatus.OK.equals(response.getStatusCode()))
                 log.error(restUtility.getErrorResponseStatusCode() + " " + restUtility.getErrorResponseBody());
+
+            return HttpStatus.OK.equals(response.getStatusCode());
         } catch (JsonProcessingException e) {
             System.err.println("You provided shitty JSON, bro");
+            return false;
         }
     }
 
@@ -219,7 +222,7 @@ public class TraderPresenter implements PresenterHandler {
     }
 
     @Override
-    public void deleteTransfer(Long id) {
+    public boolean deleteTransfer(Long id) {
 
         requestType = HttpMethod.DELETE;
         requestUrl = serviceAddress.concat("/transfer/").concat(id.toString());
@@ -227,6 +230,8 @@ public class TraderPresenter implements PresenterHandler {
 
         ResponseEntity<String> response = restUtility.processHttpRequest(requestType, requestAsString, requestUrl, APPLICATION_JSON_VALUE);
         log.info(response.getBody());
+
+        return HttpStatus.OK.equals(response.getStatusCode());
     }
 
     @Override
@@ -243,12 +248,14 @@ public class TraderPresenter implements PresenterHandler {
     }
 
     @Override
-    public void createAccount(String name, String shortname, Double units, Long bankId) {
+    public boolean createAccount(String name, String shortname, Double units, Long bankId) {
         //TODO
+
+        return false;
     }
 
     @Override
-    public void deleteAccount(Long id) {
+    public boolean deleteAccount(Long id) {
 
         requestType = HttpMethod.DELETE;
         requestUrl = serviceAddress.concat("/account/").concat(id.toString());
@@ -256,6 +263,8 @@ public class TraderPresenter implements PresenterHandler {
 
         ResponseEntity<String> response = restUtility.processHttpRequest(requestType, requestAsString, requestUrl, APPLICATION_JSON_VALUE);
         Optional.ofNullable(response.getBody()).ifPresent(log::info);
+
+        return HttpStatus.OK.equals(response.getStatusCode());
     }
 
     @Override
@@ -289,7 +298,7 @@ public class TraderPresenter implements PresenterHandler {
     public void saveDb() {
     }
 
-    private void saveBank(Bank bank, String contentType, String requestUrl) {
+    private boolean saveBank(Bank bank, String contentType, String requestUrl) {
         try {
             String bankJson = new ObjectMapper().writeValueAsString(bank);
 
@@ -298,16 +307,20 @@ public class TraderPresenter implements PresenterHandler {
                 log.error("REST error. Couldn't save bank.");
             }
             restUtility.retrieveResponseBodyAndStatusCode(response);
-            if (!"200".equals(restUtility.getResponseStatusCode()))
+            if (!HttpStatus.OK.equals(response.getStatusCode()))
                 log.error(restUtility.getErrorResponseStatusCode() + " " + restUtility.getErrorResponseBody());
+
+            return HttpStatus.OK.equals(response.getStatusCode());
+
         } catch (JsonProcessingException e) {
             System.err.println("You've given shitty JSON");
+            return false;
         }
     }
 
     @Override
     public void setAccountId(Long accountId) {
-        this.accountId = accountId;
+        TraderPresenter.accountId = accountId;
     }
 
     @Override

@@ -108,7 +108,7 @@ class LogController {
     private Log findOrCreateRecentLog() {
         Optional<Log> recentLog = logDaoRepo.findRecentLog();
 
-        if (!recentLog.isPresent()) {
+        if (recentLog.isEmpty()) {
             Logger.getLogger(LogController.class.getSimpleName()).warning("Recent log not found. Atempting to create a new one.\n");
             var response = create("newlog");
 

@@ -6,7 +6,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.Window;
 import org.kd.main.client.presenter.PresenterHandler;
 import org.kd.main.client.view.lib.PropertiesReader;
 import org.kd.main.common.entities.Account;
@@ -19,7 +18,8 @@ import java.util.OptionalDouble;
 import java.util.OptionalLong;
 import java.util.stream.Collectors;
 
-import static org.kd.main.client.view.AlertHelper.showAlert;
+import static org.kd.main.client.view.AlertHelper.showErrorAlert;
+import static org.kd.main.client.view.AlertHelper.showInfoAlert;
 
 public class TraderViewController {
 
@@ -74,65 +74,68 @@ public class TraderViewController {
         var bookConfirmMsg = new PropertiesReader().readKey("error.message.transfer.booked");
         var bookingErrorMgs = new PropertiesReader().readKey("error.message.transfer.not.booked");
 
-        if (handler.bookTransfer())
-        {
-            showAlert(Alert.AlertType.INFORMATION, getWindow(), "Info", bookConfirmMsg);
-        }
-        else {
-            showAlert(Alert.AlertType.ERROR, getWindow(), "Error", bookingErrorMgs);
+        if (handler.bookTransfer()) {
+            showInfoAlert(bookConfirmMsg);
+        } else {
+            showErrorAlert(bookingErrorMgs);
         }
         loadTrades();
     }
 
     @FXML
-    protected void handleShowCptyAction(ActionEvent event) {
+    protected void handleShowBankAction(ActionEvent event) {
 
         var errorMsg = new PropertiesReader().readKey("error.message.bank.not.selected");
         if (isNoneElementSelected(bankIdChoiceBox, errorMsg)) return;
 
         var id = readBankId();
         var bank = handler.readBank(id);
-        if (bank != null) {
-            this.bankNameField.setText(bank.getName());
-            this.shortBankNameField.setText(bank.getShortname());
+        if (bank.isPresent()) {
+            this.bankNameField.setText(bank.get().getName());
+            this.shortBankNameField.setText(bank.get().getShortname());
         }
     }
 
     @FXML
     protected void handleDeleteBankAction(ActionEvent actionEvent) {
-        var selectionErrorMsg = new PropertiesReader().readKey("error.message.bank.not.selected");
-        var deleteErrorMsg = new PropertiesReader().readKey("error.message.bank.not.deleted");
-        var deleteConfirmMsg = new PropertiesReader().readKey("confirm.message.bank.deleted");
+        var selectionErrorMsg = new PropertiesReader().readKey("message.error.bank.not.selected");
+        var deleteErrorMsg = new PropertiesReader().readKey("message.error.bank.not.deleted");
+        var deleteConfirmMsg = new PropertiesReader().readKey("message.confirm.bank.deleted");
         if (isNoneElementSelected(bankIdChoiceBox, selectionErrorMsg)) return;
 
         var id = readBankId();
         if (handler.deleteBank(id))
-            showAlert(Alert.AlertType.INFORMATION, getWindow(), "Info", deleteConfirmMsg);
+            showInfoAlert(deleteConfirmMsg);
         else
-            showAlert(Alert.AlertType.ERROR, getWindow(), "Error", deleteErrorMsg);
+            showErrorAlert(deleteErrorMsg);
     }
 
     @FXML
     protected void handleDeleteAccountAction(ActionEvent actionEvent) {
-        var errorMsg = new PropertiesReader().readKey("error.message.account.not.selected");
-        if (isNoneElementSelected(accountIdChoiceBoxAccount, errorMsg)) return;
+        var selectionErrorMsg = new PropertiesReader().readKey("message.error.account.not.selected");
+        var deleteErrorMsg = new PropertiesReader().readKey("message.error.account.not.deleted");
+        var deleteConfirmMsg = new PropertiesReader().readKey("message.confirm.account.deleted");
+        if (isNoneElementSelected(accountIdChoiceBoxAccount, selectionErrorMsg)) return;
 
         var id = readAccountId();
-        handler.deleteAccount(id);
+        if (handler.deleteAccount(id))
+            showInfoAlert(deleteConfirmMsg);
+        else
+            showErrorAlert(deleteErrorMsg);
     }
 
     @FXML
     protected void handleShowAccountAction(ActionEvent event) {
 
-        String errorMsg = new PropertiesReader().readKey("error.message.account.not.selected");
-        if (isNoneElementSelected(accountIdChoiceBoxAccount, errorMsg)) return;
+        var selectionErrorMsg = new PropertiesReader().readKey("message.error.account.not.selected");
+        if (isNoneElementSelected(accountIdChoiceBoxAccount, selectionErrorMsg)) return;
 
         var id = readAccountId();
         var account = handler.readAccount(id);
-        if (account != null) {
-            this.accountNameField.setText(account.getName());
-            this.accountShortNameField.setText(account.getShortname());
-            this.accountBalanceField.setText(String.valueOf(account.getBalance()));
+        if (account.isPresent()) {
+            this.accountNameField.setText(account.get().getName());
+            this.accountShortNameField.setText(account.get().getShortname());
+            this.accountBalanceField.setText(String.valueOf(account.get().getBalance()));
         }
     }
 
@@ -278,13 +281,9 @@ public class TraderViewController {
     private boolean isNoneElementSelected(ChoiceBox<String> choiceBox, String errorMessage) {
         if (isItemSelected(choiceBox)) return false;
 
-        var formErrorMsg = new PropertiesReader().readKey("id.not.selected");
-        showAlert(Alert.AlertType.ERROR, getWindow(), formErrorMsg, errorMessage);
+        var selectionErrorMsg = new PropertiesReader().readKey("message.error.id.not.selected");
+        showErrorAlert(selectionErrorMsg);
         return true;
-    }
-
-    private Window getWindow() {
-        return showBankButton.getScene().getWindow();
     }
 
     public static void setHandler(PresenterHandler handler) {
