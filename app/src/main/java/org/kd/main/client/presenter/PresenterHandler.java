@@ -16,19 +16,19 @@ public interface PresenterHandler {
 
     void updateBank(Bank bank);
 
-    void deleteBank(Long id);
+    boolean deleteBank(Long id);
 
-    void createCustomer(String name, String shortname, Double units, Long bankId);
+    void createAccount(String name, String shortname, Double units, Long bankId);
 
-    Account readCustomer(Long id);
+    Account readAccount(Long id);
 
-    List<Account> readCustomers();
+    List<Account> readAccounts();
 
-    void updateCustomer(Account account);
+    void updateAccount(Account account);
 
-    void deleteCustomer(Long id);
+    void deleteAccount(Long id);
 
-    void bookTransfer();
+    boolean bookTransfer();
 
     List<Transfer> readTransfers();
 
@@ -39,4 +39,8 @@ public interface PresenterHandler {
     void saveDb();
 
     void stopServer();
+
+    void setAccountId(Long accountId);
+
+    Long getAccountId();
 }

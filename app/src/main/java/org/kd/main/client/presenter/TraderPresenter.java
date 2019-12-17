@@ -14,12 +14,15 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 import java.util.Vector;
+
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @Import(TraderConfig.class)
 public class TraderPresenter implements PresenterHandler {
@@ -28,6 +31,8 @@ public class TraderPresenter implements PresenterHandler {
     private RestUtility restUtility;
 
     private final String port = new PropertiesReader().readKey("server_port");
+
+    private static Long accountId = 2001L;
 
     private String serviceAddress = "http://localhost:" + port;
     private HttpMethod requestType;
@@ -50,11 +55,11 @@ public class TraderPresenter implements PresenterHandler {
     @Override
     public List<Bank> readBanks() {
 
-        requestType = HttpMethod.valueOf("GET");
+        requestType = HttpMethod.GET;
         requestUrl = serviceAddress.concat("/banks");
         requestAsString = "";
 
-        ResponseEntity<String> response = restUtility.processHttpRequest(requestType, requestAsString, requestUrl, "application/json");
+        ResponseEntity<String> response = restUtility.processHttpRequest(requestType, requestAsString, requestUrl, APPLICATION_JSON_VALUE);
         if (response == null) {
             log.error("REST error. Couldn't read banks from server.");
             return new Vector<>();
@@ -76,9 +81,9 @@ public class TraderPresenter implements PresenterHandler {
     @Override
     public void createBank(String name, String shortname) {
 
-        var contentType = "application/json";
+        var contentType = APPLICATION_JSON_VALUE;
         var requestUrl = serviceAddress.concat("/bank");
-        requestType = HttpMethod.valueOf("POST");
+        requestType = HttpMethod.POST;
 
         saveBank(new Bank(name, shortname), contentType, requestUrl);
     }
@@ -86,11 +91,11 @@ public class TraderPresenter implements PresenterHandler {
     @Override
     public Bank readBank(Long id) {
 
-        requestType = HttpMethod.valueOf("GET");
+        requestType = HttpMethod.GET;
         requestUrl = serviceAddress.concat("/bank/").concat(id.toString());
         requestAsString = "";
 
-        ResponseEntity<String> response = restUtility.processHttpRequest(requestType, requestAsString, requestUrl, "application/json");
+        ResponseEntity<String> response = restUtility.processHttpRequest(requestType, requestAsString, requestUrl, APPLICATION_JSON_VALUE);
         if (response == null) {
             log.error("REST error. Couldn't read bank with id={} from server.", id);
             return null;
@@ -112,21 +117,21 @@ public class TraderPresenter implements PresenterHandler {
     @Override
     public void updateBank(Bank bank) {
 
-        var contentType = "application/json";
+        var contentType = APPLICATION_JSON_VALUE;
         var requestUrl = serviceAddress.concat("/bank");
-        requestType = HttpMethod.valueOf("PUT");
+        requestType = HttpMethod.PUT;
 
         saveBank(bank, contentType, requestUrl);
     }
 
     @Override
-    public List<Account> readCustomers() {
+    public List<Account> readAccounts() {
 
-        requestType = HttpMethod.valueOf("GET");
-        requestUrl = serviceAddress.concat("/accounts");
+        requestType = HttpMethod.GET;
+        requestUrl = serviceAddress.concat("/corporate-accounts");
         requestAsString = "";
 
-        ResponseEntity<String> response = restUtility.processHttpRequest(requestType, requestAsString, requestUrl, "application/json");
+        ResponseEntity<String> response = restUtility.processHttpRequest(requestType, requestAsString, requestUrl, APPLICATION_JSON_VALUE);
         if (response == null) {
             log.error("REST error. Couldn't read accounts from server.");
             return new Vector<>();
@@ -146,13 +151,13 @@ public class TraderPresenter implements PresenterHandler {
     }
 
     @Override
-    public Account readCustomer(Long id) {
+    public Account readAccount(Long id) {
 
-        requestType = HttpMethod.valueOf("GET");
+        requestType = HttpMethod.GET;
         requestUrl = serviceAddress.concat("/account/").concat(id.toString());
         requestAsString = "";
 
-        ResponseEntity<String> response = restUtility.processHttpRequest(requestType, requestAsString, requestUrl, "application/json");
+        ResponseEntity<String> response = restUtility.processHttpRequest(requestType, requestAsString, requestUrl, APPLICATION_JSON_VALUE);
         if (response == null) {
             log.error("REST error. Couldn't read account with id={} from server.", id);
             return null;
@@ -172,9 +177,9 @@ public class TraderPresenter implements PresenterHandler {
     }
 
     @Override
-    public void updateCustomer(Account account) {
+    public void updateAccount(Account account) {
 
-        var contentType = "application/json";
+        var contentType = APPLICATION_JSON_VALUE;
         var requestUrl = serviceAddress.concat("/account");
 
         try {
@@ -192,11 +197,11 @@ public class TraderPresenter implements PresenterHandler {
     @Override
     public List<Transfer> readTransfers() {
 
-        requestType = HttpMethod.valueOf("GET");
+        requestType = HttpMethod.GET;
         requestUrl = serviceAddress.concat("/transfers");
         requestAsString = "";
 
-        ResponseEntity<String> response = restUtility.processHttpRequest(requestType, requestAsString, requestUrl, "application/json");
+        ResponseEntity<String> response = restUtility.processHttpRequest(requestType, requestAsString, requestUrl, APPLICATION_JSON_VALUE);
         if (response == null) {
             log.error("REST error. Couldn't read transfers from server.");
             return new Vector<>();
@@ -216,58 +221,63 @@ public class TraderPresenter implements PresenterHandler {
     @Override
     public void deleteTransfer(Long id) {
 
-        requestType = HttpMethod.valueOf("DELETE");
+        requestType = HttpMethod.DELETE;
         requestUrl = serviceAddress.concat("/transfer/").concat(id.toString());
         requestAsString = "";
 
-        ResponseEntity<String> response = restUtility.processHttpRequest(requestType, requestAsString, requestUrl, "application/json");
+        ResponseEntity<String> response = restUtility.processHttpRequest(requestType, requestAsString, requestUrl, APPLICATION_JSON_VALUE);
         log.info(response.getBody());
     }
 
     @Override
-    public void deleteBank(Long id) {
-        requestType = HttpMethod.valueOf("DELETE");
+    public boolean deleteBank(Long id) {
+        requestType = HttpMethod.DELETE;
         requestUrl = serviceAddress.concat("/bank/").concat(id.toString());
         requestAsString = "";
 
-        ResponseEntity<String> response = restUtility.processHttpRequest(requestType, requestAsString, requestUrl, "application/json");
-        log.info(response.getBody());
+        ResponseEntity<String> response = restUtility.processHttpRequest(requestType, requestAsString, requestUrl, APPLICATION_JSON_VALUE);
+        if (response.getBody() != null) log.info(response.getBody());
+
+        return HttpStatus.OK
+                .equals(response.getStatusCode());
     }
 
     @Override
-    public void createCustomer(String name, String shortname, Double units, Long bankId) {
+    public void createAccount(String name, String shortname, Double units, Long bankId) {
         //TODO
     }
 
     @Override
-    public void deleteCustomer(Long id) {
+    public void deleteAccount(Long id) {
 
-        requestType = HttpMethod.valueOf("DELETE");
+        requestType = HttpMethod.DELETE;
         requestUrl = serviceAddress.concat("/account/").concat(id.toString());
         requestAsString = "";
 
-        ResponseEntity<String> response = restUtility.processHttpRequest(requestType, requestAsString, requestUrl, "application/json");
+        ResponseEntity<String> response = restUtility.processHttpRequest(requestType, requestAsString, requestUrl, APPLICATION_JSON_VALUE);
         Optional.ofNullable(response.getBody()).ifPresent(log::info);
     }
 
     @Override
-    public void bookTransfer() {
+    public boolean bookTransfer() {
         //TODO log.info("Book Transfer not finished");
-        requestType = HttpMethod.valueOf("POST");
+        requestType = HttpMethod.POST;
         requestUrl = serviceAddress.concat("/transfer/");
         requestAsString = "";
 
-        ResponseEntity<String> response = restUtility.processHttpRequest(requestType, requestAsString, requestUrl, "application/json");
+        ResponseEntity<String> response = restUtility.processHttpRequest(requestType, requestAsString, requestUrl, APPLICATION_JSON_VALUE);
         Optional.ofNullable(response.getBody()).ifPresent(log::info);
 
+        return HttpStatus.OK
+                .equals(response.getStatusCode());
     }
 
     @Override
     public void stopServer() {
-        requestType = HttpMethod.valueOf("POST");
+        requestType = HttpMethod.POST;
         requestUrl = serviceAddress.concat("/stop");
         requestAsString = "";
-        restUtility.processHttpRequest(requestType, requestAsString, requestUrl, "application/json");
+        restUtility.processHttpRequest(requestType, requestAsString, requestUrl, APPLICATION_JSON_VALUE);
     }
 
     @Override
@@ -293,5 +303,15 @@ public class TraderPresenter implements PresenterHandler {
         } catch (JsonProcessingException e) {
             System.err.println("You've given shitty JSON");
         }
+    }
+
+    @Override
+    public void setAccountId(Long accountId) {
+        this.accountId = accountId;
+    }
+
+    @Override
+    public Long getAccountId() {
+        return accountId;
     }
 }

@@ -44,11 +44,11 @@
                                     </padding>
                                 </Label>
                                 <Label text="Bank Id :" GridPane.rowIndex="1" />
-                                <ChoiceBox id="partyId4TradeChoiceBox" fx:id="bankId4TradeChoiceBox" nodeOrientation="LEFT_TO_RIGHT" prefHeight="14.0" prefWidth="180.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                <ChoiceBox id="bankIdChoiceBoxTransfer" fx:id="bankIdChoiceBoxTransfer" nodeOrientation="LEFT_TO_RIGHT" prefHeight="14.0" prefWidth="180.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
 
                                 </ChoiceBox>
-                                <Label text="Customer Id:" GridPane.rowIndex="2" />
-                                <ChoiceBox id="fundIdChoiceBox" fx:id="fundId4TradeChoiceBox" nodeOrientation="LEFT_TO_RIGHT" prefHeight="14.0" prefWidth="180.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                <Label text="Account Id:" GridPane.rowIndex="2" />
+                                <ChoiceBox id="fundIdChoiceBox" fx:id="accountIdChoiceBoxTransfer" nodeOrientation="LEFT_TO_RIGHT" onMouseClicked="#handleAccountSelection" prefHeight="14.0" prefWidth="180.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                 </ChoiceBox>
                                 <Button fx:id="bookTradeButton" defaultButton="true" onAction="#handleBookTradeAction" prefHeight="36.0" prefWidth="169.0" text="Book" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="4">
                                     <GridPane.margin>
@@ -83,14 +83,14 @@
                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                 <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints />
-                        <RowConstraints />
-                        <RowConstraints />
-                        <RowConstraints />
-                        <RowConstraints />
-                        <RowConstraints maxHeight="41.0" minHeight="10.0" prefHeight="41.0" />
-                        <RowConstraints maxHeight="22.0" minHeight="10.0" prefHeight="19.0" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" />
+                                <RowConstraints />
+                                <RowConstraints />
+                                <RowConstraints />
+                                <RowConstraints />
+                                <RowConstraints />
+                                <RowConstraints maxHeight="41.0" minHeight="10.0" prefHeight="41.0" />
+                                <RowConstraints maxHeight="22.0" minHeight="10.0" prefHeight="19.0" />
+                                <RowConstraints minHeight="10.0" prefHeight="30.0" />
                             </rowConstraints>
                             <children>
                                 <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="20.0" prefWidth="400.0" text="Bank Info" textAlignment="CENTER" GridPane.columnSpan="2">
@@ -104,12 +104,12 @@
                                 <Label text="Bank Name : " GridPane.rowIndex="5" />
                                 <TextField fx:id="bankNameField" minWidth="225" prefHeight="15" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                                 <TextField fx:id="shortBankNameField" alignment="CENTER_RIGHT" maxWidth="100" prefHeight="15" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                                <Label alignment="CENTER_RIGHT" text="Customers : " GridPane.rowIndex="7">
+                                <Label alignment="CENTER_RIGHT" text="Accounts : " GridPane.rowIndex="7">
                                     <GridPane.margin>
                                         <Insets top="4.0" />
                                     </GridPane.margin>
                                 </Label>
-                                <TextField fx:id="customersField" alignment="CENTER_RIGHT" editable="true" prefHeight="60.0" prefWidth="190.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                                <TextField fx:id="accountsField" alignment="CENTER_RIGHT" editable="true" prefHeight="60.0" prefWidth="190.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
                                 <Button fx:id="showBankButton" defaultButton="true" onAction="#handleShowCptyAction" prefHeight="36.0" prefWidth="169.0" text="Show" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.rowSpan="1">
                                     <GridPane.margin>
                                         <Insets bottom="5" top="5" />
@@ -123,15 +123,17 @@
                                         <Insets bottom="5.0" top="5.0" />
                                     </GridPane.margin>
                                 </Button>
-                        <Button fx:id="deleteBankButton" defaultButton="true" layoutX="142.0" layoutY="362.0" onAction="#handleDeleteBankAction" prefHeight="36.0" prefWidth="169.0" text="Delete Bank" textAlignment="CENTER" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="10">
-                           <GridPane.margin>
-                              <Insets bottom="5.0" top="5.0" />
-                           </GridPane.margin></Button>
-                        <Button fx:id="deleteBankButton1" defaultButton="true" layoutX="141.0" layoutY="407.0" onAction="#handleDeleteBankAction" prefHeight="36.0" prefWidth="169.0" text="Create New Bank" textAlignment="CENTER" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="11">
-                           <GridPane.margin>
-                              <Insets bottom="5.0" top="5.0" />
-                           </GridPane.margin></Button>
-                        <Label layoutX="25.0" layoutY="219.0" text="Short Name : " GridPane.rowIndex="6" />
+                                <Button fx:id="deleteBankButton" defaultButton="true" layoutX="142.0" layoutY="362.0" onAction="#handleDeleteBankAction" prefHeight="36.0" prefWidth="169.0" text="Delete Bank" textAlignment="CENTER" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="10">
+                                    <GridPane.margin>
+                                        <Insets bottom="5.0" top="5.0" />
+                                    </GridPane.margin>
+                                </Button>
+                                <Button fx:id="deleteBankButton1" defaultButton="true" layoutX="141.0" layoutY="407.0" onAction="#handleDeleteBankAction" prefHeight="36.0" prefWidth="169.0" text="Create New Bank" textAlignment="CENTER" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="11">
+                                    <GridPane.margin>
+                                        <Insets bottom="5.0" top="5.0" />
+                                    </GridPane.margin>
+                                </Button>
+                                <Label layoutX="25.0" layoutY="219.0" text="Short Name : " GridPane.rowIndex="6" />
                             </children>
                             <padding>
                                 <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
@@ -143,7 +145,7 @@
         </Tab>
 
 
-        <Tab fx:id="customerTab" text="Customer">
+        <Tab fx:id="accountTab" text="Account">
             <content>
                 <AnchorPane minHeight="280.0" minWidth="0.0" prefHeight="380.0" prefWidth="200.0">
                     <children>
@@ -160,13 +162,13 @@
                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                             </rowConstraints>
                             <children>
-                                <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="20.0" prefWidth="400.0" text="Customer Info" textAlignment="CENTER" GridPane.columnSpan="2">
+                                <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="20.0" prefWidth="400.0" text="Account Info" textAlignment="CENTER" GridPane.columnSpan="2">
                                     <font>
                                         <Font name="Arial Bold" size="16.0" />
                                     </font>
@@ -174,31 +176,31 @@
                                         <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                                     </padding>
                                 </Label>
-                                <Label text="Customer Id:" GridPane.rowIndex="1" />
-                                <ChoiceBox id="fundIdChoiceBox" fx:id="customerIdChoiceBox" nodeOrientation="LEFT_TO_RIGHT" prefHeight="14.0" prefWidth="180.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                                </ChoiceBox>
-                                <Label alignment="CENTER_RIGHT" text="Customer Name : " GridPane.rowIndex="3" />
+                                <Label text="Account Id:" GridPane.rowIndex="1" />
+                                <ChoiceBox id="fundIdChoiceBox" fx:id="accountIdChoiceBoxAccount" nodeOrientation="LEFT_TO_RIGHT" prefHeight="14.0" prefWidth="180.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                <Label alignment="CENTER_RIGHT" text="Account Name : " GridPane.rowIndex="3" />
                                 <Label alignment="CENTER_RIGHT" text="Short Name : " GridPane.rowIndex="4" />
-                                <TextField fx:id="customerNameField" minWidth="225" prefHeight="15" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                <TextField fx:id="customerShortNameField" editable="true" maxWidth="100" prefHeight="15" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                                <Button fx:id="showCustomerButton" defaultButton="true" onAction="#handleShowCustomerAction" prefHeight="36.0" prefWidth="169.0" text="Show" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                                <TextField fx:id="accountNameField" minWidth="225" prefHeight="15" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                <TextField fx:id="accountShortNameField" editable="true" maxWidth="100" prefHeight="15" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                <Button fx:id="showAccountButton" defaultButton="true" onAction="#handleShowAccountAction" prefHeight="36.0" prefWidth="169.0" text="Show" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
                                 <Label alignment="CENTER_RIGHT" text="Cash Balance" GridPane.rowIndex="5" />
-                                <TextField fx:id="customerCashField" editable="true" maxWidth="100" prefHeight="15" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                                <Button fx:id="saveFundButton" defaultButton="true" layoutX="141.0" layoutY="118.0" onAction="#handleSaveCustomerAction" prefHeight="36.0" prefWidth="169.0" text="Save Changes" textAlignment="CENTER" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="6">
+                                <TextField fx:id="accountBalanceField" editable="true" maxWidth="100" prefHeight="15" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                <Button fx:id="saveFundButton" defaultButton="true" layoutX="141.0" layoutY="118.0" onAction="#handleSaveAccountAction" prefHeight="36.0" prefWidth="169.0" text="Save Changes" textAlignment="CENTER" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="6">
                                     <GridPane.margin>
                                         <Insets bottom="5.0" top="5.0" />
                                     </GridPane.margin>
                                 </Button>
-                        <Button fx:id="saveFundButton1" defaultButton="true" layoutX="141.0" layoutY="275.0" onAction="#handleDeleteCustomerAction" prefHeight="36.0" prefWidth="169.0" text="Delete Customer" textAlignment="CENTER" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="7">
-                           <GridPane.margin>
-                              <Insets bottom="5.0" top="5.0" />
-                           </GridPane.margin></Button>
-                        <Button fx:id="saveFundButton11" defaultButton="true" layoutX="141.0" layoutY="352.0" onAction="#handleSaveCustomerAction" prefHeight="36.0" prefWidth="169.0" text="Create New Customer" textAlignment="CENTER" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="8">
-                           <GridPane.margin>
-                              <Insets />
-                           </GridPane.margin>
-                        </Button>
-                        <Button id="details-button" fx:id="saveFundButton111" defaultButton="true" layoutX="141.0" layoutY="397.0" onAction="#showDetailsPanel" prefHeight="36.0" prefWidth="80.0" text="DETAILS" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
+                                <Button fx:id="deleteAccountButton" defaultButton="true" layoutX="141.0" layoutY="275.0" onAction="#handleDeleteAccountAction" prefHeight="36.0" prefWidth="169.0" text="Delete Account" textAlignment="CENTER" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="7">
+                                    <GridPane.margin>
+                                        <Insets bottom="5.0" top="5.0" />
+                                    </GridPane.margin>
+                                </Button>
+                                <Button fx:id="saveAccountButton" defaultButton="true" layoutX="141.0" layoutY="352.0" onAction="#handleSaveAccountAction" prefHeight="36.0" prefWidth="169.0" text="Create New Account" textAlignment="CENTER" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="8">
+                                    <GridPane.margin>
+                                        <Insets />
+                                    </GridPane.margin>
+                                </Button>
+                                <Button id="details-button" fx:id="detailsButton" defaultButton="true" layoutX="141.0" layoutY="397.0" onAction="#showDetailsPanel" prefHeight="36.0" prefWidth="80.0" text="DETAILS" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
                             </children>
                             <padding>
                                 <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
@@ -213,7 +215,7 @@
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                     <children>
                         <Hyperlink layoutX="27.0" layoutY="36.0" prefHeight="29.0" prefWidth="363.0" text="DB link: " />
-                  <Hyperlink layoutX="27.0" layoutY="65.0" onAction="#stopServerActionHandler" prefHeight="29.0" prefWidth="363.0" text="Stop server" />
+                        <Hyperlink layoutX="27.0" layoutY="65.0" onAction="#stopServerActionHandler" prefHeight="29.0" prefWidth="363.0" text="Stop server" />
                     </children>
                 </AnchorPane>
             </content>

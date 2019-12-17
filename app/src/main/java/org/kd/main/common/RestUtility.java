@@ -37,8 +37,10 @@ public class RestUtility {
             return restTemplate.exchange(requestUrl, httpMethod, entity, String.class);
         } catch (HttpStatusCodeException e) {
             interceptErrorResponse(e);
+
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(e.getMessage());
         }
-        return null;
     }
 
     private HttpEntity<String> createRequestEntity(String request, String contentType) {

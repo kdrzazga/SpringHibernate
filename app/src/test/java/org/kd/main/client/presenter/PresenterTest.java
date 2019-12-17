@@ -87,7 +87,7 @@ public class PresenterTest {
 
     @Test
     public void testLoadCustomers() {
-        var customers = presenterHandler.readCustomers();
+        var customers = presenterHandler.readAccounts();
         assertNotNull(customers);
         assertThat(customers, hasSize(greaterThan(0)));
         assertEquals(account, customers.get(0));

@@ -15,18 +15,23 @@ public class TraderConfig {
     @Value("${server_port}")
     private String port;
 
+    @Bean//necessary for JavaFx CLIENT APP, Sever will autoconfigure the component.
+    public RestUtility restUtility() {
+        return new RestUtility();
+    }
+
     @Bean
-    public RestTemplate restTemplate(){
+    public RestTemplate restTemplate() {
         return new RestTemplate();
     }
 
-    @Bean(name="server_port")
-    public String port(){
+    @Bean(name = "server_port")
+    public String port() {
         return port;
     }
 
     @Bean
-    PresenterHandler presenterHandler(){
+    PresenterHandler presenterHandler() {
         return new TraderPresenter();
     }
 }

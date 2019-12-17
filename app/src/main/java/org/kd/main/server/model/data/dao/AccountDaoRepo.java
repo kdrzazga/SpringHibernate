@@ -5,8 +5,6 @@ import org.hibernate.query.Query;
 import org.kd.main.common.entities.CorporateAccount;
 import org.kd.main.common.entities.Account;
 import org.kd.main.common.entities.IndividualAccount;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -119,7 +117,7 @@ public class AccountDaoRepo {
 
     void deleteCustomer(Account account) {
         var session = getSession();
-        /*TODO: nulling customers required*/
+        /*TODO: nulling account in bank and transfer required*/
 
         session.delete(account);
     }

@@ -57,7 +57,7 @@ public class AccountDaoRepoTest {
 /*
     @Test
     public void testGet() {
-        var fund = DataModelManagerSingleton.getInstance().getCustomerDao().readCustomer(3016);
+        var fund = DataModelManagerSingleton.getInstance().getCustomerDao().readAccount(3016);
         var possibleFailureCause = "Please first check if DB was changed.";
 
         assertNotNull(possibleFailureCause, fund);

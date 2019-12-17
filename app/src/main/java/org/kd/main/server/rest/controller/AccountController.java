@@ -140,7 +140,7 @@ class AccountController {
     public ResponseEntity<String> delete(@PathVariable long id) {
         var deletedAccount = accountDaoRepo.delete(id);
         String logMessage;
-        ResponseEntity result;
+        ResponseEntity<String> result;
 
         if (deletedAccount != null) {
             logMessage = "Account " + id + " deleted.";
@@ -156,7 +156,6 @@ class AccountController {
         }
 
         log(logMessage);
-
         return result;
     }
 

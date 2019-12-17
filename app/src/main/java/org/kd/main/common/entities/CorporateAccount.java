@@ -1,11 +1,12 @@
 package org.kd.main.common.entities;
 
+import lombok.AllArgsConstructor;
+
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
 @Entity
 @DiscriminatorValue("TRUE")
-
 public class CorporateAccount extends Account {
 
     public CorporateAccount(){

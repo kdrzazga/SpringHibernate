@@ -40,6 +40,6 @@ public class Account implements Serializable {
 
     @Override
     public String toString() {
-        return "Account " + this.id + " " + this.shortname + " " + this.name + " with units: " + this.balance;
+        return this.shortname;
     }
 }
