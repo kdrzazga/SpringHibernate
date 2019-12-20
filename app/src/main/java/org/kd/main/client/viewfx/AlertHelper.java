@@ -1,4 +1,4 @@
-package org.kd.main.client.view;
+package org.kd.main.client.viewfx;
 
 import javafx.scene.control.Alert;
 import javafx.stage.Window;

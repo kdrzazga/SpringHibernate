@@ -29,6 +29,6 @@ public class Currency implements Serializable {
 
     @Override
     public String toString() {
-        return "Currency " + id + " " + shortname + " " + name;
+        return shortname;
     }
 }

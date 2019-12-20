@@ -25,7 +25,7 @@ public class Bank implements Serializable {
 
     @Override
     public String toString() {
-        return "Bank " + id + " " + shortname + " " + name;
+        return name;
     }
 
 }

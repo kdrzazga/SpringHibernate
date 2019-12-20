@@ -5,7 +5,7 @@
 
 2. Client in 2 versions:
     2.1 JavaFx
-    Run org.kd.main.client.Launcher
+    Run org.kd.main.client.LauncherFx
 
     2.2 Html + JS
     Open \app\src\main\resources\js\index.html in any browser

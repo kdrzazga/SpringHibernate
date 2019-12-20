@@ -11,7 +11,7 @@ import java.io.Serializable;
 @Getter
 @Setter
 @NoArgsConstructor
-abstract class Card implements Serializable {
+public abstract class Card implements Serializable {
 
     @Id
     protected Long id;

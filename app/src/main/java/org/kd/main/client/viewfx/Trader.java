@@ -1,4 +1,4 @@
-package org.kd.main.client.view;
+package org.kd.main.client.viewfx;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -23,6 +23,9 @@ public class Trader extends Application {
     private Scene mainScreen;
     private Scene accountDetailsScreen;
 
+    private TraderViewController mainScreenContoller;
+    private AccountDetailsPanelController accountDetailsPanelController;
+
     @Override
     public void start(Stage primaryStage) throws Exception {
         this.window = primaryStage;
@@ -44,18 +47,21 @@ public class Trader extends Application {
 
     public void activateAccountDetailsScreen() {
         this.window.setScene(this.accountDetailsScreen);
+
+        //TODO: unclean, poor method of passing an argument between scenes.
         var messageTextBox = (TextField) (this.mainScreen.lookup("#messageTextBox"));
 
         setAccountIdOnDetailsScreen(messageTextBox.getText());
     }
 
     public void activateMainScreen() {
-            this.window.setScene(this.mainScreen);
+        this.window.setScene(this.mainScreen);
     }
 
     private void setupCustomerDetailsScreen() throws java.io.IOException {
         var loader = new FXMLLoader(getClass().getResource("customer_details_panel.fxml"));
         Parent customerDetailsRoot = loader.load();
+        this.accountDetailsPanelController = loader.getController();
         this.accountDetailsScreen = new Scene(customerDetailsRoot, 600, 494);
     }
 
@@ -64,11 +70,11 @@ public class Trader extends Application {
         Parent mainScreenRoot = loader.load();
         this.mainScreen = new Scene(mainScreenRoot, 450, 565);
 
-        var controller = ((TraderViewController) loader.getController());
+        this.mainScreenContoller = loader.getController();
 
-        controller.loadBanks();
-        controller.loadAccounts();
-        controller.loadTransfers();
+        this.mainScreenContoller.loadBanks();
+        this.mainScreenContoller.loadAccounts();
+        this.mainScreenContoller.loadTransfers();
     }
 
     private void setupWindow() {
@@ -82,6 +88,19 @@ public class Trader extends Application {
     private void setAccountIdOnDetailsScreen(String text) {
         var idLabel = this.accountDetailsScreen.getRoot().getChildrenUnmodifiable().get(ID_LABEL_INDEX);
         ((Label) idLabel).setText(text);
+
+        var id = extractId(text);
+
+        if (this.accountDetailsPanelController != null && id != null) {
+            this.accountDetailsPanelController.loadDebitCards(id);
+            this.accountDetailsPanelController.loadCreditCards(id);
+            this.accountDetailsPanelController.loadCredits(id);
+        }
+    }
+
+    private Long extractId(String text) {
+        text = text.replaceAll("", "");//TODO: create regex
+        return Long.valueOf(text);
     }
 
     private void initialize() {

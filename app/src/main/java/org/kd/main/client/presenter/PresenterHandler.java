@@ -1,8 +1,6 @@
 package org.kd.main.client.presenter;
 
-import org.kd.main.common.entities.Account;
-import org.kd.main.common.entities.Bank;
-import org.kd.main.common.entities.Transfer;
+import org.kd.main.common.entities.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -34,7 +32,7 @@ public interface PresenterHandler {
     List<Transfer> readTransfers();
 
     boolean deleteTransfer(Long id);
-    
+
     void initApplication();
 
     boolean saveDb();
@@ -44,4 +42,10 @@ public interface PresenterHandler {
     void setAccountId(Long accountId);
 
     Long getAccountId();
+
+    List<DebitCard> readDebitCards(Long accountId);
+
+    List<CreditCard> readCreditCards(Long accountId);
+
+    List<Credit> readCredits(Long id);
 }

@@ -94,6 +94,9 @@ public class TransferDaoRepo {
         sourceAccount.setBalance(sourceAccount.getBalance() - units);
         destAccount.setBalance(destAccount.getBalance() + units);
 
+        /*TODO: possible error - if program unexpectedly quits after withdrawing money form source account
+        *  and before adding them to destination account, sourceAccount will LOSE money
+        *  Solution is to put both updates in a single Hibernate transaction*/
         accountDaoRepo.update(sourceAccount);
         accountDaoRepo.update(destAccount);
         return createInternalTransfer(sourceAccount, destAccount, units);

@@ -1,4 +1,4 @@
-package org.kd.main.client.view;
+package org.kd.main.client.viewfx;
 
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -18,8 +18,8 @@ import java.util.OptionalDouble;
 import java.util.OptionalLong;
 import java.util.stream.Collectors;
 
-import static org.kd.main.client.view.AlertHelper.showErrorAlert;
-import static org.kd.main.client.view.AlertHelper.showInfoAlert;
+import static org.kd.main.client.viewfx.AlertHelper.showErrorAlert;
+import static org.kd.main.client.viewfx.AlertHelper.showInfoAlert;
 
 public class TraderViewController {
 

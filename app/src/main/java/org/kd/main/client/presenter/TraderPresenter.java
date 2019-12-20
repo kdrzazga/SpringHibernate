@@ -7,10 +7,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.kd.main.client.view.lib.PropertiesReader;
 import org.kd.main.common.RestUtility;
 import org.kd.main.common.TraderConfig;
-import org.kd.main.common.entities.Account;
-import org.kd.main.common.entities.Bank;
-import org.kd.main.common.entities.CorporateAccount;
-import org.kd.main.common.entities.Transfer;
+import org.kd.main.common.entities.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +17,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.Vector;
@@ -52,6 +50,12 @@ public class TraderPresenter implements PresenterHandler {
     private final TypeReference<List<Account>> customerListTypeReference = new TypeReference<>() {
     };
     private final TypeReference<List<Transfer>> transferListTypeReference = new TypeReference<>() {
+    };
+    private final TypeReference<List<DebitCard>> debitCardListTypeReference = new TypeReference<>() {
+    };
+    private final TypeReference<List<CreditCard>> creditCardListTypeReference = new TypeReference<>() {
+    };
+    private final TypeReference<List<Credit>> creditListTypeReference = new TypeReference<>() {
     };
 
     @Override
@@ -331,6 +335,86 @@ public class TraderPresenter implements PresenterHandler {
         }
     }
 
+
+    @Override
+    public List<DebitCard> readDebitCards(Long accountId) {
+
+        requestType = HttpMethod.GET;
+        //TODO: for now all debit cards are read, not only for given account
+        requestUrl = serviceAddress.concat("/debitcards");
+        requestAsString = "";
+
+        ResponseEntity<String> response = restUtility.processHttpRequest(requestType, requestAsString, requestUrl, APPLICATION_JSON_VALUE);
+
+        if (!HttpStatus.OK.equals(response.getStatusCode())) {
+            log.error("Error reading debit cards " + response.getStatusCodeValue() + " " + response.getBody());
+            return Collections.emptyList();
+        }
+
+        List<DebitCard> debitCards;
+        try {
+            debitCards = new ObjectMapper()
+                    .readValue(response.getBody()
+                            , debitCardListTypeReference);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return Collections.emptyList();
+        }
+        return debitCards;
+    }
+
+    @Override
+    public List<CreditCard> readCreditCards(Long accountId) {
+        requestType = HttpMethod.GET;
+        //TODO: for now all debit cards are read, not only for given account
+        requestUrl = serviceAddress.concat("/creditcards");
+        requestAsString = "";
+
+        ResponseEntity<String> response = restUtility.processHttpRequest(requestType, requestAsString, requestUrl, APPLICATION_JSON_VALUE);
+
+        if (!HttpStatus.OK.equals(response.getStatusCode())) {
+            log.error("Error reading credit cards " + response.getStatusCodeValue() + " " + response.getBody());
+            return Collections.emptyList();
+        }
+
+        List<CreditCard> creditCards;
+        try {
+            creditCards = new ObjectMapper()
+                    .readValue(response.getBody()
+                            , creditCardListTypeReference);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return Collections.emptyList();
+        }
+        return creditCards;
+    }
+
+    @Override
+    public List<Credit> readCredits(Long id) {
+        requestType = HttpMethod.GET;
+        //TODO: for now all debit cards are read, not only for given account
+        requestUrl = serviceAddress.concat("/credits");
+        requestAsString = "";
+
+        ResponseEntity<String> response = restUtility.processHttpRequest(requestType, requestAsString, requestUrl, APPLICATION_JSON_VALUE);
+
+        if (!HttpStatus.OK.equals(response.getStatusCode())) {
+            log.error("Error reading credits " + response.getStatusCodeValue() + " " + response.getBody());
+            return Collections.emptyList();
+        }
+
+        List<Credit> credits;
+        try {
+            credits = new ObjectMapper()
+                    .readValue(response.getBody()
+                            , creditListTypeReference);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return Collections.emptyList();
+        }
+        return credits;
+    }
+
     @Override
     public void setAccountId(Long accountId) {
         TraderPresenter.accountId = accountId;
@@ -340,4 +424,5 @@ public class TraderPresenter implements PresenterHandler {
     public Long getAccountId() {
         return accountId;
     }
+
 }
