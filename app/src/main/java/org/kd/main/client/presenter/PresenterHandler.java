@@ -48,4 +48,6 @@ public interface PresenterHandler {
     List<CreditCard> readCreditCards(Long accountId);
 
     List<Credit> readCredits(Long id);
+
+    List<Account> readAssociatedAccounts(Long readBankId);
 }

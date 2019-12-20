@@ -95,7 +95,7 @@ public class AccountDaoRepo {
         return q.getSingleResult();
     }
 
-    //@Transactional
+    @Transactional
     public List<Account> readAccountsOfBank(long bankId) {
         var session = getSession();
         var crBuilder = session.getCriteriaBuilder();

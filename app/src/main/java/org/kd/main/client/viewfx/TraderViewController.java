@@ -13,6 +13,7 @@ import org.kd.main.common.entities.Bank;
 import org.kd.main.common.entities.CorporateAccount;
 import org.kd.main.common.entities.Transfer;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.OptionalDouble;
 import java.util.OptionalLong;
@@ -47,7 +48,7 @@ public class TraderViewController {
     private ChoiceBox<String> bankIdChoiceBoxTransfer;
 
     @FXML
-    private TextField accountsField;
+    private TextArea accountsField;
 
     @FXML
     private Button showBankButton;
@@ -96,6 +97,7 @@ public class TraderViewController {
         if (bank.isPresent()) {
             this.bankNameField.setText(bank.get().getName());
             this.shortBankNameField.setText(bank.get().getShortname());
+            loadAssociatedAccounts();
         }
     }
 
@@ -254,6 +256,20 @@ public class TraderViewController {
 
         transferTable.setItems(trades);
         transferTable.getColumns().addAll(idColumn, quantityColumn, srcAccountColumn, destAccountColumn);
+    }
+
+    public void loadAssociatedAccounts() {
+        var associatedAccounts = FXCollections
+                .observableArrayList(
+                        handler.readAssociatedAccounts(readBankId())
+                );
+
+        var accounts = new StringBuilder(associatedAccounts.size());
+
+        associatedAccounts.stream().map(Account::getId).collect(Collectors.toList())
+                .forEach(account -> accounts.append(account.toString().concat(" ")));
+
+        accountsField.setText(accounts.toString());
     }
 
     private Long readAccountId() {

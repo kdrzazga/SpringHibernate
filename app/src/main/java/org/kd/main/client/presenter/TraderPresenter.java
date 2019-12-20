@@ -47,7 +47,7 @@ public class TraderPresenter implements PresenterHandler {
     };
     private final TypeReference<List<Bank>> bankListTypeReference = new TypeReference<>() {
     };
-    private final TypeReference<List<Account>> customerListTypeReference = new TypeReference<>() {
+    private final TypeReference<List<Account>> accountListTypeReference = new TypeReference<>() {
     };
     private final TypeReference<List<Transfer>> transferListTypeReference = new TypeReference<>() {
     };
@@ -182,7 +182,7 @@ public class TraderPresenter implements PresenterHandler {
         try {
             accounts = new ObjectMapper()
                     .readValue(response.getBody()
-                            , customerListTypeReference);
+                            , accountListTypeReference);
         } catch (IOException e) {
             e.printStackTrace();
             return new Vector<>();
@@ -413,6 +413,31 @@ public class TraderPresenter implements PresenterHandler {
             return Collections.emptyList();
         }
         return credits;
+    }
+
+    @Override
+    public List<Account> readAssociatedAccounts(Long bankId) {
+        requestType = HttpMethod.GET;
+        requestUrl = serviceAddress.concat("/associatedAccounts/").concat(bankId.toString());
+        requestAsString = "";
+
+        ResponseEntity<String> response = restUtility.processHttpRequest(requestType, requestAsString, requestUrl, APPLICATION_JSON_VALUE);
+
+        if (!HttpStatus.OK.equals(response.getStatusCode())) {
+            log.error("Error reading associated accounts " + response.getStatusCodeValue() + " " + response.getBody());
+            return Collections.emptyList();
+        }
+
+        List<Account> accountsOfBank;
+        try {
+            accountsOfBank = new ObjectMapper()
+                    .readValue(response.getBody()
+                            , accountListTypeReference);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return Collections.emptyList();
+        }
+        return accountsOfBank;
     }
 
     @Override
