@@ -10,8 +10,8 @@ import javax.persistence.Entity;
 @DiscriminatorValue("FALSE")
 public class ExternalTransfer extends Transfer{
 
-    public ExternalTransfer(Long sourceFundId, Long destFundId, Float units){
-        super(sourceFundId, destFundId, units, false);
+    public ExternalTransfer(Account sourceFund, Account destAccount, Float units){
+        super(sourceFund, destAccount, units, false);
     }
 
 }

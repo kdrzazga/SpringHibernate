@@ -1,5 +1,6 @@
 package org.kd.main.client.presenter;
 
+import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -8,6 +9,7 @@ import org.kd.main.common.RestUtility;
 import org.kd.main.common.TraderConfig;
 import org.kd.main.common.entities.Account;
 import org.kd.main.common.entities.Bank;
+import org.kd.main.common.entities.CorporateAccount;
 import org.kd.main.common.entities.Transfer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -53,6 +55,16 @@ public class TraderPresenter implements PresenterHandler {
     };
 
     @Override
+    public boolean createBank(String name, String shortname) {
+
+        var contentType = APPLICATION_JSON_VALUE;
+        var requestUrl = serviceAddress.concat("/bank");
+        requestType = HttpMethod.POST;
+
+        return saveBank(new Bank(name, shortname), contentType, requestUrl);
+    }
+
+    @Override
     public List<Bank> readBanks() {
 
         requestType = HttpMethod.GET;
@@ -76,16 +88,6 @@ public class TraderPresenter implements PresenterHandler {
         }
 
         return banks;
-    }
-
-    @Override
-    public boolean createBank(String name, String shortname) {
-
-        var contentType = APPLICATION_JSON_VALUE;
-        var requestUrl = serviceAddress.concat("/bank");
-        requestType = HttpMethod.POST;
-
-        return saveBank(new Bank(name, shortname), contentType, requestUrl);
     }
 
     @Override
@@ -122,6 +124,41 @@ public class TraderPresenter implements PresenterHandler {
         requestType = HttpMethod.PUT;
 
         return saveBank(bank, contentType, requestUrl);
+    }
+
+    @Override
+    public boolean deleteBank(Long id) {
+        requestType = HttpMethod.DELETE;
+        requestUrl = serviceAddress.concat("/bank/").concat(id.toString());
+        requestAsString = "";
+
+        ResponseEntity<String> response = restUtility.processHttpRequest(requestType, requestAsString, requestUrl, APPLICATION_JSON_VALUE);
+        if (response.getBody() != null) log.info(response.getBody());
+
+        return HttpStatus.OK
+                .equals(response.getStatusCode());
+    }
+
+    @Override
+    public boolean createAccount(String name, String shortname, Double units, Long bankId) {
+        requestType = HttpMethod.POST;
+        requestUrl = serviceAddress.concat("/corporate-accounts");
+
+        var account = new CorporateAccount(shortname, name, units, bankId);
+        String accountJson;
+        try {
+            //TODO modify mapping - remove id
+            var jf = new JsonFactory();
+            var x = new ObjectMapper(jf);//?
+            accountJson = new ObjectMapper().writeValueAsString(account);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        ResponseEntity<String> response = restUtility.processHttpRequest(requestType, accountJson, requestUrl, APPLICATION_JSON_VALUE);
+
+        return HttpStatus.OK.equals(response.getStatusCode());
     }
 
     @Override
@@ -198,63 +235,6 @@ public class TraderPresenter implements PresenterHandler {
     }
 
     @Override
-    public List<Transfer> readTransfers() {
-
-        requestType = HttpMethod.GET;
-        requestUrl = serviceAddress.concat("/transfers");
-        requestAsString = "";
-
-        ResponseEntity<String> response = restUtility.processHttpRequest(requestType, requestAsString, requestUrl, APPLICATION_JSON_VALUE);
-        if (response == null) {
-            log.error("REST error. Couldn't read transfers from server.");
-            return new Vector<>();
-        }
-        restUtility.retrieveResponseBodyAndStatusCode(response);
-        List<Transfer> transfers;
-        try {
-            transfers = new ObjectMapper().readValue(response.getBody(), transferListTypeReference);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return new Vector<>();
-        }
-
-        return transfers;
-    }
-
-    @Override
-    public boolean deleteTransfer(Long id) {
-
-        requestType = HttpMethod.DELETE;
-        requestUrl = serviceAddress.concat("/transfer/").concat(id.toString());
-        requestAsString = "";
-
-        ResponseEntity<String> response = restUtility.processHttpRequest(requestType, requestAsString, requestUrl, APPLICATION_JSON_VALUE);
-        log.info(response.getBody());
-
-        return HttpStatus.OK.equals(response.getStatusCode());
-    }
-
-    @Override
-    public boolean deleteBank(Long id) {
-        requestType = HttpMethod.DELETE;
-        requestUrl = serviceAddress.concat("/bank/").concat(id.toString());
-        requestAsString = "";
-
-        ResponseEntity<String> response = restUtility.processHttpRequest(requestType, requestAsString, requestUrl, APPLICATION_JSON_VALUE);
-        if (response.getBody() != null) log.info(response.getBody());
-
-        return HttpStatus.OK
-                .equals(response.getStatusCode());
-    }
-
-    @Override
-    public boolean createAccount(String name, String shortname, Double units, Long bankId) {
-        //TODO
-
-        return false;
-    }
-
-    @Override
     public boolean deleteAccount(Long id) {
 
         requestType = HttpMethod.DELETE;
@@ -282,6 +262,40 @@ public class TraderPresenter implements PresenterHandler {
     }
 
     @Override
+    public List<Transfer> readTransfers() {
+
+        requestType = HttpMethod.GET;
+        requestUrl = serviceAddress.concat("/transfers");
+        requestAsString = "";
+
+        ResponseEntity<String> response = restUtility.processHttpRequest(requestType, requestAsString, requestUrl, APPLICATION_JSON_VALUE);
+
+        restUtility.retrieveResponseBodyAndStatusCode(response);
+        List<Transfer> transfers;
+        try {
+            transfers = new ObjectMapper().readValue(response.getBody(), transferListTypeReference);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return new Vector<>();
+        }
+
+        return transfers;
+    }
+
+    @Override
+    public boolean deleteTransfer(Long id) {
+
+        requestType = HttpMethod.DELETE;
+        requestUrl = serviceAddress.concat("/transfer/").concat(id.toString());
+        requestAsString = "";
+
+        ResponseEntity<String> response = restUtility.processHttpRequest(requestType, requestAsString, requestUrl, APPLICATION_JSON_VALUE);
+        log.info(response.getBody());
+
+        return HttpStatus.OK.equals(response.getStatusCode());
+    }
+
+    @Override
     public void stopServer() {
         requestType = HttpMethod.POST;
         requestUrl = serviceAddress.concat("/stop");
@@ -295,7 +309,8 @@ public class TraderPresenter implements PresenterHandler {
     }
 
     @Override
-    public void saveDb() {
+    public boolean saveDb() {
+        return false;//TODO: saving not implemented yet
     }
 
     private boolean saveBank(Bank bank, String contentType, String requestUrl) {
@@ -303,14 +318,12 @@ public class TraderPresenter implements PresenterHandler {
             String bankJson = new ObjectMapper().writeValueAsString(bank);
 
             var response = restUtility.processHttpRequest(requestType, bankJson, requestUrl, contentType);
-            if (response == null) {
-                log.error("REST error. Couldn't save bank.");
-            }
-            restUtility.retrieveResponseBodyAndStatusCode(response);
-            if (!HttpStatus.OK.equals(response.getStatusCode()))
-                log.error(restUtility.getErrorResponseStatusCode() + " " + restUtility.getErrorResponseBody());
 
-            return HttpStatus.OK.equals(response.getStatusCode());
+            if (!HttpStatus.OK.equals(response.getStatusCode()))
+                log.error(response.getStatusCode() + " " + response.getBody());
+
+            return HttpStatus.OK
+                    .equals(response.getStatusCode());
 
         } catch (JsonProcessingException e) {
             System.err.println("You've given shitty JSON");

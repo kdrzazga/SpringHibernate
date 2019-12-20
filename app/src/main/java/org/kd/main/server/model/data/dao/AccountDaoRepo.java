@@ -5,6 +5,8 @@ import org.hibernate.query.Query;
 import org.kd.main.common.entities.CorporateAccount;
 import org.kd.main.common.entities.Account;
 import org.kd.main.common.entities.IndividualAccount;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 

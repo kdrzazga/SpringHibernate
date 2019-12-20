@@ -33,11 +33,11 @@ public class TransferDaoRepo {
     private ExternalTransferDaoRepo externalTransferDaoRepo;
 
     @Transactional
-    public long book(long srcAccountId, long destAccountId, float units) {
-
+    public long book(Account srcAccount, Account destAccount, float units) {
+/*
         var destAccount = accountDaoRepo.read(destAccountId);
         var srcAccount = accountDaoRepo.read(srcAccountId);
-
+*/
         if (destAccount == null || srcAccount == null) return -1;
 
         return (Objects.equals(destAccount.getBankId(), srcAccount.getBankId()))
@@ -96,7 +96,7 @@ public class TransferDaoRepo {
 
         accountDaoRepo.update(sourceAccount);
         accountDaoRepo.update(destAccount);
-        return createInternalTransfer(sourceAccount.getId(), destAccount.getId(), units);
+        return createInternalTransfer(sourceAccount, destAccount, units);
     }
 
     private long bookExternalTransfer(Account sourceAccount, Account destAccount, float units) {
@@ -108,17 +108,17 @@ public class TransferDaoRepo {
         accountDaoRepo.update(sourceAccount);
         accountDaoRepo.update(destAccount);
         //TODO introduce differences btween internal and external transfer
-        return createExternalTransfer(sourceAccount.getId(), destAccount.getId(), units);
+        return createExternalTransfer(sourceAccount, destAccount, units);
     }
 
-    private long createInternalTransfer(long sourceFundId, long destFundId, float units) {
+    private long createInternalTransfer(Account sourceFundId, Account destFundId, float units) {
         var newTrade = new InternalTransfer(sourceFundId, destFundId, units);
 
         getSession().saveOrUpdate(newTrade);
         return newTrade.getId();
     }
 
-    private long createExternalTransfer(long sourceFundId, long destFundId, float units) {
+    private long createExternalTransfer(Account sourceFundId, Account destFundId, float units) {
         var newTrade = new ExternalTransfer(sourceFundId, destFundId, units);
 
         getSession().saveOrUpdate(newTrade);

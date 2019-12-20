@@ -37,7 +37,7 @@ public interface PresenterHandler {
     
     void initApplication();
 
-    void saveDb();
+    boolean saveDb();
 
     void stopServer();
 

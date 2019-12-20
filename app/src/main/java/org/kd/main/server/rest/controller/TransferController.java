@@ -38,7 +38,7 @@ class TransferController {
 
             var newTransfer = objectMapper.readValue(transferJson, Transfer.class);
 
-            var newId = transferDao.book(newTransfer.getSrcAccountId(), newTransfer.getDestAccountId(), newTransfer.getUnits());
+            var newId = transferDao.book(newTransfer.getSrcAccount(), newTransfer.getDestAccount(), newTransfer.getUnits());
 
             logTransfer(newId, newTransfer);
 

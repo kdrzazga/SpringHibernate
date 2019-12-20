@@ -38,7 +38,7 @@ public class PresenterTest {
 
     private final Bank bank = new Bank(1L, "Test Bank", "TST");
     private final Account account = new CorporateAccount("IK", "Ian Kovalsky", 1.0, 1L);
-    private final Transfer transfer = new InternalTransfer(1L, 1L, 2f);
+    private final Transfer transfer = new InternalTransfer(account, account, 2f);
 
     @Autowired
     private WireMockServer wireMockServer;

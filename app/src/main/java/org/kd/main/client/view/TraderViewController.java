@@ -65,6 +65,9 @@ public class TraderViewController {
     private Button showAccountButton;
 
     @FXML
+    private TextField messageTextBox;
+
+    @FXML
     public void initialize() {
         devTab.setDisable(new PropertiesReader().readKey("dev-mode").equals("false"));
     }
@@ -79,7 +82,7 @@ public class TraderViewController {
         } else {
             showErrorAlert(bookingErrorMgs);
         }
-        loadTrades();
+        loadTransfers();
     }
 
     @FXML
@@ -131,6 +134,9 @@ public class TraderViewController {
         if (isNoneElementSelected(accountIdChoiceBoxAccount, selectionErrorMsg)) return;
 
         var id = readAccountId();
+
+        messageTextBox.setText(id.toString());
+
         var account = handler.readAccount(id);
         if (account.isPresent()) {
             this.accountNameField.setText(account.get().getName());
@@ -149,36 +155,53 @@ public class TraderViewController {
 
     @FXML
     protected void handleSaveBankAction(ActionEvent event) {
-        String errorMsg = new PropertiesReader().readKey("error.message.bank.not.selected");
+        var errorMsg = new PropertiesReader().readKey("error.message.bank.not.selected");
+        var saveErrorMsg = new PropertiesReader().readKey("message.error.bank.not.saved");
+        var saveConfirmMsg = new PropertiesReader().readKey("message.confirm.bank.saved");
         if (isNoneElementSelected(bankIdChoiceBox, errorMsg)) return;
 
-        handler.updateBank(new Bank(readBankId(), readBankName(), readBankShortName()));
+        if (handler.updateBank(new Bank(readBankId(), readBankName(), readBankShortName())))
+            showInfoAlert(saveConfirmMsg);
+        else showErrorAlert(saveErrorMsg);
     }
 
     @FXML
     protected void handleSaveAccountAction(ActionEvent event) {
         String errorMsgCustomer = new PropertiesReader().readKey("error.message.customer.not.selected");
         String errorMsgBank = new PropertiesReader().readKey("error.message.bank.not.selected");
+        var saveErrorMsg = new PropertiesReader().readKey("message.error.account.not.saved");
+        var saveConfirmMsg = new PropertiesReader().readKey("message.confirm.account.saved");
         if (isNoneElementSelected(accountIdChoiceBoxAccount, errorMsgCustomer)
                 | isNoneElementSelected(bankIdChoiceBox, errorMsgBank)) return;
 
-        handler.updateAccount(new CorporateAccount(readAccountShortName(), readAccountName(), readAccountUnits(), readBankId()));
+        var account = new CorporateAccount(readAccountShortName(), readAccountName(), readAccountUnits(), readBankId());
+
+        if (handler.updateAccount(account))
+            showInfoAlert(saveConfirmMsg);
+        else showErrorAlert(saveErrorMsg);
     }
 
     @FXML
     protected void handleCreateBankAction(ActionEvent event) {
         String errorMsg = new PropertiesReader().readKey("error.message.bank.not.selected");
+        var saveErrorMsg = new PropertiesReader().readKey("message.error.bank.not.saved");
+        var saveConfirmMsg = new PropertiesReader().readKey("message.confirm.bank.saved");
+
         if (isNoneElementSelected(bankIdChoiceBox, errorMsg)) return;
 
-        handler.createBank(readBankName(), readBankShortName());
+        if (handler.createBank(readBankName(), readBankShortName()))
+            showInfoAlert(saveConfirmMsg);
+        else showErrorAlert(saveErrorMsg);
     }
 
     @FXML
-    protected void handleCreateCustomerAction(ActionEvent event) {
-        String errorMsg = new PropertiesReader().readKey("error.message.customer.not.selected");
-        if (isNoneElementSelected(accountIdChoiceBoxAccount, errorMsg)) return;
+    protected void handleCreateAccountAction(ActionEvent event) {
+        var saveErrorMsg = new PropertiesReader().readKey("message.error.account.not.saved");
+        var saveConfirmMsg = new PropertiesReader().readKey("message.confirm.account.saved");
 
-        handler.createAccount(readAccountShortName(), readAccountName(), readAccountUnits(), readBankId());
+        if (handler.createAccount(readAccountShortName(), readAccountName(), readAccountUnits(), readBankId()))
+            showInfoAlert(saveConfirmMsg);
+        else showErrorAlert(saveErrorMsg);
     }
 
     @FXML
@@ -211,7 +234,7 @@ public class TraderViewController {
         accountIdChoiceBoxAccount.setItems(list);
     }
 
-    public void loadTrades() {
+    public void loadTransfers() {
         var trades = FXCollections
                 .observableArrayList(
                         handler.readTransfers());
@@ -233,7 +256,7 @@ public class TraderViewController {
         transferTable.getColumns().addAll(idColumn, quantityColumn, srcAccountColumn, destAccountColumn);
     }
 
-    private long readAccountId() {
+    private Long readAccountId() {
         /*TODO*/
         var text = Optional.ofNullable(accountIdChoiceBoxAccount.getValue())
                 .orElse("2001");
@@ -244,11 +267,13 @@ public class TraderViewController {
     }
 
     private String readAccountShortName() {
-        return this.accountShortNameField.getText();
+        return Optional.ofNullable(this.accountShortNameField.getText())
+                .orElse("");
     }
 
     private String readAccountName() {
-        return this.accountNameField.getText();
+        return Optional.ofNullable(this.accountNameField.getText())
+                .orElse("");
     }
 
     private double readAccountUnits() {
@@ -258,8 +283,10 @@ public class TraderViewController {
     }
 
     private Long readBankId() {
+
         var bankId = bankIdChoiceBox.getValue();
-        return Long.parseLong(bankId);
+        return bankId == null ? 2001L
+                : Long.parseLong(bankId);
     }
 
     private String readBankShortName() {
@@ -291,7 +318,12 @@ public class TraderViewController {
     }
 
     public void handleAccountSelection(MouseEvent mouseEvent) {
-        this.accountIdChoiceBoxAccount.getValue();
-        handler.setAccountId(readAccountId());
+        final var accountId = Optional.of(this.accountIdChoiceBoxAccount)
+                .map(ChoiceBox::getValue);
+
+        if (accountId.isPresent()) {
+            this.messageTextBox.setText(accountId.get());
+            AccountDetailsPanelController.setAccountId(Long.valueOf(accountId.get()));
+        }
     }
 }

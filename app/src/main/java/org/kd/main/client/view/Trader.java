@@ -1,21 +1,20 @@
 package org.kd.main.client.view;
 
-import javafx.scene.control.Label;
-import javafx.scene.control.TabPane;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import org.kd.main.client.presenter.PresenterHandler;
 import org.kd.main.client.view.lib.PropertiesReader;
 import org.kd.main.common.TraderConfig;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 public class Trader extends Application {
 
     private final static int ID_LABEL_INDEX = 3;
-    private final static int ACCOUNT_TAB_INDEX = 2;
 
     private static Trader instance;
     private PresenterHandler handler;
@@ -45,17 +44,13 @@ public class Trader extends Application {
 
     public void activateAccountDetailsScreen() {
         this.window.setScene(this.accountDetailsScreen);
+        var messageTextBox = (TextField) (this.mainScreen.lookup("#messageTextBox"));
 
-        var tab1 = (TabPane)(mainScreen.getRoot().getChildrenUnmodifiable().get(0));
-        var accountTab = tab1.getTabs().get(ACCOUNT_TAB_INDEX);
-
-        var idCheckBox = this.mainScreen.lookup("#accountIdChoiceBox");
-
-        setAccountIdOnDetailsScreen("DUPA");
+        setAccountIdOnDetailsScreen(messageTextBox.getText());
     }
 
     public void activateMainScreen() {
-        this.window.setScene(this.mainScreen);
+            this.window.setScene(this.mainScreen);
     }
 
     private void setupCustomerDetailsScreen() throws java.io.IOException {
@@ -73,7 +68,7 @@ public class Trader extends Application {
 
         controller.loadBanks();
         controller.loadAccounts();
-        controller.loadTrades();
+        controller.loadTransfers();
     }
 
     private void setupWindow() {

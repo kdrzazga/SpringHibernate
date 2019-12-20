@@ -20,24 +20,27 @@ public class Transfer implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     protected Long id;
 
-    @Column(name="src_account_id")
-    protected Long srcAccountId;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "src_account_id")
+    protected Account srcAccount;
 
-    @Column(name="dest_account_id")
-    protected Long destAccountId;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "dest_account_id")
+    protected Account destAccount;
+
     protected Float units;
     @Column(insertable = false, updatable = false)
     private Boolean internal;
 
-    public Transfer(long srcAccountId, long destAccountId, float units, boolean internal) {
-        this.srcAccountId = srcAccountId;
-        this.destAccountId = destAccountId;
+    public Transfer(Account srcAccountId, Account destAccountId, float units, boolean internal) {
+        this.srcAccount = srcAccountId;
+        this.destAccount = destAccountId;
         this.units = units;
         this.internal = internal;
     }
 
     @Override
     public String toString() {
-        return "id=" + this.id + " from " + this.srcAccountId + " to " + this.destAccountId + " units " + units;
+        return "id=" + this.id + " from " + this.srcAccount + " to " + this.destAccount + " units " + units;
     }
 }

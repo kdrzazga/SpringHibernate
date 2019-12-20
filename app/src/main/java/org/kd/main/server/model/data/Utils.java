@@ -19,10 +19,10 @@ class Utils {
 
     public boolean isInternal(Transfer transfer) {
         var srcFundBank = Optional.ofNullable(
-                accountDaoRepo.read(transfer.getSrcAccountId()).getBankId())
+                accountDaoRepo.read(transfer.getSrcAccount().getId()).getBankId())
                 .orElse((long) -1);
         var destFundBank = Optional.ofNullable(
-                accountDaoRepo.read(transfer.getDestAccountId()).getBankId())
+                accountDaoRepo.read(transfer.getDestAccount().getId()).getBankId())
                 .orElse((long) -2);
 
         var correctInternalTransfer = srcFundBank.equals(destFundBank) && transfer.getInternal();

@@ -14,6 +14,15 @@ public class AccountDetailsPanelController {
         AccountDetailsPanelController.handler = handler;
     }
 
+    public static void setAccountId(Long accountId) {
+        AccountDetailsPanelController.accountId = accountId;
+    }
+
+    @FXML
+    public void initialize(){
+        customerIdLabel.setText(accountId.toString());
+    }
+
     @FXML
     private Label customerIdLabel;//TODO
 
@@ -22,9 +31,5 @@ public class AccountDetailsPanelController {
         Trader.getInstance().activateMainScreen();
     }
 
-    public static void setAccountId(Long accountId) {
-        //CustomerDetailsPanelController.accountId = accountId;
-        //customerIdLabel.setText(accountId.toString());
-        ;
-    }
+
 }

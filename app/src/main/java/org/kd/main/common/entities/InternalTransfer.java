@@ -10,7 +10,7 @@ import javax.persistence.Entity;
 @DiscriminatorValue("TRUE")
 public class InternalTransfer extends Transfer {
 
-    public InternalTransfer(Long sourceFundId, Long destFundId, Float units){
-        super(sourceFundId, destFundId, units, true);
+    public InternalTransfer(Account srcAccount, Account destAccount, Float units){
+        super(srcAccount, destAccount, units, true);
     }
 }
