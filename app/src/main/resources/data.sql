@@ -36,7 +36,7 @@ create TABLE transfer (
     dest_account_id bigint,
     units float,
     internal BOOLEAN,
-    --FOREIGN KEY (src_account_id) REFERENCES funds(id),
+    FOREIGN KEY (src_account_id) REFERENCES account(id),
     FOREIGN KEY (dest_account_id) REFERENCES account(id)
 );
 
@@ -113,6 +113,7 @@ create TABLE log(
 
 insert into bank(id, shortname, name) values (1001, 'A', 'Agilent Technologies');
 insert into account(id, corporate, shortname, name, balance, bank_id) values (2001, TRUE, 'MUSA', 'Murphy USA Inc', 2001.24, 1001);
+insert into account(corporate, shortname, name, balance, bank_id) values (true, 'RAD', 'Rite Aid Corp', 0.7100, 1001);
 insert into transfer(id, src_account_id, dest_account_id, units, internal) values (3001, 2002, 2001, 123.44, TRUE);
 insert into currency(id, name, shortname) values (30001, 'Polish Zloty', 'PLN');
 insert into country(id, name, shortname, currency_id) values (10001, 'Poland', 'PL', 30001);
@@ -175,7 +176,6 @@ insert into bank(shortname, name) values('MTB', 'M&T Bank Corp');
 insert into bank(shortname, name) values('MTB-C', 'M&T Bank Corporation Fixed Rate');
 insert into bank(shortname, name) values('MTB.P', 'M&T Bank Corporation Fixed Rate');
 
-insert into account(corporate, shortname, name, balance, bank_id) values (true, 'RAD', 'Rite Aid Corp', 0.7100, 1011);
 insert into account(corporate, shortname, name, balance, bank_id) values (true, 'RAMP', 'Liveramp Holdings Inc.', 38.35, 1011);
 insert into account(corporate, shortname, name, balance, bank_id) values (true, 'RBA', 'Ritchie Bros. Auctioneers Inc', 31.33, 1011);
 insert into account(corporate, shortname, name, balance, bank_id) values (true, 'RBC', 'Regal-Beloit Corp', 69.18, 1021);

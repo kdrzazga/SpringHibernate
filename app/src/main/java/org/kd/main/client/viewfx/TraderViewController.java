@@ -7,16 +7,14 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import org.kd.main.client.presenter.PresenterHandler;
-import org.kd.main.client.view.lib.PropertiesReader;
+import org.kd.main.client.viewfx.lib.PropertiesReader;
+import org.kd.main.client.viewfx.lib.NumberTextField;
 import org.kd.main.common.entities.Account;
 import org.kd.main.common.entities.Bank;
 import org.kd.main.common.entities.CorporateAccount;
 import org.kd.main.common.entities.Transfer;
 
-import java.util.List;
 import java.util.Optional;
-import java.util.OptionalDouble;
-import java.util.OptionalLong;
 import java.util.stream.Collectors;
 
 import static org.kd.main.client.viewfx.AlertHelper.showErrorAlert;
@@ -33,10 +31,10 @@ public class TraderViewController {
     private TableView<Transfer> transferTable;
 
     @FXML
-    private ChoiceBox<String> bankIdChoiceBox;
+    private ChoiceBox<Long> bankIdChoiceBox;
 
     @FXML
-    private ChoiceBox<String> accountIdChoiceBoxAccount;
+    private ChoiceBox<Long> accountIdChoiceBoxAccount;
 
     @FXML
     private TextField bankNameField;
@@ -45,7 +43,13 @@ public class TraderViewController {
     private TextField shortBankNameField;
 
     @FXML
-    private ChoiceBox<String> bankIdChoiceBoxTransfer;
+    private ChoiceBox<Long> srcAccountIdChoiceBoxTransfer;
+
+    @FXML
+    private ChoiceBox<Long> destAccountChoiceBoxTransfer;
+
+    @FXML
+    private NumberTextField amountTextBox;
 
     @FXML
     private TextArea accountsField;
@@ -60,7 +64,7 @@ public class TraderViewController {
     private TextField accountShortNameField;
 
     @FXML
-    private TextField accountBalanceField;
+    private NumberTextField accountBalanceField;
 
     @FXML
     private Button showAccountButton;
@@ -78,6 +82,14 @@ public class TraderViewController {
         var bookConfirmMsg = new PropertiesReader().readKey("error.message.transfer.booked");
         var bookingErrorMgs = new PropertiesReader().readKey("error.message.transfer.not.booked");
 
+        var errorMsg = new PropertiesReader().readKey("error.message.account.not.selected");
+        if (isNoneElementSelected(srcAccountIdChoiceBoxTransfer, errorMsg)) return;
+        if (isNoneElementSelected(destAccountChoiceBoxTransfer, errorMsg)) return;
+
+        var srcAccount = readAccountId(srcAccountIdChoiceBoxTransfer);
+        var destAccount = readAccountId(destAccountChoiceBoxTransfer);
+        var amount = amountTextBox.getDouble();
+        //TODO
         if (handler.bookTransfer()) {
             showInfoAlert(bookConfirmMsg);
         } else {
@@ -122,7 +134,7 @@ public class TraderViewController {
         var deleteConfirmMsg = new PropertiesReader().readKey("message.confirm.account.deleted");
         if (isNoneElementSelected(accountIdChoiceBoxAccount, selectionErrorMsg)) return;
 
-        var id = readAccountId();
+        var id = readAccountId(accountIdChoiceBoxAccount);
         if (handler.deleteAccount(id))
             showInfoAlert(deleteConfirmMsg);
         else
@@ -135,7 +147,7 @@ public class TraderViewController {
         var selectionErrorMsg = new PropertiesReader().readKey("message.error.account.not.selected");
         if (isNoneElementSelected(accountIdChoiceBoxAccount, selectionErrorMsg)) return;
 
-        var id = readAccountId();
+        var id = readAccountId(accountIdChoiceBoxAccount);
 
         messageTextBox.setText(id.toString());
 
@@ -176,7 +188,8 @@ public class TraderViewController {
         if (isNoneElementSelected(accountIdChoiceBoxAccount, errorMsgCustomer)
                 | isNoneElementSelected(bankIdChoiceBox, errorMsgBank)) return;
 
-        var account = new CorporateAccount(readAccountShortName(), readAccountName(), readAccountUnits(), readBankId());
+        var account = new CorporateAccount(readAccountShortName(), readAccountName()
+                , accountBalanceField.getDouble(), readBankId());
 
         if (handler.updateAccount(account))
             showInfoAlert(saveConfirmMsg);
@@ -201,7 +214,8 @@ public class TraderViewController {
         var saveErrorMsg = new PropertiesReader().readKey("message.error.account.not.saved");
         var saveConfirmMsg = new PropertiesReader().readKey("message.confirm.account.saved");
 
-        if (handler.createAccount(readAccountShortName(), readAccountName(), readAccountUnits(), readBankId()))
+        if (handler.createAccount(readAccountShortName(), readAccountName()
+                , accountBalanceField.getDouble(), readBankId()))
             showInfoAlert(saveConfirmMsg);
         else showErrorAlert(saveErrorMsg);
     }
@@ -217,11 +231,10 @@ public class TraderViewController {
                 handler.readBanks()
                         .stream()
                         .map(Bank::getId)
-                        .map(Object::toString)
                         .collect(Collectors.toList()));
 
         bankIdChoiceBox.setItems(list);
-        bankIdChoiceBoxTransfer.setItems(list);
+
     }
 
     public void loadAccounts() {
@@ -230,10 +243,11 @@ public class TraderViewController {
                 handler.readAccounts()
                         .stream()
                         .map(Account::getId)
-                        .map(Object::toString)
                         .collect(Collectors.toList()));
 
         accountIdChoiceBoxAccount.setItems(list);
+        srcAccountIdChoiceBoxTransfer.setItems(list);
+        destAccountChoiceBoxTransfer.setItems(list);
     }
 
     public void loadTransfers() {
@@ -272,13 +286,9 @@ public class TraderViewController {
         accountsField.setText(accounts.toString());
     }
 
-    private Long readAccountId() {
+    private Long readAccountId(ChoiceBox<Long> choiceBox) {
         /*TODO*/
-        var text = Optional.ofNullable(accountIdChoiceBoxAccount.getValue())
-                .orElse("2001");
-
-        return OptionalLong
-                .of(Long.parseLong(text))
+        return Optional.ofNullable(choiceBox.getValue())
                 .orElse(2001L);
     }
 
@@ -292,17 +302,10 @@ public class TraderViewController {
                 .orElse("");
     }
 
-    private double readAccountUnits() {
-        return OptionalDouble
-                .of(Double.valueOf(this.accountBalanceField.getText()))
-                .orElse(0);
-    }
-
     private Long readBankId() {
 
-        var bankId = bankIdChoiceBox.getValue();
-        return bankId == null ? 2001L
-                : Long.parseLong(bankId);
+        return Optional.ofNullable(bankIdChoiceBox.getValue())
+                .orElse(2001L);
     }
 
     private String readBankShortName() {
@@ -313,15 +316,14 @@ public class TraderViewController {
         return this.bankNameField.getText();
     }
 
-    private boolean isItemSelected(ChoiceBox<String> choiceBox) {
+    private boolean isItemSelected(ChoiceBox<Long> choiceBox) {
 
         return Optional.ofNullable(choiceBox)
                 .map(ChoiceBox::getValue)
-                .map(String::isEmpty)
                 .isPresent();
     }
 
-    private boolean isNoneElementSelected(ChoiceBox<String> choiceBox, String errorMessage) {
+    private boolean isNoneElementSelected(ChoiceBox<Long> choiceBox, String errorMessage) {
         if (isItemSelected(choiceBox)) return false;
 
         var selectionErrorMsg = new PropertiesReader().readKey("message.error.id.not.selected");
@@ -338,8 +340,8 @@ public class TraderViewController {
                 .map(ChoiceBox::getValue);
 
         if (accountId.isPresent()) {
-            this.messageTextBox.setText(accountId.get());
-            AccountDetailsPanelController.setAccountId(Long.valueOf(accountId.get()));
+            this.messageTextBox.setText(accountId.get().toString());
+            AccountDetailsPanelController.setAccountId(accountId.get());
         }
     }
 }

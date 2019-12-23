@@ -28,7 +28,7 @@ public class SpringJmsConsumer {
     }
 
     public String receiveMessage() throws JMSException {
-        TextMessage textMessage = (TextMessage) jmsTemplate.receive(destination);
+        var textMessage = (TextMessage) jmsTemplate.receive(destination);
         return (textMessage != null) ? textMessage.getText() : "";
 
     }

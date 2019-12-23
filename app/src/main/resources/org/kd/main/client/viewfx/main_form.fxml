@@ -17,6 +17,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
+<?import org.kd.main.client.viewfx.lib.NumberTextField?>
 
 <Pane fx:id="mainPane" maxHeight="680.0" minHeight="680.0" prefHeight="680.0" prefWidth="446.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.kd.main.client.viewfx.TraderViewController">
     <TabPane fx:id="mainTabPane" maxHeight="600.0" minHeight="520.0" prefHeight="548.0" prefWidth="446.0" tabClosingPolicy="UNAVAILABLE">
@@ -28,6 +29,7 @@
                             <columnConstraints>
                                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                             </columnConstraints>
                             <rowConstraints>
                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -45,18 +47,21 @@
                                         <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                                     </padding>
                                 </Label>
-                                <Label text="Bank Id :" GridPane.rowIndex="1" />
-                                <ChoiceBox id="bankIdChoiceBoxTransfer" fx:id="bankIdChoiceBoxTransfer" nodeOrientation="LEFT_TO_RIGHT" prefHeight="14.0" prefWidth="180.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                <Label text="From Account" GridPane.rowIndex="1" />
+                                <ChoiceBox fx:id="srcAccountIdChoiceBoxTransfer" nodeOrientation="LEFT_TO_RIGHT" prefHeight="14.0" prefWidth="180.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="1">
 
                                 </ChoiceBox>
-                                <Label text="Account Id:" GridPane.rowIndex="2" />
-                                <ChoiceBox id="fundIdChoiceBox" fx:id="accountIdChoiceBoxTransfer" nodeOrientation="LEFT_TO_RIGHT" onMouseClicked="#handleAccountSelection" prefHeight="14.0" prefWidth="180.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                <Label text="To Account" GridPane.rowIndex="3" />
+                                <ChoiceBox fx:id="destAccountChoiceBoxTransfer" nodeOrientation="LEFT_TO_RIGHT" onMouseClicked="#handleAccountSelection" prefHeight="14.0" prefWidth="180.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="3">
                                 </ChoiceBox>
                                 <Button fx:id="bookTradeButton" defaultButton="true" onAction="#handleBookTradeAction" prefHeight="36.0" prefWidth="169.0" text="Book" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="4">
                                     <GridPane.margin>
                                         <Insets bottom="5.0" top="5.0" />
                                     </GridPane.margin>
                                 </Button>
+                        <Label text="Amount" GridPane.rowIndex="2" />
+                        <NumberTextField fx:id="amountTextBox" alignment="CENTER_RIGHT" prefHeight="31.0" prefWidth="89.0" text="0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <Label fx:id="maxAmountLabel" prefHeight="21.0" prefWidth="79.0" text="/ 0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
                             </children>
                             <padding>
                                 <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
@@ -105,7 +110,7 @@
                                 </Label>
                                 <Label text="Bank Name : " GridPane.rowIndex="5" />
                                 <TextField fx:id="bankNameField" minWidth="225" prefHeight="15" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                                <TextField fx:id="shortBankNameField" alignment="CENTER_RIGHT" maxWidth="100" prefHeight="15" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                                <TextField fx:id="shortBankNameField" maxWidth="100" prefHeight="15" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                                 <Label alignment="CENTER_RIGHT" text="Accounts : " GridPane.rowIndex="7">
                                     <GridPane.margin>
                                         <Insets top="4.0" />
@@ -116,7 +121,7 @@
                                         <Insets bottom="5" top="5" />
                                     </GridPane.margin>
                                 </Button>
-                                <ChoiceBox id="partyIdChoiceBox" fx:id="bankIdChoiceBox" nodeOrientation="LEFT_TO_RIGHT" prefHeight="14.0" prefWidth="180.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                <ChoiceBox fx:id="bankIdChoiceBox" nodeOrientation="LEFT_TO_RIGHT" prefHeight="14.0" prefWidth="180.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                 </ChoiceBox>
                                 <Label layoutX="27.0" text="Bank Id :" GridPane.rowIndex="2" />
                                 <Button fx:id="saveBankButton" defaultButton="true" layoutX="141.0" layoutY="118.0" onAction="#handleSaveBankAction" prefHeight="36.0" prefWidth="169.0" text="Save Changes" textAlignment="CENTER" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="9">
@@ -135,7 +140,7 @@
                                     </GridPane.margin>
                                 </Button>
                                 <Label layoutX="25.0" layoutY="219.0" text="Short Name : " GridPane.rowIndex="6" />
-                                <TextArea fx:id="accountsField" prefHeight="99.0" prefWidth="199.0" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                                <TextArea fx:id="accountsField" editable="false" prefHeight="99.0" prefWidth="199.0" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="7" />
                             </children>
                             <padding>
                                 <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
@@ -179,14 +184,14 @@
                                     </padding>
                                 </Label>
                                 <Label text="Account Id:" GridPane.rowIndex="1" />
-                                <ChoiceBox id="fundIdChoiceBox" fx:id="accountIdChoiceBoxAccount" nodeOrientation="LEFT_TO_RIGHT" onMouseClicked="#handleAccountSelection" onMouseMoved="#handleAccountSelection" onMousePressed="#handleAccountSelection" prefHeight="14.0" prefWidth="180.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                <ChoiceBox fx:id="accountIdChoiceBoxAccount" nodeOrientation="LEFT_TO_RIGHT" onMouseClicked="#handleAccountSelection" onMouseMoved="#handleAccountSelection" onMousePressed="#handleAccountSelection" prefHeight="14.0" prefWidth="180.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                 <Label alignment="CENTER_RIGHT" text="Account Name : " GridPane.rowIndex="3" />
                                 <Label alignment="CENTER_RIGHT" text="Short Name : " GridPane.rowIndex="4" />
-                                <TextField fx:id="accountNameField" minWidth="225" prefHeight="15" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                <TextField fx:id="accountShortNameField" editable="true" maxWidth="100" prefHeight="15" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                <TextField fx:id="accountNameField" alignment="CENTER_RIGHT" minWidth="225" prefHeight="15" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                <TextField fx:id="accountShortNameField" alignment="TOP_RIGHT" editable="true" maxWidth="100" prefHeight="15" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                                 <Button fx:id="showAccountButton" defaultButton="true" onAction="#handleShowAccountAction" prefHeight="36.0" prefWidth="169.0" text="Show" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
                                 <Label alignment="CENTER_RIGHT" text="Cash Balance" GridPane.rowIndex="5" />
-                                <TextField fx:id="accountBalanceField" editable="true" maxWidth="100" prefHeight="15" text="0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                <NumberTextField fx:id="accountBalanceField" alignment="CENTER_RIGHT" editable="true" maxWidth="100" prefHeight="15" text="0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                                 <Button fx:id="saveAccountButton" defaultButton="true" layoutX="141.0" layoutY="118.0" onAction="#handleSaveAccountAction" prefHeight="36.0" prefWidth="169.0" text="Save Changes" textAlignment="CENTER" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="6">
                                     <GridPane.margin>
                                         <Insets bottom="5.0" top="5.0" />
@@ -225,11 +230,11 @@
     </TabPane>
     <HBox layoutX="-5.0" layoutY="647.0" prefHeight="33.0" prefWidth="453.0">
         <children>
-            <TextField fx:id="messageTextBox" disable="false" editable="false" maxHeight="25.0" minHeight="25.0" prefHeight="25.0" prefWidth="445.0" visible="false">
+            <NumberTextField fx:id="messageTextBox" disable="false" editable="false" maxHeight="25.0" minHeight="25.0" prefHeight="25.0" prefWidth="445.0" visible="false">
                 <font>
                     <Font size="10.0" />
                 </font>
-            </TextField>
+            </NumberTextField>
         </children>
     </HBox>
 </Pane>

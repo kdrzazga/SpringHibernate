@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.kd.main.client.view.lib.PropertiesReader;
+import org.kd.main.client.viewfx.lib.PropertiesReader;
 import org.kd.main.common.RestUtility;
 import org.kd.main.common.TraderConfig;
 import org.kd.main.common.entities.*;
@@ -61,11 +61,10 @@ public class TraderPresenter implements PresenterHandler {
     @Override
     public boolean createBank(String name, String shortname) {
 
-        var contentType = APPLICATION_JSON_VALUE;
         var requestUrl = serviceAddress.concat("/bank");
         requestType = HttpMethod.POST;
 
-        return saveBank(new Bank(name, shortname), contentType, requestUrl);
+        return saveBank(new Bank(name, shortname), APPLICATION_JSON_VALUE, requestUrl);
     }
 
     @Override
@@ -123,11 +122,10 @@ public class TraderPresenter implements PresenterHandler {
     @Override
     public boolean updateBank(Bank bank) {
 
-        var contentType = APPLICATION_JSON_VALUE;
         var requestUrl = serviceAddress.concat("/bank");
         requestType = HttpMethod.PUT;
 
-        return saveBank(bank, contentType, requestUrl);
+        return saveBank(bank, APPLICATION_JSON_VALUE, requestUrl);
     }
 
     @Override
@@ -220,12 +218,11 @@ public class TraderPresenter implements PresenterHandler {
     @Override
     public boolean updateAccount(Account account) {
 
-        var contentType = APPLICATION_JSON_VALUE;
         var requestUrl = serviceAddress.concat("/account");
 
         try {
             String customerJson = new ObjectMapper().writeValueAsString(account);
-            var response = restUtility.processHttpRequest(HttpMethod.PUT, customerJson, requestUrl, contentType);
+            var response = restUtility.processHttpRequest(HttpMethod.PUT, customerJson, requestUrl, APPLICATION_JSON_VALUE);
 
             restUtility.retrieveResponseBodyAndStatusCode(response);
             if (!HttpStatus.OK.equals(response.getStatusCode()))

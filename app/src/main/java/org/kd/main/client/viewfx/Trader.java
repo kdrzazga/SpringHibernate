@@ -1,16 +1,20 @@
 package org.kd.main.client.viewfx;
 
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import org.kd.main.client.presenter.PresenterHandler;
-import org.kd.main.client.view.lib.PropertiesReader;
+import org.kd.main.client.viewfx.lib.PropertiesReader;
 import org.kd.main.common.TraderConfig;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
+import java.util.logging.Logger;
 
 public class Trader extends Application {
 
@@ -81,7 +85,7 @@ public class Trader extends Application {
         this.window.setTitle(new PropertiesReader().readKey("app.title"));
         this.window.setIconified(false);
 
-        this.window.setOnCloseRequest(event -> exit());
+        this.window.setOnCloseRequest(new CloseHandler());
         this.window.show();
     }
 
@@ -107,10 +111,6 @@ public class Trader extends Application {
         this.handler.initApplication();
     }
 
-    private void exit() {
-        this.handler.saveDb();
-    }
-
     public void start(String[] args) {
         launch(args);
     }
@@ -121,5 +121,22 @@ public class Trader extends Application {
 
     public Stage getWindow() {
         return window;
+    }
+
+    private class CloseHandler implements EventHandler<WindowEvent> {
+
+        @Override
+        public void handle(WindowEvent event) {
+            if (AlertHelper.showConfirmationAlert("Really exit?"))
+                exit();
+            else
+                event.consume();
+        }
+
+        private void exit() {
+            var dBSavedMsg = Trader.this.handler.saveDb() ?
+                    "Database save to file" : "Database not saved";
+            Logger.getGlobal().info(dBSavedMsg);
+        }
     }
 }
