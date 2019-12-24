@@ -71,7 +71,7 @@ public class AccountDaoRepo {
     public Account delete(long id) {
         var account = readAccount(id);
 
-        deleteCustomer(account);
+        deleteAccount(account);
         return account; //TODO: reconsider this
     }
 
@@ -117,7 +117,7 @@ public class AccountDaoRepo {
         return q.getSingleResult();
     }
 
-    void deleteCustomer(Account account) {
+    void deleteAccount(Account account) {
         var session = getSession();
         /*TODO: nulling account in bank and transfer required*/
 

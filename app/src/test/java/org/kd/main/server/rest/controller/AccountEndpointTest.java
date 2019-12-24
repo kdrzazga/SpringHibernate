@@ -30,10 +30,10 @@ public class AccountEndpointTest {
     private RestUtility restUtility;
 
     @Test
-    public void testUpdateCustomer() {
+    public void testUpdateAccount() {
         TraderServer.getInstance().start();
         var contentType = "application/json";
-        var requestUrl = "http://localhost:8080/customer";
+        var requestUrl = "http://localhost:8080/account";
         var testCustomer = new CorporateAccount("TST", "Test", 0.0, 1002L);
 
         try {

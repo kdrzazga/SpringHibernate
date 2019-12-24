@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.kd</groupId>
-    <artifactId>trader</artifactId>
+    <artifactId>banque</artifactId>
     <version>0.7.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 

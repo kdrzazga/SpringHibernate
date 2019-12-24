@@ -61,8 +61,8 @@ public class BankDaoRepoTest {
     }
 
     @Test
-    public void testGetAssociatedCustomers() {
-        List<Account> associatedAccounts = bankDaoRepo.readAssociatedCustomers(1012L);
+    public void testGetAssociatedAccounts() {
+        List<Account> associatedAccounts = bankDaoRepo.readAssociatedAccounts(1012L);
 
         Assert.assertNotNull(associatedAccounts);
         assertThat(associatedAccounts.size(), greaterThan(0));
@@ -83,16 +83,16 @@ public class BankDaoRepoTest {
     @Test(expected = EmptyResultDataAccessException.class)
     public void testDeleteWithFkNulling() {
         var id = 1011L;
-        var associatedCustomers = bankDaoRepo.readAssociatedCustomers(id);
+        var associatedAccounts = bankDaoRepo.readAssociatedAccounts(id);
 
-        assertThat("Please select a bank with Accounts for this test", associatedCustomers, hasSize(greaterThan(0)));
+        assertThat("Please select a bank with Accounts for this test", associatedAccounts, hasSize(greaterThan(0)));
 
         assertTrue(bankDaoRepo.deleteWithFkNulling(id));
 
-        var associatedCustomersAfterDelete = bankDaoRepo.readAssociatedCustomers(id);
+        var associatedAccountsAfterDelete = bankDaoRepo.readAssociatedAccounts(id);
 
-        assertThat(associatedCustomers, hasSize(greaterThan(associatedCustomersAfterDelete.size())));
-        assertThat(associatedCustomersAfterDelete, hasSize(0));
+        assertThat(associatedAccounts, hasSize(greaterThan(associatedAccountsAfterDelete.size())));
+        assertThat(associatedAccountsAfterDelete, hasSize(0));
 
         bankDaoRepo.read(id);//Exception expected
     }

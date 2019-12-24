@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Trader</title>
+    <title>Banque</title>
     <link rel="stylesheet" href="style/general_styles.css"/>
     <link rel="stylesheet" href="style/padstyle.css"/>
 </head>
@@ -13,7 +13,7 @@
         <tr>
             <td class="active"><a href="#transfer">Transfer</a></td>
             <td><a href="#bank">Bank</a></td>
-            <td><a href="#account">Customer</a></td>
+            <td><a href="#account">Account</a></td>
             <td><a href="#dev">DEV</a></td>
         </tr>
     </table>
@@ -32,13 +32,13 @@
                     </div>
                 </div>
             </div>
-            <div id="transfer-account-id-select">Customer Id:
+            <div id="transfer-account-id-select">Account Id:
                 <div class="dropdown">
-                    <button class="dropbtn">Customer</button>
+                    <button class="dropbtn">Account</button>
                     <div class="dropdown-content">
-                        <a href="#">Customer 1</a>
-                        <a href="#">Customer 2</a>
-                        <a href="#">Customer 3</a>
+                        <a href="#">Account 1</a>
+                        <a href="#">Account 2</a>
+                        <a href="#">Account 3</a>
                     </div>
                 </div>
             </div>
@@ -62,32 +62,32 @@
             <button id="show-bank" class="default-button">Show</button>
             <div>Bank Name:<label for="bank-name">Bank Name:</label><input id="bank-name"/></div>
             <div>Short Name:<label for="bank=short-name">Short Name:</label><input id="bank=short-name"/></div>
-            <div>Customers:<br/><textarea id="bank-accounts" readonly></textarea></div>
+            <div>Accounts:<br/><textarea id="bank-accounts" readonly></textarea></div>
             <p></p>
             <button id="bank-save-changes" class="default-button">Save changes</button>
         </div>
 
         <div class="tab-pane" id="account">
-            <h4>Customer Info</h4>
-            <div id="account-id-select">Customer Id:
+            <h4>Account Info</h4>
+            <div id="account-id-select">Account Id:
                 <div class="dropdown">
-                    <button class="dropbtn">Customer</button>
+                    <button class="dropbtn">Account</button>
                     <div class="dropdown-content">
-                        <a href="#">Customer 1</a>
-                        <a href="#">Customer 2</a>
-                        <a href="#">Customer 3</a>
+                        <a href="#">Account 1</a>
+                        <a href="#">Account 2</a>
+                        <a href="#">Account 3</a>
                     </div>
                 </div>
-                <button id="show-account" class="default-button">Show</button><button id="account-details" class="default-button" onclick="window.open('account-details.html');">Customer Details</button>
+                <button id="show-account" class="default-button">Show</button><button id="account-details" class="default-button" onclick="window.open('account-details.html');">Account Details</button>
                 <p></p>
-                <div>Customer Name:<label for="account-name">Customer Name:</label><input id="account-name"/></div>
+                <div>Account Name:<label for="account-name">Account Name:</label><input id="account-name"/></div>
                 <div>Short Name<label for="account-shortname">Short Name</label><input id="account-shortname"/></div>
                 <div>Cash Balance<label for="account-cash-balance">Cash Balance</label><input id="account-cash-balance"/></div>
             </div>
             <p></p>
             <button id="account-save-changes" class="default-button">Save changes</button>
             <p></p>
-            <button id="account-delete" class="default-button">Delete Customer</button>
+            <button id="account-delete" class="default-button">Delete Account</button>
         </div>
 
         <div class="tab-pane" id="dev">

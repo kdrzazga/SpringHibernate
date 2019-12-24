@@ -4,12 +4,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>trader-app</artifactId>
+    <artifactId>banque-app</artifactId>
     <version>0.7.0-SNAPSHOT</version>
 
     <parent>
         <groupId>org.kd</groupId>
-        <artifactId>trader</artifactId>
+        <artifactId>banque</artifactId>
         <version>0.7.0-SNAPSHOT</version>
     </parent>
 
@@ -59,11 +59,11 @@
             <version>11.0.0-ea1</version>
             <type>pom</type>
         </dependency>
-        <dependency>
+        <!--<dependency>
             <groupId>com.sun.javafx</groupId>
             <artifactId>mediabox</artifactId>
             <version>LATEST</version>
-        </dependency>
+        </dependency>-->
         <dependency>
             <groupId>javax.inject</groupId>
             <artifactId>javax.inject</artifactId>

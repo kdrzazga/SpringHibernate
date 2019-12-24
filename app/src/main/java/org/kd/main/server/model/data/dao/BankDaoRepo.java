@@ -70,7 +70,7 @@ public class BankDaoRepo {
     }
 
     @Transactional
-    public List<Account> readAssociatedCustomers(long bankId) {
+    public List<Account> readAssociatedAccounts(long bankId) {
         return getAssociatedAccounts(bankId);
     }
 
@@ -87,9 +87,9 @@ public class BankDaoRepo {
     @Transactional
     public boolean deleteWithFkNulling(long id){
         var bank = readBank(id);
-        getAssociatedAccounts(id).forEach(customer -> {
-            customer.setBankId(null);
-            accountDaoRepo.update(customer);
+        getAssociatedAccounts(id).forEach(account -> {
+            account.setBankId(null);
+            accountDaoRepo.update(account);
         });
 
         getSession().delete(bank);
@@ -97,7 +97,7 @@ public class BankDaoRepo {
     }
 
     @Transactional
-    public boolean deleteWithRelatedCustomers(long id){
+    public boolean deleteWithRelatedAccounts(long id){
         var bank = readBank(id);
         getAssociatedAccounts(id).forEach(accountDaoRepo::deleteCustomer);
 

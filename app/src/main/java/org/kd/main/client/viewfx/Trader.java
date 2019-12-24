@@ -43,7 +43,7 @@ public class Trader extends Application {
 
         setupWindow();
         setupMainScreen();
-        setupCustomerDetailsScreen();
+        setupAccountDetailsScreen();
 
         activateMainScreen();
         instance = this;
@@ -62,11 +62,11 @@ public class Trader extends Application {
         this.window.setScene(this.mainScreen);
     }
 
-    private void setupCustomerDetailsScreen() throws java.io.IOException {
+    private void setupAccountDetailsScreen() throws java.io.IOException {
         var loader = new FXMLLoader(getClass().getResource("customer_details_panel.fxml"));
-        Parent customerDetailsRoot = loader.load();
+        Parent accountDetailsRoot = loader.load();
         this.accountDetailsPanelController = loader.getController();
-        this.accountDetailsScreen = new Scene(customerDetailsRoot, 600, 494);
+        this.accountDetailsScreen = new Scene(accountDetailsRoot, 600, 494);
     }
 
     private void setupMainScreen() throws java.io.IOException {
