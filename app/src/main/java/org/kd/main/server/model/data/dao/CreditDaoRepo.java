@@ -3,6 +3,7 @@ package org.kd.main.server.model.data.dao;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.kd.main.common.entities.Credit;
+import org.kd.main.common.entities.DebitCard;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -42,6 +43,17 @@ public class CreditDaoRepo {
 
         return session.createQuery(criteria).getResultList();
     }
+
+    public List<Credit> readAccountCredits(long accountId){
+        var session = getSession();
+        var crBuilder = session.getCriteriaBuilder();
+        var query = crBuilder.createQuery(Credit.class);
+        var root = query.from(Credit.class);
+        query.select(root).where(crBuilder.equal(root.get("account"), accountId));
+        var q = session.createQuery(query);
+        return q.getResultList();
+    }
+
 
     private Session getSession() {
         Session session;

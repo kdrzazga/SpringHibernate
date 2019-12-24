@@ -351,8 +351,7 @@ public class TraderPresenter implements PresenterHandler {
     public List<DebitCard> readDebitCards(Long accountId) {
 
         requestType = HttpMethod.GET;
-        //TODO: for now all debit cards are read, not only for given account
-        requestUrl = serviceAddress.concat("/debitcards");
+        requestUrl = serviceAddress.concat("/debitcards/" + accountId.toString());
         requestAsString = "";
 
         ResponseEntity<String> response = restUtility.processHttpRequest(requestType, requestAsString, requestUrl, APPLICATION_JSON_VALUE);
@@ -377,8 +376,7 @@ public class TraderPresenter implements PresenterHandler {
     @Override
     public List<CreditCard> readCreditCards(Long accountId) {
         requestType = HttpMethod.GET;
-        //TODO: for now all debit cards are read, not only for given account
-        requestUrl = serviceAddress.concat("/creditcards");
+        requestUrl = serviceAddress.concat("/creditcards/" + accountId.toString());
         requestAsString = "";
 
         ResponseEntity<String> response = restUtility.processHttpRequest(requestType, requestAsString, requestUrl, APPLICATION_JSON_VALUE);
@@ -403,8 +401,7 @@ public class TraderPresenter implements PresenterHandler {
     @Override
     public List<Credit> readCredits(Long id) {
         requestType = HttpMethod.GET;
-        //TODO: for now all debit cards are read, not only for given account
-        requestUrl = serviceAddress.concat("/credits");
+        requestUrl = serviceAddress.concat("/credits/" + id.toString());
         requestAsString = "";
 
         ResponseEntity<String> response = restUtility.processHttpRequest(requestType, requestAsString, requestUrl, APPLICATION_JSON_VALUE);

@@ -52,4 +52,20 @@ class DebitCardController {
                         .header("message", "Error reading list of " + DebitCard.class.getSimpleName())
                         .build();
     }
+
+    @GetMapping(path = "/debitcards/{accountId}")
+    public ResponseEntity<List<DebitCard>> readAccountCards(@PathVariable Long accountId) {
+        var debitCards = debitCardDao.readAccountCards(accountId);
+
+        return debitCards != null ?
+                ResponseEntity
+                        .status(HttpStatus.OK)
+                        .body(debitCards)
+                :
+                ResponseEntity
+                        .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                        .header("message", "Error reading list of "
+                                + DebitCard.class.getSimpleName() + "for account " + accountId)
+                        .build();
+    }
 }

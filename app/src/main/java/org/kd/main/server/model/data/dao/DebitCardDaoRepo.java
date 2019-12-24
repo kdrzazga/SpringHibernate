@@ -34,6 +34,16 @@ public class DebitCardDaoRepo {
         return session.createQuery(criteria).getResultList();
     }
 
+    public List<DebitCard> readAccountCards(long accountId){
+        var session = getSession();
+        var crBuilder = session.getCriteriaBuilder();
+        var query = crBuilder.createQuery(DebitCard.class);
+        var root = query.from(DebitCard.class);
+        query.select(root).where(crBuilder.equal(root.get("account"), accountId));
+        var q = session.createQuery(query);
+        return q.getResultList();
+    }
+
     private Session getSession() {
         Session session;
         if (entityManager == null

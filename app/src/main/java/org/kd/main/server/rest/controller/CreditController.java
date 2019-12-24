@@ -52,4 +52,20 @@ class CreditController {
                         .header("message", "Error reading list of " + Credit.class.getSimpleName())
                         .build();
     }
+
+    @GetMapping(path = "/credits/{accountId}")
+    public ResponseEntity<List<Credit>> readAccountCards(@PathVariable Long accountId) {
+        var credits = creditDaoRepo.readAccountCredits(accountId);
+
+        return credits != null ?
+                ResponseEntity
+                        .status(HttpStatus.OK)
+                        .body(credits)
+                :
+                ResponseEntity
+                        .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                        .header("message", "Error reading list of "
+                                + Credit.class.getSimpleName() + "for account " + accountId)
+                        .build();
+    }
 }

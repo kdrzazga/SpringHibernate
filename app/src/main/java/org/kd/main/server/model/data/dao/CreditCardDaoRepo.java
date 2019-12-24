@@ -4,6 +4,7 @@ import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.kd.main.common.entities.CreditCard;
 
+import org.kd.main.common.entities.DebitCard;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
@@ -41,6 +42,16 @@ public class CreditCardDaoRepo {
         criteria.from(CreditCard.class);
 
         return session.createQuery(criteria).getResultList();
+    }
+
+    public List<CreditCard> readAccountCards(long accountId){
+        var session = getSession();
+        var crBuilder = session.getCriteriaBuilder();
+        var query = crBuilder.createQuery(CreditCard.class);
+        var root = query.from(CreditCard.class);
+        query.select(root).where(crBuilder.equal(root.get("account"), accountId));
+        var q = session.createQuery(query);
+        return q.getResultList();
     }
 
     private Session getSession() {

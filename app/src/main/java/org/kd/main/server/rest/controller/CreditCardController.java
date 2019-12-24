@@ -1,6 +1,7 @@
 package org.kd.main.server.rest.controller;
 
 import org.kd.main.common.entities.CreditCard;
+import org.kd.main.common.entities.DebitCard;
 import org.kd.main.server.model.data.dao.CreditCardDaoRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -50,6 +51,22 @@ class CreditCardController {
                 ResponseEntity
                         .status(HttpStatus.INTERNAL_SERVER_ERROR)
                         .header("message", "Error reading list of " + CreditCard.class.getSimpleName())
+                        .build();
+    }
+
+    @GetMapping(path = "/creditcards/{accountId}")
+    public ResponseEntity<List<CreditCard>> readAccountCards(@PathVariable Long accountId) {
+        var creditCards = creditCardDao.readAccountCards(accountId);
+
+        return creditCards != null ?
+                ResponseEntity
+                        .status(HttpStatus.OK)
+                        .body(creditCards)
+                :
+                ResponseEntity
+                        .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                        .header("message", "Error reading list of "
+                                + CreditCard.class.getSimpleName() + "for account " + accountId)
                         .build();
     }
 }

@@ -381,6 +381,10 @@ insert into city( name, shortname, country_id) values ('New York', 'NY', 10003);
 insert into city( name, shortname, country_id) values ('Boston', 'BOS', 10003);
 insert into city( name, shortname, country_id) values ('Washington', 'WSH', 10003);
 
+insert into debit_card (account_id, is_active, bank_id, currency_id, balance) values (2002, TRUE, 1001, 30001, 4155.33);
+insert into debit_card (account_id, is_active, bank_id, currency_id, balance) values (2002, TRUE, 1002, 30001, 45.33);
+insert into debit_card (account_id, is_active, bank_id, currency_id, balance) values (2003, TRUE, 1002, 30001, 45.33);
+
 insert into credit_card (account_id, is_active, bank_id, currency_id, balance, credit_limit) values (2002, FALSE, 1001, 30001, 0.22, 350000);
 insert into credit_card (account_id, is_active, bank_id, currency_id, balance, credit_limit) values (2002, TRUE, 1002, 30006, 4993245.22, 5100245);
 insert into credit_card (account_id, is_active, bank_id, currency_id, balance, credit_limit) values (2004, TRUE, 1002, 30006, 4239932.40, 6000932);

@@ -272,6 +272,26 @@
 			"response": []
 		},
 		{
+			"name": "readCreditCardsOfAccount",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/creditcards/2002",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"creditcards",
+						"2002"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "readCredit",
 			"request": {
 				"method": "GET",
@@ -390,7 +410,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/account/2004",
+					"raw": "http://localhost:8080/account/2002",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -398,7 +418,7 @@
 					"port": "8080",
 					"path": [
 						"account",
-						"2004"
+						"2002"
 					]
 				}
 			},
@@ -531,6 +551,26 @@
 					"port": "8080",
 					"path": [
 						"debitcards"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "readDebitCardsOfAccount",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/debitcards/2001",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"debitcards",
+						"2001"
 					]
 				}
 			},
