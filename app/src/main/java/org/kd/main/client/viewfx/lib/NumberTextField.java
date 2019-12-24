@@ -3,6 +3,7 @@ package org.kd.main.client.viewfx.lib;
 import javafx.scene.control.TextField;
 
 public class NumberTextField extends TextField {
+    //needs to be compiled in JDK 8, if SceneBuilder is supposed to display it correctly
 
     public NumberTextField() {
         super();
@@ -24,14 +25,12 @@ public class NumberTextField extends TextField {
 
     private void createOnChangeListener() {
 
-        NumberTextField pointer = this;
-
         this.textProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue.matches("[0-9]*\\.?[0-9]*")) {
                 String digitsDotsOnly = newValue.replaceAll("[^\\d.]", "");
-                pointer.setText(DigitConverter.removeExtraDots(digitsDotsOnly));
+                NumberTextField.this.setText(DigitConverter
+                        .removeExtraDots(digitsDotsOnly));
             }
         });
     }
-
 }

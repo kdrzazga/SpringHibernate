@@ -29,7 +29,7 @@ public class BankDaoRepo {
 
     @Transactional
     public long create(Bank bank) {
-        getSession().save(bank);
+        getSession().saveOrUpdate(bank);
         return bank.getId();
     }
 
@@ -71,10 +71,10 @@ public class BankDaoRepo {
 
     @Transactional
     public List<Account> readAssociatedCustomers(long bankId) {
-        return getAssociatedCustomers(bankId);
+        return getAssociatedAccounts(bankId);
     }
 
-    private List<Account> getAssociatedCustomers(long bankId) {
+    private List<Account> getAssociatedAccounts(long bankId) {
         return accountDaoRepo.readAccountsOfBank(bankId);
     }
 
@@ -87,7 +87,7 @@ public class BankDaoRepo {
     @Transactional
     public boolean deleteWithFkNulling(long id){
         var bank = readBank(id);
-        getAssociatedCustomers(id).forEach(customer -> {
+        getAssociatedAccounts(id).forEach(customer -> {
             customer.setBankId(null);
             accountDaoRepo.update(customer);
         });
@@ -99,7 +99,7 @@ public class BankDaoRepo {
     @Transactional
     public boolean deleteWithRelatedCustomers(long id){
         var bank = readBank(id);
-        getAssociatedCustomers(id).forEach(accountDaoRepo::deleteCustomer);
+        getAssociatedAccounts(id).forEach(accountDaoRepo::deleteCustomer);
 
         getSession().delete(bank);
         return true;

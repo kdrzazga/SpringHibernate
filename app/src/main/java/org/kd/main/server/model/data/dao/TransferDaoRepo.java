@@ -33,11 +33,8 @@ public class TransferDaoRepo {
     private ExternalTransferDaoRepo externalTransferDaoRepo;
 
     @Transactional
-    public long book(Account srcAccount, Account destAccount, float units) {
-/*
-        var destAccount = accountDaoRepo.read(destAccountId);
-        var srcAccount = accountDaoRepo.read(srcAccountId);
-*/
+    public long book(Account srcAccount, Account destAccount, double units) {
+
         if (destAccount == null || srcAccount == null) return -1;
 
         return (Objects.equals(destAccount.getBankId(), srcAccount.getBankId()))
@@ -59,14 +56,14 @@ public class TransferDaoRepo {
     }
 
     @Transactional
-    public List<Transfer> readByFundId(long fundId) {
+    public List<Transfer> readByDestAccountId(long accountId) {
         var session = entityManager.unwrap(Session.class);
         var builder = session.getCriteriaBuilder();
         var criteria = builder.createQuery(Transfer.class);
 
         var root = criteria.from(Transfer.class);
         criteria.select(root);
-        criteria.where(builder.equal(root.get("dest_fund_id"), fundId));
+        criteria.where(builder.equal(root.get("destAccount"), accountId));
 
         var transacts = session.createQuery(criteria).getResultList();
         session.close();
@@ -88,7 +85,7 @@ public class TransferDaoRepo {
         //entityManager.getTradeion().commit();// this is handled by Spring @Transactional too
     }
     
-    private long bookInternalTransfer(Account sourceAccount, Account destAccount, float units) {
+    private long bookInternalTransfer(Account sourceAccount, Account destAccount, double units) {
         if (sourceAccount.getBalance() < units) return -1;
 
         sourceAccount.setBalance(sourceAccount.getBalance() - units);
@@ -102,7 +99,7 @@ public class TransferDaoRepo {
         return createInternalTransfer(sourceAccount, destAccount, units);
     }
 
-    private long bookExternalTransfer(Account sourceAccount, Account destAccount, float units) {
+    private long bookExternalTransfer(Account sourceAccount, Account destAccount, double units) {
         if (sourceAccount.getBalance() < units) return -1;
 
         sourceAccount.setBalance(sourceAccount.getBalance() - units);
@@ -110,18 +107,17 @@ public class TransferDaoRepo {
 
         accountDaoRepo.update(sourceAccount);
         accountDaoRepo.update(destAccount);
-        //TODO introduce differences btween internal and external transfer
         return createExternalTransfer(sourceAccount, destAccount, units);
     }
 
-    private long createInternalTransfer(Account sourceFundId, Account destFundId, float units) {
-        var newTrade = new InternalTransfer(sourceFundId, destFundId, units);
+    private long createInternalTransfer(Account sourceFundId, Account destFundId, double units) {
+        var transfer = new InternalTransfer(sourceFundId, destFundId, units);
 
-        getSession().saveOrUpdate(newTrade);
-        return newTrade.getId();
+        getSession().saveOrUpdate(transfer);
+        return transfer.getId();
     }
 
-    private long createExternalTransfer(Account sourceFundId, Account destFundId, float units) {
+    private long createExternalTransfer(Account sourceFundId, Account destFundId, double units) {
         var newTrade = new ExternalTransfer(sourceFundId, destFundId, units);
 
         getSession().saveOrUpdate(newTrade);

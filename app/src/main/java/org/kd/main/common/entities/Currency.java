@@ -16,7 +16,6 @@ import java.io.Serializable;
 public class Currency implements Serializable {
 
     @Id
-    //@GeneratedValue
     private Long id;
 
     private String name;

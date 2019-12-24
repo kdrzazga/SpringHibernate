@@ -31,7 +31,7 @@ public class AccountDaoRepoTest {
     }
 
     @Test
-    public void testGetAllCustomers() {
+    public void testReadAllCorporate() {
         var allCustomers = accountDaoRepo.readAllCorporate();
 
         Assert.assertNotNull(allCustomers);
@@ -39,7 +39,7 @@ public class AccountDaoRepoTest {
     }
 
     @Test
-    public void testGetSingleCustomerById() {
+    public void testGetSingleAccountById() {
         var customer = accountDaoRepo.read(2012L);
 
         Assert.assertNotNull(customer);
@@ -53,23 +53,4 @@ public class AccountDaoRepoTest {
 
         accountDaoRepo.read(id);
     }
-
-/*
-    @Test
-    public void testGet() {
-        var fund = DataModelManagerSingleton.getInstance().getCustomerDao().readAccount(3016);
-        var possibleFailureCause = "Please first check if DB was changed.";
-
-        assertNotNull(possibleFailureCause, fund);
-        assertEquals(possibleFailureCause, "IBM", fund.getName());
-        assertEquals(100, fund.getTrade().getQuantity(), 0.01);
-    }
-
-    @Test
-    public void testGetAvailableCustomers(){
-        var allCustomers = DataModelManagerSingleton.getInstance().getCustomerDao().getAvailableCustomers();
-
-        assertNotNull(allCustomers);
-        assertTrue(allCustomers.size() > 0);
-    }
-*/}
+}

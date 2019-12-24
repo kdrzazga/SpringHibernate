@@ -27,7 +27,7 @@ public interface PresenterHandler {
 
     boolean deleteAccount(Long id);
 
-    boolean bookTransfer();
+    boolean bookTransfer(Long fromAccountId, Long toAccountId, Double amount);
 
     List<Transfer> readTransfers();
 

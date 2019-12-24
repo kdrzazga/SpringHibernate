@@ -25,7 +25,8 @@ class AlertHelper {
         alert.setContentText(message);
         alert.initOwner(Trader.getInstance().getWindow());
         Optional<ButtonType> result = alert.showAndWait();
-        return result.get() == ButtonType.OK;
+
+        return result.isEmpty() ? false : result.get() == ButtonType.OK;
     }
 
     private static void showAlert(Alert.AlertType alertType, Window owner, String title, String message) {

@@ -95,7 +95,7 @@ public class Trader extends Application {
 
         var id = extractId(text);
 
-        if (this.accountDetailsPanelController != null && id != null) {
+        if (this.accountDetailsPanelController != null) {
             this.accountDetailsPanelController.loadDebitCards(id);
             this.accountDetailsPanelController.loadCreditCards(id);
             this.accountDetailsPanelController.loadCredits(id);

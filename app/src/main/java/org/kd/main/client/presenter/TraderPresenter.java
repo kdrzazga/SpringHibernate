@@ -20,7 +20,6 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.Vector;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
@@ -77,7 +76,7 @@ public class TraderPresenter implements PresenterHandler {
         ResponseEntity<String> response = restUtility.processHttpRequest(requestType, requestAsString, requestUrl, APPLICATION_JSON_VALUE);
         if (response == null) {
             log.error("REST error. Couldn't read banks from server.");
-            return new Vector<>();
+            return Collections.emptyList();
         }
         restUtility.retrieveResponseBodyAndStatusCode(response);
         List<Bank> banks;
@@ -87,7 +86,7 @@ public class TraderPresenter implements PresenterHandler {
                             , bankListTypeReference);
         } catch (IOException e) {
             e.printStackTrace();
-            return new Vector<>();
+            return Collections.emptyList();
         }
 
         return banks;
@@ -173,7 +172,7 @@ public class TraderPresenter implements PresenterHandler {
         ResponseEntity<String> response = restUtility.processHttpRequest(requestType, requestAsString, requestUrl, APPLICATION_JSON_VALUE);
         if (response == null) {
             log.error("REST error. Couldn't read accounts from server.");
-            return new Vector<>();
+            return Collections.emptyList();
         }
         restUtility.retrieveResponseBodyAndStatusCode(response);
         List<Account> accounts;
@@ -183,7 +182,7 @@ public class TraderPresenter implements PresenterHandler {
                             , accountListTypeReference);
         } catch (IOException e) {
             e.printStackTrace();
-            return new Vector<>();
+            return Collections.emptyList();
         }
 
         return accounts;
@@ -248,12 +247,28 @@ public class TraderPresenter implements PresenterHandler {
         return HttpStatus.OK.equals(response.getStatusCode());
     }
 
+    @SuppressWarnings("OptionalGetWithoutIsPresent")
     @Override
-    public boolean bookTransfer() {
-        //TODO log.info("Book Transfer not finished");
+    public boolean bookTransfer(Long fromAccountId, Long toAccountId, Double units) {
+
+        var fromAccount = readAccount(fromAccountId);
+        var toAccount = readAccount(toAccountId);
+        if (fromAccount.isEmpty() || toAccount.isEmpty()) {
+            log.error("One or both accounts not found " + fromAccountId + " and/or " + toAccountId);
+        }
+
+        var internalTransfer = fromAccount.get().getBankId().equals(toAccount.get().getBankId());
+        var newTransfer = new Transfer(fromAccount.get(), toAccount.get(), units, internalTransfer);
+
         requestType = HttpMethod.POST;
-        requestUrl = serviceAddress.concat("/transfer/");
-        requestAsString = "";
+        requestUrl = serviceAddress.concat("/transfer");
+
+        try {
+            requestAsString = new ObjectMapper().writeValueAsString(newTransfer);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+            return false;
+        }
 
         ResponseEntity<String> response = restUtility.processHttpRequest(requestType, requestAsString, requestUrl, APPLICATION_JSON_VALUE);
         Optional.ofNullable(response.getBody()).ifPresent(log::info);
@@ -277,7 +292,7 @@ public class TraderPresenter implements PresenterHandler {
             transfers = new ObjectMapper().readValue(response.getBody(), transferListTypeReference);
         } catch (IOException e) {
             e.printStackTrace();
-            return new Vector<>();
+            return Collections.emptyList();
         }
 
         return transfers;
@@ -327,11 +342,10 @@ public class TraderPresenter implements PresenterHandler {
                     .equals(response.getStatusCode());
 
         } catch (JsonProcessingException e) {
-            System.err.println("You've given shitty JSON");
+            log.error("You've given shitty JSON");
             return false;
         }
     }
-
 
     @Override
     public List<DebitCard> readDebitCards(Long accountId) {

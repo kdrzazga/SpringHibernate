@@ -1,7 +1,6 @@
 package org.kd.main.server.model.data.dao;
 
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.TestMethodOrder;
@@ -14,6 +13,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Objects;
 import java.util.function.Predicate;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
@@ -33,19 +33,18 @@ public class TransferDaoRepoTest {
     @Test
     @Order(value = 1)
     public void testBookInternalTransfer() {
-        var srcCustomerId = 2002L;
-        var commonBankId = accountDaoRepo.read(srcCustomerId).getBankId();
+        var srcAccount = accountDaoRepo.read(2011L);
+        var commonBankId = srcAccount.getBankId();
 
-        //checkBookingTransfer(srcCustomerId, customer -> Objects.equals(customer.getBankId(), commonBankId));
+        checkBookingTransfer(srcAccount, account -> Objects.equals(account.getBankId(), commonBankId));
     }
 
-    @Ignore("functionality not implemented yet")
     @Test
     public void testBookExternalTransfer() {
-        var srcCustomerId = 2011L;
-        var commonBankId = accountDaoRepo.read(srcCustomerId).getBankId();
+        var srcAccount = accountDaoRepo.read(2011L);
+        var commonBankId = srcAccount.getBankId();
 
-        //checkBookingTransfer(srcCustomerId, customer -> !Objects.equals(customer.getBankId(), commonBankId));
+        checkBookingTransfer(srcAccount, account -> !Objects.equals(account.getBankId(), commonBankId));
     }
 
     @Test
@@ -57,12 +56,11 @@ public class TransferDaoRepoTest {
     }
 
     @Test
-    @Ignore
     @Order(value = 3)
     public void testReadForParticularFund() {
-        var tradeForFund2002 = transferDaoRepo.readByFundId(2002);
+        var tradeForFund2002 = transferDaoRepo.readByDestAccountId(2002L);
         Assert.assertNotNull(tradeForFund2002);
-        assertEquals(3, tradeForFund2002.size());
+        assertThat(tradeForFund2002, hasSize(greaterThan(0)));
     }
 
     @Test
@@ -85,18 +83,18 @@ public class TransferDaoRepoTest {
         //transferDaoRepo.book(2003L, 2004L, 30.02f);//books transact again, but id will change
     }
 
-    private void checkBookingTransfer(Account srcFundId, Predicate<Account> partyIdComparisonPredicate) {
+    private void checkBookingTransfer(Account srcAccount, Predicate<Account> bankIdComparisonPredicate) {
 
         var destCustomer = accountDaoRepo.readAllCorporate()
                 .stream()
-                .filter(partyIdComparisonPredicate)
+                .filter(bankIdComparisonPredicate)
                 .findFirst();
 
         if (destCustomer.isEmpty())
             fail("Wrong test data. Cannot book Transfer. Only one account with appropriate bank id ");
 
         final int errorCode = -1;
-        final long newTransferId =  transferDaoRepo.book(srcFundId, destCustomer.get(), 0.5f);
+        final long newTransferId =  transferDaoRepo.book(srcAccount, destCustomer.get(), 0.5f);
 
         assertNotEquals(errorCode, newTransferId);
 

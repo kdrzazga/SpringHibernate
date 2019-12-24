@@ -2,7 +2,7 @@ package org.kd.main.server.rest.controller;
 
 import org.kd.main.common.entities.Log;
 import org.kd.main.server.model.data.dao.LogDaoRepo;
-import org.kd.main.server.model.operation.LogOperation;
+import org.kd.main.server.model.utils.LogOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -47,15 +47,20 @@ class LogController {
     public ResponseEntity<String> addEntryToRecentLog(@RequestBody String message) {
         var recentLog = findOrCreateRecentLog();
 
-        return recentLog.addMessage(message)
+        if (recentLog.isEmpty())
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Recent log not found.");
+
+        return recentLog.get().addMessage(message)
                 ?
                 ResponseEntity
                         .status(HttpStatus.OK)
-                        .body("Written\n" + message + "\n to file:\n" + recentLog.getFilepath())
+                        .body("Written\n" + message + "\n to file:\n" + recentLog.get().getFilepath())
                 :
                 ResponseEntity
                         .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                        .body("ERROR writing\n" + message + "\n to file:\n" + recentLog.getFilepath()
+                        .body("ERROR writing\n" + message + "\n to file:\n" + recentLog.get().getFilepath()
                                 + "\nCheck if log file exists on disk.");
     }
 
@@ -84,10 +89,10 @@ class LogController {
                         .status(HttpStatus.OK)
                         .body(log)
                 :
-                ResponseEntity
-                        .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                        .header("message", "Couldn't read " + Log.class.getSimpleName() + " with id = " + id)
-                        .build();
+        ResponseEntity
+                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .header("message", "Couldn't read " + Log.class.getSimpleName() + " with id = " + id)
+                .build();
     }
 
     @GetMapping(path = "/logs")
@@ -105,7 +110,7 @@ class LogController {
                         .build();
     }
 
-    private Log findOrCreateRecentLog() {
+    private Optional<Log> findOrCreateRecentLog() {
         Optional<Log> recentLog = logDaoRepo.findRecentLog();
 
         if (recentLog.isEmpty()) {
@@ -116,7 +121,7 @@ class LogController {
             recentLog = logDaoRepo.findRecentLog();
             //TODO
         }
-        return recentLog.get();
+        return recentLog;
     }
 
 }

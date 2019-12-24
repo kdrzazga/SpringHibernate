@@ -14,6 +14,7 @@ import java.io.Serializable;
 public abstract class Card implements Serializable {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     protected Long id;
 
     @OneToOne(cascade = CascadeType.ALL)

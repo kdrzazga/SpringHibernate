@@ -79,7 +79,7 @@ public class TraderViewController {
 
     @FXML
     protected void handleBookTradeAction(ActionEvent event) {
-        var bookConfirmMsg = new PropertiesReader().readKey("error.message.transfer.booked");
+        var bookConfirmMsg = new PropertiesReader().readKey("message.confirm.transfer.booked");
         var bookingErrorMgs = new PropertiesReader().readKey("error.message.transfer.not.booked");
 
         var errorMsg = new PropertiesReader().readKey("error.message.account.not.selected");
@@ -89,8 +89,7 @@ public class TraderViewController {
         var srcAccount = readAccountId(srcAccountIdChoiceBoxTransfer);
         var destAccount = readAccountId(destAccountChoiceBoxTransfer);
         var amount = amountTextBox.getDouble();
-        //TODO
-        if (handler.bookTransfer()) {
+        if (handler.bookTransfer(srcAccount, destAccount, amount)) {
             showInfoAlert(bookConfirmMsg);
         } else {
             showErrorAlert(bookingErrorMgs);

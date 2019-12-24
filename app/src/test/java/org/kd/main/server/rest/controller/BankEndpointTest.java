@@ -19,6 +19,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.junit.Assert.assertEquals;
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @SpringBootTest(classes = {TraderServer.class})
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -32,13 +33,12 @@ public class BankEndpointTest {
     @Ignore
     public void testUpdateBank() {
         TraderServer.getInstance().start();
-        var contentType = "application/json";
         var requestUrl = "http://localhost:8080/bank";
         var testBank = new Bank(2L, "Test Bank", "TST-B");
         try {
             String customerJson = new ObjectMapper().writeValueAsString(testBank);
 
-            var response = restUtility.processHttpRequest(HttpMethod.PUT, customerJson, requestUrl, contentType);
+            var response = restUtility.processHttpRequest(HttpMethod.PUT, customerJson, requestUrl, APPLICATION_JSON_VALUE);
 
             restUtility.retrieveResponseBodyAndStatusCode(response);
 

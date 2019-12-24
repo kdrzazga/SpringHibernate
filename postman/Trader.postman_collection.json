@@ -390,7 +390,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/account/2003",
+					"raw": "http://localhost:8080/account/2004",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -398,7 +398,7 @@
 					"port": "8080",
 					"path": [
 						"account",
-						"2003"
+						"2004"
 					]
 				}
 			},
@@ -456,7 +456,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"id\" : 1002,\n\t\"shortname\" : \"Wiesiek\",\n\t\"name\" : \"Wszywka\",\n\t\"units\" : 3,\n\t\"bank_id\" : 2003\n}",
+					"raw": "{\n\t\"id\" : 2002,\n\t\"corporate\" : false,\n\t\"shortname\" : \"Wiesiek\",\n\t\"name\" : \"Wszywka\",\n\t\"balance\" : 313022,\n\t\"bankId\" : 1003\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -690,7 +690,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"srcAccountId\": 2002,\n    \"destAccountId\": 2007,\n    \"units\": 0.00,\n    \"internal\": false\n}\n",
+					"raw": "{\r\n    \"srcAccount\": {\r\n        \"id\": 2009,\r\n        \"corporate\": true,\r\n        \"shortname\": \"XEC\",\r\n        \"name\": \"Cimarex Energy Co\",\r\n        \"balance\": 59.52,\r\n        \"bankId\": 1021\r\n    },\r\n    \"destAccount\": {\r\n        \"id\": 2002,\r\n        \"corporate\": true,\r\n        \"shortname\": \"RAD\",\r\n        \"name\": \"Rite Aid Corp\",\r\n        \"balance\": 0.71,\r\n        \"bankId\": 1001\r\n    },\r\n    \"units\": 0.01,\r\n    \"internal\": false\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -725,7 +725,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"srcAccountId\": 2004,\n    \"destAccountId\": 2002,\n    \"units\": 30,\n    \"internal\": true\n}\n",
+					"raw": "{\r\n    \"srcAccount\": {\r\n\t\t\"id\": 2003,\r\n\t    \"corporate\": true,\r\n\t    \"shortname\": \"RAMP\",\r\n\t    \"name\": \"Liveramp Holdings Inc.\",\r\n\t    \"balance\": 38.35,\r\n\t    \"bankId\": 1011\r\n},\r\n    \"destAccount\": {\r\n\t\t\"id\": 2004,\r\n    \t\"corporate\": true,\r\n    \t\"shortname\": \"RBA\",\r\n    \t\"name\": \"Ritchie Bros. Auctioneers Inc\",\r\n    \t\"balance\": 31.33,\r\n    \t\"bankId\": 1011\r\n},\r\n    \"units\": 10,\r\n    \"internal\": true\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -799,7 +799,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"id\" : 3002,\n\t\"src_customer_id\" : 2002,\n\t\"dest_customer_id\" : 2003,\n\t\"units\" : 3.40,\n\t\"internal\" : true\n}",
+					"raw": "{\n\t\"id\" : 3002,\n\t\"srcAccount\" : 2002,\n\t\"destAccount\" : 2003,\n\t\"units\" : 3.40,\n\t\"internal\" : true\n}",
 					"options": {
 						"raw": {
 							"language": "json"

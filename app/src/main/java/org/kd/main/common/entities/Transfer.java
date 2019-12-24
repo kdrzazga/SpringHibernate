@@ -28,13 +28,13 @@ public class Transfer implements Serializable {
     @JoinColumn(name = "dest_account_id")
     protected Account destAccount;
 
-    protected Float units;
+    protected Double units;
     @Column(insertable = false, updatable = false)
     private Boolean internal;
 
-    public Transfer(Account srcAccountId, Account destAccountId, float units, boolean internal) {
-        this.srcAccount = srcAccountId;
-        this.destAccount = destAccountId;
+    public Transfer(Account srcAccount, Account destAccount, double units, boolean internal) {
+        this.srcAccount = srcAccount;
+        this.destAccount = destAccount;
         this.units = units;
         this.internal = internal;
     }

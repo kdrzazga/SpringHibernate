@@ -13,7 +13,9 @@ import javax.persistence.*;
 @Setter
 @AllArgsConstructor
 public class Credit {
+
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     private Float amount;
