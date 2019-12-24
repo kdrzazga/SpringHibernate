@@ -36,6 +36,7 @@ class AccountController {
 
         ResponseEntity<String> errorResponse = ResponseEntity
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .header("Access-Control-Allow-Origin", "*")
                 .header("message", "Couldn't create")
                 .build();
 
@@ -46,6 +47,7 @@ class AccountController {
             return (account != null) ?
                     ResponseEntity
                             .status(HttpStatus.OK)
+                            .header("Access-Control-Allow-Origin", "*")
                             .body(account.toString())
                     :
                     errorResponse;
@@ -77,10 +79,12 @@ class AccountController {
         return corporateAccounts != null ?
                 ResponseEntity
                         .status(HttpStatus.OK)
+                        .header("Access-Control-Allow-Origin", "*")
                         .body(corporateAccounts)
                 :
                 ResponseEntity
                         .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                        .header("Access-Control-Allow-Origin", "*")
                         .header("message", "Error reading list of Corporate Customers")
                         .build();
     }
@@ -92,10 +96,12 @@ class AccountController {
         return accounts != null ?
                 ResponseEntity
                         .status(HttpStatus.OK)
+                        .header("Access-Control-Allow-Origin", "*")
                         .body(accounts)
                 :
                 ResponseEntity
                         .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                        .header("Access-Control-Allow-Origin", "*")
                         .header("message", "Error reading list of Individual Customers")
                         .build();
     }
@@ -117,6 +123,7 @@ class AccountController {
 
             result = ResponseEntity
                     .status(HttpStatus.OK)
+                    .header("Access-Control-Allow-Origin", "*")
                     .body(account.toString());
 
             logMessage = "Updated account " + account.toString();
@@ -128,6 +135,7 @@ class AccountController {
 
             result = ResponseEntity
                     .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .header("Access-Control-Allow-Origin", "*")
                     .body(logMessage);
         }
 
@@ -147,11 +155,13 @@ class AccountController {
 
             result = ResponseEntity
                     .status(HttpStatus.OK)
+                    .header("Access-Control-Allow-Origin", "*")
                     .body(logMessage);
         } else {
             logMessage = "Couldn't delete account with id = " + id;
             result = ResponseEntity
                     .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .header("Access-Control-Allow-Origin", "*")
                     .body(logMessage);
         }
 

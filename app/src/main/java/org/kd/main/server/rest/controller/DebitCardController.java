@@ -30,10 +30,12 @@ class DebitCardController {
         return debitCard != null ?
                 ResponseEntity
                         .status(HttpStatus.OK)
+                        .header("Access-Control-Allow-Origin", "*")
                         .body(debitCard)
                 :
                 ResponseEntity
                         .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                        .header("Access-Control-Allow-Origin", "*")
                         .header("message", "Couldn't read " + DebitCard.class.getSimpleName() + " with id = " + id)
                         .build();
     }
@@ -45,10 +47,12 @@ class DebitCardController {
         return debitCards != null ?
                 ResponseEntity
                         .status(HttpStatus.OK)
+                        .header("Access-Control-Allow-Origin", "*")
                         .body(debitCards)
                 :
                 ResponseEntity
                         .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                        .header("Access-Control-Allow-Origin", "*")
                         .header("message", "Error reading list of " + DebitCard.class.getSimpleName())
                         .build();
     }
@@ -60,10 +64,12 @@ class DebitCardController {
         return debitCards != null ?
                 ResponseEntity
                         .status(HttpStatus.OK)
+                        .header("Access-Control-Allow-Origin", "*")
                         .body(debitCards)
                 :
                 ResponseEntity
                         .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                        .header("Access-Control-Allow-Origin", "*")
                         .header("message", "Error reading list of "
                                 + DebitCard.class.getSimpleName() + "for account " + accountId)
                         .build();

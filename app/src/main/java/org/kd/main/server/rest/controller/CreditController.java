@@ -30,6 +30,7 @@ class CreditController {
         return credit != null ?
                 ResponseEntity
                         .status(HttpStatus.OK)
+                        .header("Access-Control-Allow-Origin", "*")
                         .body(credit)
                 :
                 ResponseEntity
@@ -45,10 +46,12 @@ class CreditController {
         return creditList != null ?
                 ResponseEntity
                         .status(HttpStatus.OK)
+                        .header("Access-Control-Allow-Origin", "*")
                         .body(creditList)
                 :
                 ResponseEntity
                         .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                        .header("Access-Control-Allow-Origin", "*")
                         .header("message", "Error reading list of " + Credit.class.getSimpleName())
                         .build();
     }

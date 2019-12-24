@@ -39,12 +39,14 @@ class BankController {
 
             return ResponseEntity
                     .status(HttpStatus.OK)
+                    .header("Access-Control-Allow-Origin", "*")
                     .body(bank.toString());
 
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity
                     .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .header("Access-Control-Allow-Origin", "*")
                     .body("Couldn't create bank " + bankJson);
         }
     }
@@ -56,10 +58,12 @@ class BankController {
         return bank != null ?
                 ResponseEntity
                         .status(HttpStatus.OK)
+                        .header("Access-Control-Allow-Origin", "*")
                         .body(bank)
                 :
                 ResponseEntity
                         .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                        .header("Access-Control-Allow-Origin", "*")
                         .header("message", "Couldn't read bank with id = " + id)
                         .build();
     }
@@ -71,10 +75,12 @@ class BankController {
         return allBanks != null ?
                 ResponseEntity
                         .status(HttpStatus.OK)
+                        .header("Access-Control-Allow-Origin", "*")
                         .body(allBanks)
                 :
                 ResponseEntity
                         .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                        .header("Access-Control-Allow-Origin", "*")
                         .header("message", "Error reading list of Banks")
                         .build();
     }
@@ -86,10 +92,12 @@ class BankController {
         return associatedAccounts.size() > 0 ?
                 ResponseEntity
                         .status(HttpStatus.OK)
+                        .header("Access-Control-Allow-Origin", "*")
                         .body(associatedAccounts)
                 :
                 ResponseEntity
                         .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                        .header("Access-Control-Allow-Origin", "*")
                         .header("message", "Error reading associated accounts of bank with id" + bankId)
                         .build();
     }
@@ -107,12 +115,14 @@ class BankController {
 
             return ResponseEntity
                     .status(HttpStatus.OK)
+                    .header("Access-Control-Allow-Origin", "*")
                     .body(bank.toString());
 
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity
                     .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .header("Access-Control-Allow-Origin", "*")
                     .body("Couldn't update bank " + bankJson);
         }
     }
@@ -122,10 +132,12 @@ class BankController {
         return (bankDao.deleteWithFkNulling(id))
                 ? ResponseEntity
                 .status(HttpStatus.OK)
+                .header("Access-Control-Allow-Origin", "*")
                 .body("Bank " + id + " deleted. All bank accounts are not related now.")
 
                 : ResponseEntity
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .header("Access-Control-Allow-Origin", "*")
                 .body("Couldn't delete bank with id = " + id);
     }
 }

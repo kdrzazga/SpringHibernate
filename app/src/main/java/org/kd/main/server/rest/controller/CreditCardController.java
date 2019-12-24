@@ -31,6 +31,7 @@ class CreditCardController {
         return creditCard != null ?
                 ResponseEntity
                         .status(HttpStatus.OK)
+                        .header("Access-Control-Allow-Origin", "*")
                         .body(creditCard)
                 :
                 ResponseEntity
@@ -46,6 +47,7 @@ class CreditCardController {
         return creditCards != null ?
                 ResponseEntity
                         .status(HttpStatus.OK)
+                        .header("Access-Control-Allow-Origin", "*")
                         .body(creditCards)
                 :
                 ResponseEntity
@@ -61,10 +63,12 @@ class CreditCardController {
         return creditCards != null ?
                 ResponseEntity
                         .status(HttpStatus.OK)
+                        .header("Access-Control-Allow-Origin", "*")
                         .body(creditCards)
                 :
                 ResponseEntity
                         .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                        .header("Access-Control-Allow-Origin", "*")
                         .header("message", "Error reading list of "
                                 + CreditCard.class.getSimpleName() + "for account " + accountId)
                         .build();

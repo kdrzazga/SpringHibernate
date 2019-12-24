@@ -45,6 +45,7 @@ class TransferController {
             return newId >= 0 ?
                     ResponseEntity
                             .status(HttpStatus.OK)
+                            .header("Access-Control-Allow-Origin", "*")
                             .body("Booked with id=" + newId)
                     :
                     createErrorResponse("Error with source or destination account. Does src contain sufficient units?");
@@ -63,6 +64,7 @@ class TransferController {
         return transfer != null ?
                 ResponseEntity
                         .status(HttpStatus.OK)
+                        .header("Access-Control-Allow-Origin", "*")
                         .body(transfer)
                 :
                 ResponseEntity
@@ -78,10 +80,12 @@ class TransferController {
         return allTransfers != null ?
                 ResponseEntity
                         .status(HttpStatus.OK)
+                        .header("Access-Control-Allow-Origin", "*")
                         .body(allTransfers)
                 :
                 ResponseEntity
                         .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                        .header("Access-Control-Allow-Origin", "*")
                         .header("message", "Error reading list of Transfers")
                         .build();
     }
@@ -102,6 +106,7 @@ class TransferController {
 
             return ResponseEntity
                     .status(HttpStatus.OK)
+                    .header("Access-Control-Allow-Origin", "*")
                     .body(transfer.toString());
 
         } catch (Exception e) {
@@ -144,6 +149,7 @@ class TransferController {
     private ResponseEntity<String> createErrorResponse(String message) {
         return ResponseEntity
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .header("Access-Control-Allow-Origin", "*")
                 .body(message);
     }
 }

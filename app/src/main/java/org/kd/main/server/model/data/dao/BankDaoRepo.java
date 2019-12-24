@@ -99,7 +99,7 @@ public class BankDaoRepo {
     @Transactional
     public boolean deleteWithRelatedAccounts(long id){
         var bank = readBank(id);
-        getAssociatedAccounts(id).forEach(accountDaoRepo::deleteCustomer);
+        getAssociatedAccounts(id).forEach(accountDaoRepo::deleteAccount);
 
         getSession().delete(bank);
         return true;
