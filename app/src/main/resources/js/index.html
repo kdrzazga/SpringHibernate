@@ -22,27 +22,24 @@
     <div class="tab-content">
         <div class="tab-pane active" id="transfer">
             <h4>Transfer Input</h4>
-            <div id="transfer-bank-id-select">From Account:
+            <div id="src-account-select">From Account:
                 <div class="dropdown">
                     <button class="dropbtn">Source</button>
-                    <div id="transfer-banks-list" class="dropdown-content">
+                    <div id="src-accounts-list" class="dropdown-content">
                         <a href="#">Banks not loaded. Is server running?</a>
                     </div>
                 </div>
             </div>
             <p></p>
-            <div>
-                Amount: <input type="text" value="0">
-            </div>
+            <div>Amount: <input type="text" value="0"></div>
             <p></p>
-            <div id="transfer-account-id-select">To Account:
+            <div id="dest-account-select">To Account:
                 <div class="dropdown">
                     <button class="dropbtn">Destination</button>
-                    <div id="transfer-accounts-list" class="dropdown-content">
+                    <div id="dest-accounts-list" class="dropdown-content">
                         <a href="#">Accounts not loaded. Is server running?</a>
                     </div>
                 </div>
-
             </div>
             <p></p>
             <button id="book-trade" class="default-button">Book</button>
@@ -65,8 +62,8 @@
             </div>
             <p></p>
             <button id="show-bank" class="default-button">Show</button>
-            <div>Bank Name:<label for="bank-name">Bank Name:</label><input id="bank-name"/></div>
-            <div>Short Name:<label for="bank=short-name">Short Name:</label><input id="bank=short-name"/></div>
+            <div><label for="bank-name">Bank Name:</label><input id="bank-name"/></div>
+            <div><label for="bank=short-name">Short Name:</label><input id="bank=short-name"/></div>
             <div>Accounts:<br/><textarea id="bank-accounts" readonly></textarea></div>
             <p></p>
             <button id="bank-save-changes" class="default-button">Save changes</button>
@@ -82,13 +79,16 @@
                     </div>
                 </div>
                 <button id="show-account" class="default-button">Show</button>
-                <button id="account-details" class="default-button" onclick="window.open('account-details.html');">
+                <button id="account-details" class="default-button"
+                        onclick="
+                        sessionStorage.setItem('accountId','2001');
+                        window.open('account-details.html');">
                     Account Details
                 </button>
                 <p></p>
-                <div>Account Name:<label for="account-name">Account Name:</label><input id="account-name"/></div>
-                <div>Short Name<label for="account-shortname">Short Name</label><input id="account-shortname"/></div>
-                <div>Cash Balance<label for="account-cash-balance">Cash Balance</label><input
+                <div><label for="account-name">Account Name:</label><input id="account-name"/></div>
+                <div><label for="account-shortname">Short Name</label><input id="account-shortname"/></div>
+                <div><label for="account-cash-balance">Cash Balance</label><input
                         id="account-cash-balance"/></div>
             </div>
             <p></p>
@@ -106,8 +106,8 @@
     </div>
 </div>
 
+<script src="script/libs.js"></script>
 <script src="script/tabs.js"></script>
 <script src="script/requests.js"></script>
-
 </body>
 </html>

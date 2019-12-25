@@ -6,10 +6,10 @@
     <link rel="stylesheet" href="style/padstyle.css"/>
     <link rel="stylesheet" href="style/general_styles.css"/>
 </head>
-<body>
+<body onload="initAccountDetails();">
 <div>
     <div id="header">
-        <div align="center">Account: Jan Kovalsky (id = 0)</div>
+        <div align="center" id="account-id">Account: Jan Kovalsky (id = 0)</div>
     </div>
     <div class="container">
         <!-- Tabs -->
@@ -22,7 +22,7 @@
         </table>
         <div class="tab-content">
             <div class="tab-pane active" id="debit-cards">
-                <table>
+                <table id="debit-cards-table">
                     <thead>
                     <td class="table-td">id</td>
                     <td class="table-td">Account</td>
@@ -34,7 +34,7 @@
                 </table>
             </div>
             <div class="tab-pane" id="credit-cards">
-                <table>
+                <table id="credit-cards-table">
                     <thead>
                     <td class="table-td">id</td>
                     <td class="table-td">Account</td>
@@ -46,7 +46,7 @@
                 </table>
             </div>
             <div class="tab-pane" id="credits">
-                <table>
+                <table id="credits-table">
                     <thead>
                     <td class="table-td">id</td>
                     <td class="table-td">Account</td>
@@ -66,6 +66,8 @@
         </div>
     </div>
 </div>
+<script src="script/libs.js"></script>
 <script src="script/tabs.js"></script>
+<script src="script/account_details_requests.js"></script>
 </body>
 </html>
