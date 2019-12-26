@@ -204,3 +204,5 @@ Booked transfer id=9 from RBC to XOM units 33.0
 Booked transfer id=10 from RBC to XOM units 33.0
 Error booking transfer id=null from RBC to XOM units 333.0
 Error booking transfer id=null from RBC to XOM units 333.0
+Booked transfer id=1 from XHR to MZA units 0.1
+Booked transfer id=1 from XEC to MZA units 0.2

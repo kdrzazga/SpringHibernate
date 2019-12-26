@@ -5,12 +5,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>banque-app</artifactId>
-    <version>0.7.0-SNAPSHOT</version>
+    <version>0.8.0-RELEASE</version>
 
     <parent>
         <groupId>org.kd</groupId>
         <artifactId>banque</artifactId>
-        <version>0.7.0-SNAPSHOT</version>
+        <version>0.8.0-RELEASE</version>
     </parent>
 
     <properties>
@@ -34,15 +34,10 @@
 
         <slf4j.version>1.7.25</slf4j.version>
         <wiremock.version>2.19.0</wiremock.version>
-        <jackson-databind.version>2.9.10</jackson-databind.version>
+        <jackson-databind.version>2.10.1</jackson-databind.version>
     </properties>
 
     <dependencies>
-        <dependency>
-            <groupId>org.openjfx</groupId>
-            <artifactId>javafx</artifactId>
-            <version>${maven.compiler.source}</version>
-        </dependency>
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-graphics</artifactId>
@@ -53,17 +48,6 @@
             <artifactId>javafx-fxml</artifactId>
             <version>${maven.compiler.source}</version>
         </dependency>
-        <dependency>
-            <groupId>org.openjfx</groupId>
-            <artifactId>javafx.swing</artifactId>
-            <version>11.0.0-ea1</version>
-            <type>pom</type>
-        </dependency>
-        <!--<dependency>
-            <groupId>com.sun.javafx</groupId>
-            <artifactId>mediabox</artifactId>
-            <version>LATEST</version>
-        </dependency>-->
         <dependency>
             <groupId>javax.inject</groupId>
             <artifactId>javax.inject</artifactId>
