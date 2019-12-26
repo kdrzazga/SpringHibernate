@@ -16,6 +16,35 @@ function stopApplication() {
     xhttp.send();
 }
 
+function fillTransferSelectedSourceAccount(accountId) {
+    document.getElementById("transfer-selected-source-account").innerText = accountId;
+}
+
+function fillTransferSelectedDestAccount(accountId) {
+    document.getElementById("transfer-selected-dest-account").innerText = accountId;
+}
+
+function fillAccountSelectedSourceAccount(accountId) {
+    document.getElementById("account-selected-account").innerText = accountId;
+    sessionStorage.setItem('accountId', accountId);
+}
+
+function fillBankSelectedBank(bankId) {
+    document.getElementById("bank-selected-bank").innerText = bankId;
+}
+
+function createCmbBox(id, options, onSelectFunction) {
+    var accountIdsComboBox = "<div id=\"" + id + "\" class=\"dropdown-content\">";
+
+    for (var i = 0; i < options.length; i++) {
+        var id = options[i].id;
+
+        accountIdsComboBox += "<a href=\"" + "#\"" + " onclick='" + onSelectFunction + "(" + id + ");'>" + id + "</a>";
+    }
+    accountIdsComboBox += "</div>";
+    return accountIdsComboBox;
+}
+
 function readAccounts() {
     var xhttp = new XMLHttpRequest();
 
@@ -23,18 +52,11 @@ function readAccounts() {
         if (this.readyState === 4) {
             if (this.status === 200) {
             }
-            var banksIdComboBox = "<div id=\"accounts-list\" class=\"dropdown-content\">";
-
             var accountList = JSON.parse(this.responseText);
-            for (var i = 0; i < accountList.length; i++) {
-                var id = accountList[i].id;
-                banksIdComboBox += "<a href=\"" + "#" + "\">" + id + "</a>";
-            }
-            banksIdComboBox += "</div>";
 
-            document.getElementById("accounts-list").innerHTML = banksIdComboBox;
-            document.getElementById("src-accounts-list").innerHTML = banksIdComboBox;
-            document.getElementById("dest-accounts-list").innerHTML = banksIdComboBox;
+            document.getElementById("accounts-list").innerHTML = createCmbBox("accounts-list", accountList, "fillAccountSelectedSourceAccount");
+            document.getElementById("src-accounts-list").innerHTML = createCmbBox("accounts-list", accountList, "fillTransferSelectedSourceAccount");
+            document.getElementById("dest-accounts-list").innerHTML = createCmbBox("accounts-list", accountList, "fillTransferSelectedDestAccount");
         }
         if (this.status === 404) {
             var message = "Couldn't read accounts";
@@ -51,16 +73,9 @@ function readBanks() {
     xhttp.onreadystatechange = function () {
         if (this.readyState === 4) {
             if (this.status === 200) {
-                var banksIdComboBox = "<div id=\"accounts-list\" class=\"dropdown-content\">";
-
                 var banksList = JSON.parse(this.responseText);
-                for (var i = 0; i < banksList.length; i++) {
-                    var id = banksList[i].id;
-                    banksIdComboBox += "<a href=\"" + "#" + "\">" + id + "</a>";
-                }
-                banksIdComboBox += "</div>";
 
-                document.getElementById("banks-list").innerHTML = banksIdComboBox;
+                document.getElementById("banks-list").innerHTML = createCmbBox("banks-list", banksList, "fillBankSelectedBank");
             }
             if (this.status === 404) {
                 var message = "Couldn't read banks";
@@ -73,32 +88,33 @@ function readBanks() {
     xhttp.send();
 }
 
+function createTransfersTable(transferList, table) {
+    for (var i = 0; i < transferList.length; i++) {
+        var id = transferList[i].id;
+        var units = transferList[i].units;
+        var internal = transferList[i].internal;
+        var from = transferList[i].srcAccount.shortname;
+        var to = transferList[i].destAccount.shortname;
+
+        table += "<tr><td class='table-td'>" + id + "</td><td class='table-td'>" + from
+            + "</td><td class='table-td'>" + to + "</td>" + "</td><td class='table-td'>" + units
+            + "</td><td class='table-td'>" + internal + "</td></tr>";
+    }
+    return table;
+}
+
 function readTransfers() {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
         if (this.readyState === 4) {
             if (this.status === 200) {
-                console.log("Reading transfers")
-                console.log(this.responseText);
+                console.log("Read transfers " + this.responseText);
 
                 var table = "<thead><td class='table-td'>id</td><td class='table-td'>from</td><td class='table-td'>to</td>" +
                     "<td class='table-td'>units</td><td class='table-td'>internal</td></thead>";
 
                 var transferList = JSON.parse(this.responseText);
-
-                for (var i = 0; i < transferList.length; i++) {
-                    var id = transferList[i].id;
-                    var units = transferList[i].units;
-                    var internal = transferList[i].internal;
-                    var from = transferList[i].srcAccount.shortname;
-                    var to = transferList[i].destAccount.shortname;
-
-                    table += "<tr><td class='table-td'>" + id + "</td><td class='table-td'>" + from
-                        + "</td><td class='table-td'>" + to + "</td>" + "</td><td class='table-td'>" + units
-                        + "</td><td class='table-td'>" + internal + "</td></tr>";
-                }
-
-                document.getElementById("transfers-table").innerHTML = table;
+                document.getElementById("transfers-table").innerHTML = createTransfersTable(transferList, table);
 
             }
             if (this.status === 404) {

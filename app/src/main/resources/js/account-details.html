@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Trader - Account Details</title>
+    <title>Banque - Account Details</title>
     <link rel="stylesheet" href="style/padstyle.css"/>
     <link rel="stylesheet" href="style/general_styles.css"/>
 </head>
@@ -27,10 +27,19 @@
                     <td class="table-td">id</td>
                     <td class="table-td">Account</td>
                     <td class="table-td">Bank</td>
-                    <td class="table-td">Currency</td>
                     <td class="table-td">Balance</td>
+                    <td class="table-td">Currency</td>
+                    <td class="table-td">Active</td>
                     </thead>
-                    <tr></tr>
+                    <tbody id="debit-cards-content">
+                    <tr>
+                        <td class="table-td">Debit</td>
+                        <td class="table-td">cards</td>
+                        <td class="table-td">not</td>
+                        <td class="table-td">loaded</td>
+                        <td class="table-td">ERROR</td>
+                    </tr>
+                    </tbody>
                 </table>
             </div>
             <div class="tab-pane" id="credit-cards">
@@ -39,10 +48,19 @@
                     <td class="table-td">id</td>
                     <td class="table-td">Account</td>
                     <td class="table-td">Bank</td>
-                    <td class="table-td">Currency</td>
                     <td class="table-td">Balance</td>
+                    <td class="table-td">Currency</td>
                     <td class="table-td">Credit Limit</td>
+                    <td class="table-td">Active</td>
                     </thead>
+                    <tbody id="credit-cards-content">
+                    <tr>
+                        <td class="table-td">Credit cards</td>
+                        <td class="table-td">not</td>
+                        <td class="table-td">loaded</td>
+                        <td class="table-td">ERROR</td>
+                    </tr>
+                    </tbody>
                 </table>
             </div>
             <div class="tab-pane" id="credits">
@@ -54,13 +72,14 @@
                     <td class="table-td">Amount</td>
                     <td class="table-td">Currency</td>
                     </thead>
+                    <tbody id="credits-content">
                     <tr>
-                        <td class="table-td">1</td>
-                        <td class="table-td">2</td>
-                        <td class="table-td">3</td>
-                        <td class="table-td">4</td>
-                        <td class="table-td">5</td>
+                        <td class="table-td">Credits</td>
+                        <td class="table-td">not</td>
+                        <td class="table-td">loaded</td>
+                        <td class="table-td">ERROR</td>
                     </tr>
+                    </tbody>
                 </table>
             </div>
         </div>

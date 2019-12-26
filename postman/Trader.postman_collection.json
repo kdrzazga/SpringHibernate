@@ -331,6 +331,26 @@
 			"response": []
 		},
 		{
+			"name": "readCreditsOfAccount",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/credits/2001",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"credits",
+						"2001"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "readCurrency",
 			"request": {
 				"method": "GET",
@@ -932,6 +952,25 @@
 					"port": "8080",
 					"path": [
 						"stop"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "readCredits Copy",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/credits",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"credits"
 					]
 				}
 			},

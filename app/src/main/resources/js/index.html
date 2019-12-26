@@ -24,9 +24,9 @@
             <h4>Transfer Input</h4>
             <div id="src-account-select">From Account:
                 <div class="dropdown">
-                    <button class="dropbtn">Source</button>
+                    <button id="transfer-selected-source-account" class="dropbtn">Source</button>
                     <div id="src-accounts-list" class="dropdown-content">
-                        <a href="#">Banks not loaded. Is server running?</a>
+                        <a href="#">Accounts not loaded. Is server running?</a>
                     </div>
                 </div>
             </div>
@@ -35,7 +35,7 @@
             <p></p>
             <div id="dest-account-select">To Account:
                 <div class="dropdown">
-                    <button class="dropbtn">Destination</button>
+                    <button id="transfer-selected-dest-account" class="dropbtn">Destination</button>
                     <div id="dest-accounts-list" class="dropdown-content">
                         <a href="#">Accounts not loaded. Is server running?</a>
                     </div>
@@ -54,7 +54,7 @@
             <h4>Bank Info</h4>
             <div id="bank-id-select">Bank Id:
                 <div class="dropdown">
-                    <button class="dropbtn">Bank</button>
+                    <button id="bank-selected-bank" class="dropbtn">Bank</button>
                     <div id="banks-list" class="dropdown-content">
                         <a href="#">Banks not loaded. Is server running?</a>
                     </div>
@@ -73,16 +73,14 @@
             <h4>Account Info</h4>
             <div id="account-id-select">Account Id:
                 <div class="dropdown">
-                    <button class="dropbtn">Account</button>
+                    <button id="account-selected-account" class="dropbtn">Account</button>
                     <div id="accounts-list" class="dropdown-content">
                         <a href="#">Accounts not loaded. Is server running?</a>
                     </div>
                 </div>
                 <button id="show-account" class="default-button">Show</button>
                 <button id="account-details" class="default-button"
-                        onclick="
-                        sessionStorage.setItem('accountId','2001');
-                        window.open('account-details.html');">
+                        onclick="window.open('account-details.html');">
                     Account Details
                 </button>
                 <p></p>

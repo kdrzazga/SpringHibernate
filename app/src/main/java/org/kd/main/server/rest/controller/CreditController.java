@@ -67,6 +67,7 @@ class CreditController {
                 :
                 ResponseEntity
                         .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                        .header("Access-Control-Allow-Origin", "*")
                         .header("message", "Error reading list of "
                                 + Credit.class.getSimpleName() + "for account " + accountId)
                         .build();
