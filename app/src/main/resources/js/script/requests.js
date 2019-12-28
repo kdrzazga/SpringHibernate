@@ -6,7 +6,7 @@ function stopApplication() {
                 console.log("App stopped")
             }
             if (this.status === 404) {
-                var message = "Couldn't stop the app";
+                const message = "Couldn't stop the app";
                 console.error(message);
                 alert(message);
             }
@@ -37,9 +37,9 @@ function createCmbBox(id, options, onSelectFunction) {
     var accountIdsComboBox = "<div id=\"" + id + "\" class=\"dropdown-content\">";
 
     for (var i = 0; i < options.length; i++) {
-        var id = options[i].id;
+        var _id = options[i].id;
 
-        accountIdsComboBox += "<a href=\"" + "#\"" + " onclick='" + onSelectFunction + "(" + id + ");'>" + id + "</a>";
+        accountIdsComboBox += "<a href=\"" + "#\"" + " onclick='" + onSelectFunction + "(" + _id + ");'>" + _id + "</a>";
     }
     accountIdsComboBox += "</div>";
     return accountIdsComboBox;
@@ -59,7 +59,7 @@ function readAccounts() {
             document.getElementById("dest-accounts-list").innerHTML = createCmbBox("accounts-list", accountList, "fillTransferSelectedDestAccount");
         }
         if (this.status === 404) {
-            var message = "Couldn't read accounts";
+            const message = "Couldn't read accounts";
             console.error(message);
             alert(message);
         }
@@ -118,7 +118,7 @@ function readTransfers() {
 
             }
             if (this.status === 404) {
-                var message = "Couldn't read transfers";
+                const message = "Couldn't read transfers";
                 console.error(message);
                 alert(message);
             }

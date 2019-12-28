@@ -64,10 +64,12 @@ class AccountController {
                 ?
                 ResponseEntity
                         .status(HttpStatus.OK)
+                        .header("Access-Control-Allow-Origin", "*")
                         .body(account)
                 :
                 ResponseEntity
                         .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                        .header("Access-Control-Allow-Origin", "*")
                         .header("message", "Couldn't read account with id = " + id)
                         .build();
     }
@@ -147,25 +149,25 @@ class AccountController {
     @DeleteMapping(path = "/account/{id}")
     public ResponseEntity<String> delete(@PathVariable long id) {
         var deletedAccount = accountDaoRepo.delete(id);
-        String logMessage;
+        String resultMessage;
         ResponseEntity<String> result;
 
         if (deletedAccount != null) {
-            logMessage = "Account " + id + " deleted.";
+            resultMessage = "Account " + id + " deleted.";
 
             result = ResponseEntity
                     .status(HttpStatus.OK)
                     .header("Access-Control-Allow-Origin", "*")
-                    .body(logMessage);
+                    .body(resultMessage);
         } else {
-            logMessage = "Couldn't delete account with id = " + id;
+            resultMessage = "Couldn't delete account with id = " + id;
             result = ResponseEntity
                     .status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .header("Access-Control-Allow-Origin", "*")
-                    .body(logMessage);
+                    .body(resultMessage);
         }
 
-        log(logMessage);
+        log(resultMessage);
         return result;
     }
 
