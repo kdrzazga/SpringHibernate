@@ -25,13 +25,7 @@ public class CreditCardDaoRepo {
     }
 
     private CreditCard readCreditCard(long id) {
-        var session = getSession();
-        var crBuilder = session.getCriteriaBuilder();
-        CriteriaQuery<CreditCard> query = crBuilder.createQuery(CreditCard.class);
-        Root<CreditCard> root = query.from(CreditCard.class);
-        query.select(root).where(crBuilder.equal(root.get("id"), id));
-        Query<CreditCard> q = session.createQuery(query);
-        return q.getSingleResult();
+        return entityManager.find(CreditCard.class, id);
     }
 
     @Transactional

@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @MappedSuperclass
@@ -17,10 +18,12 @@ public abstract class Card implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     protected Long id;
 
+    @NotNull
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "account_id", referencedColumnName = "id")
     protected Account account;
 
+    @NotNull
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "bankId", referencedColumnName = "id")
     protected Bank bank;

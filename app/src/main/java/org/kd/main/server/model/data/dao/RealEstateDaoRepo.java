@@ -40,13 +40,7 @@ public class RealEstateDaoRepo {
     }
 
     private RealEstate readRealEstate(long id) {
-        var session = getSession();
-        var crBuilder = session.getCriteriaBuilder();
-        CriteriaQuery<RealEstate> query = crBuilder.createQuery(RealEstate.class);
-        Root<RealEstate> root = query.from(RealEstate.class);
-        query.select(root).where(crBuilder.equal(root.get("id"), id));//SELECT from Account WHERE id=id
-        Query<RealEstate> q = session.createQuery(query);
-        return q.getSingleResult();
+        return entityManager.find(RealEstate.class, id);
     }
 
     @Transactional

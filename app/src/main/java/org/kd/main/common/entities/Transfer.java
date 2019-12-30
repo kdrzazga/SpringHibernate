@@ -3,6 +3,7 @@ package org.kd.main.common.entities;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @Getter
@@ -20,10 +21,12 @@ public class Transfer implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     protected Long id;
 
+    @NotNull
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "src_account_id")
     protected Account srcAccount;
 
+    @NotNull
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "dest_account_id")
     protected Account destAccount;

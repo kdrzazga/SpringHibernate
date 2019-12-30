@@ -49,13 +49,7 @@ public class BankDaoRepo {
     }
 
     private Bank readBank(long id) {
-        var session = getSession();
-        var crBuilder = session.getCriteriaBuilder();
-        CriteriaQuery<Bank> query = crBuilder.createQuery(Bank.class);
-        Root<Bank> root = query.from(Bank.class);
-        query.select(root).where(crBuilder.equal(root.get("id"), id));//SELECT from Account WHERE id=id
-        Query<Bank> q = session.createQuery(query);
-        return q.getSingleResult();
+        return entityManager.find(Bank.class, id);
     }
 
     @Transactional

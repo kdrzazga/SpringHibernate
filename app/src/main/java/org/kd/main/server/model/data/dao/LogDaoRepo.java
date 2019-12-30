@@ -40,13 +40,7 @@ public class LogDaoRepo {
     }
 
     private Log readLog(long id) {
-        var session = getSession();
-        var crBuilder = session.getCriteriaBuilder();
-        CriteriaQuery<Log> query = crBuilder.createQuery(Log.class);
-        var root = query.from(Log.class);
-        query.select(root).where(crBuilder.equal(root.get("id"), id));//SELECT from Account WHERE id=id
-        Query<Log> q = session.createQuery(query);
-        return q.getSingleResult();
+        return entityManager.find(Log.class, id);
     }
 
     @Transactional

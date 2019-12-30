@@ -40,13 +40,7 @@ public class CurrencyDaoRepo {
     }
 
     private Currency readCurrency(long id) {
-        var session = getSession();
-        var crBuilder = session.getCriteriaBuilder();
-        CriteriaQuery<Currency> query = crBuilder.createQuery(Currency.class);
-        Root<Currency> root = query.from(Currency.class);
-        query.select(root).where(crBuilder.equal(root.get("id"), id));//SELECT from Account WHERE id=id
-        Query<Currency> q = session.createQuery(query);
-        return q.getSingleResult();
+        return entityManager.find(Currency.class, id);
     }
 
     @Transactional

@@ -86,13 +86,7 @@ public class AccountDaoRepo {
 
 
     private Account readAccount(long id) {
-        var session = getSession();
-        var crBuilder = session.getCriteriaBuilder();
-        CriteriaQuery<Account> query = crBuilder.createQuery(Account.class);
-        Root<Account> root = query.from(Account.class);
-        query.select(root).where(crBuilder.equal(root.get("id"), id));//SELECT from Account WHERE id=id
-        Query<Account> q = session.createQuery(query);
-        return q.getSingleResult();
+        return this.entityManager.find(Account.class, id);
     }
 
     @Transactional

@@ -12,17 +12,10 @@ import java.util.List;
 public class DebitCardDaoRepo {
 
     @PersistenceContext
-    private
-    EntityManager entityManager;
+    private EntityManager entityManager;
 
     public DebitCard read(long id) {
-        var session = getSession();
-        var crBuilder = session.getCriteriaBuilder();
-        var query = crBuilder.createQuery(DebitCard.class);
-        var root = query.from(DebitCard.class);
-        query.select(root).where(crBuilder.equal(root.get("id"), id));
-        var q = session.createQuery(query);
-        return q.getSingleResult();
+        return entityManager.find(DebitCard.class, id);
     }
 
     public List<DebitCard> readAll() {
@@ -34,7 +27,7 @@ public class DebitCardDaoRepo {
         return session.createQuery(criteria).getResultList();
     }
 
-    public List<DebitCard> readAccountCards(long accountId){
+    public List<DebitCard> readAccountCards(long accountId) {
         var session = getSession();
         var crBuilder = session.getCriteriaBuilder();
         var query = crBuilder.createQuery(DebitCard.class);

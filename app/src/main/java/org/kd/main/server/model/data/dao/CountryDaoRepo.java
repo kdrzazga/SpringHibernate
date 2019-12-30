@@ -40,13 +40,7 @@ public class CountryDaoRepo {
     }
 
     private Country readCountry(long id) {
-        var session = getSession();
-        var crBuilder = session.getCriteriaBuilder();
-        CriteriaQuery<Country> query = crBuilder.createQuery(Country.class);
-        Root<Country> root = query.from(Country.class);
-        query.select(root).where(crBuilder.equal(root.get("id"), id));//SELECT from Account WHERE id=id
-        Query<Country> q = session.createQuery(query);
-        return q.getSingleResult();
+        return entityManager.find(Country.class, id);
     }
 
     @Transactional

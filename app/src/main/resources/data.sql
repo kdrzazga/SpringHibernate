@@ -33,8 +33,8 @@ create TABLE account (
 
 create TABLE transfer (
     id bigint NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    src_account_id bigint,
-    dest_account_id bigint,
+    src_account_id bigint NOT NULL,
+    dest_account_id bigint NOT NULL,
     units float,
     internal BOOLEAN,
     FOREIGN KEY (src_account_id) REFERENCES account(id),
@@ -65,10 +65,10 @@ create TABLE city (
 
 create TABLE credit (
   id bigint NOT NULL PRIMARY KEY AUTO_INCREMENT,
-  account_id bigint,
-  bank_id bigint,
+  account_id bigint NOT NULL,
+  bank_id bigint NOT NULL,
   amount float,
-  currency_id bigint,
+  currency_id bigint NOT NULL,
   FOREIGN KEY (account_id) REFERENCES account(id),
   FOREIGN KEY (bank_id) REFERENCES bank(id),
   FOREIGN KEY (currency_id) REFERENCES currency(id)
@@ -76,9 +76,9 @@ create TABLE credit (
 
 create TABLE credit_card(
    id bigint NOT NULL PRIMARY KEY AUTO_INCREMENT,
-   account_id bigint,
+   account_id bigint NOT NULL,
    is_active BOOLEAN,
-   bank_id bigint,
+   bank_id bigint NOT NULL,
    currency_id bigint,
    balance float,
    credit_limit float,
@@ -89,10 +89,10 @@ create TABLE credit_card(
 
 create TABLE debit_card(
    id bigint NOT NULL PRIMARY KEY AUTO_INCREMENT,
-   account_id bigint,
+   account_id bigint NOT NULL,
    is_active BOOLEAN,
-   bank_id bigint,
-   currency_id bigint,
+   bank_id bigint NOT NULL,
+   currency_id bigint NOT NULL,
    balance float,
    FOREIGN KEY (account_id) REFERENCES account(id),
    FOREIGN KEY (bank_id) REFERENCES bank(id),
