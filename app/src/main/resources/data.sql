@@ -1,6 +1,8 @@
 --Script automatically executed on startup by Hibernate
+--revision 1
 drop table IF EXISTS bank;
 drop table IF EXISTS account;
+drop table IF EXISTS savings_account;
 drop table IF EXISTS transfer;
 drop table IF EXISTS country;
 drop table IF EXISTS city;
@@ -9,7 +11,6 @@ drop table IF EXISTS credit;
 drop table IF EXISTS credit_card;
 drop table IF EXISTS debit_card;
 drop table IF EXISTS real_estate;
-drop table IF EXISTS car;
 drop table IF EXISTS log;
 
 create TABLE bank (
@@ -364,6 +365,7 @@ insert into currency(name, shortname) values ('US Dollar', 'USD');
 insert into currency(name, shortname) values ('Yen', '¥');
 insert into currency(name, shortname) values ('Pound', '£');
 insert into currency(name, shortname) values ('Euro', 'EUR');
+insert into currency(name, shortname) values ('Zloty', 'PLN');
 
 insert into country(name, shortname, currency_id) values ('China', 'CN', 30002);
 insert into country(name, shortname, currency_id) values ('United States', 'US', 30003);
@@ -374,6 +376,7 @@ insert into country(name, shortname, currency_id) values ('Spain', 'ES', 30006);
 insert into country(name, shortname, currency_id) values ('France', 'FR', 30006);
 insert into country(name, shortname, currency_id) values ('Italy', 'IT', 30006);
 insert into country(name, shortname, currency_id) values ('Germany', 'DE', 30006);
+insert into country(name, shortname, currency_id) values ('Poland', 'PL', 30007);
 
 insert into city( name, shortname, country_id) values ('Bejing', 'BEG', 10002);
 insert into city( name, shortname, country_id) values ('Shanghai', 'SHA', 10002);
@@ -415,3 +418,126 @@ insert into credit_card (account_id, is_active, bank_id, currency_id, balance, c
 insert into credit_card (account_id, is_active, bank_id, currency_id, balance, credit_limit) values (2046, FALSE, 1052, 30006, 129932, 390000);
 
 insert into log(created, file_path) values ('2019-12-02 14:39:47', 'log1.txt');
+
+--revision 2
+
+drop table IF EXISTS car;
+drop table IF EXISTS person;
+drop table IF EXISTS customer;
+drop table IF EXISTS life_insurance;
+drop table IF EXISTS car_insurance;
+drop table IF EXISTS fiscal_office;
+drop table IF EXISTS insurance_company;
+drop table IF EXISTS investment_fund;
+drop table IF EXISTS pension_fund;
+drop table IF EXISTS mobile_phone;
+drop table IF EXISTS mobile_phone_charges;
+drop table IF EXISTS currency_exchange_transfers;
+
+create TABLE person(
+   id bigint NOT NULL PRIMARY KEY AUTO_INCREMENT,
+   NIN varchar(15) NOT NULL, --National Identification Number e.g PESEL for POland
+   lastname varchar(255) NOT NULL,
+   name varchar(16),
+   address_id bigint,
+   nationality_id bigint,
+   FOREIGN KEY (address_id) REFERENCES real_estate(id),
+   FOREIGN KEY (nationality_id) REFERENCES country(id)
+);
+
+create TABLE customer(
+   id bigint NOT NULL PRIMARY KEY AUTO_INCREMENT,
+   lastname varchar(255) NOT NULL,
+   name varchar(16) NOT NULL,
+   address_id bigint NOT NULL,
+   FOREIGN KEY (address_id) REFERENCES real_estate(id)
+);
+
+create TABLE car_insurance(
+  id bigint NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  customer_id bigint,
+  FOREIGN KEY (customer_id) REFERENCES customer(id)
+);
+
+create TABLE car(
+  id bigint NOT NULL PRIMARY KEY AUTO_INCREMENT,
+   brand varchar(100),
+   car_model varchar(100),
+   fuel char(3),
+
+   color varchar(10),
+   owner_id bigint,
+   insurance_id bigint,
+   previous_crashes boolean,
+
+   FOREIGN KEY (owner_id) REFERENCES person(id),
+   FOREIGN KEY (insurance_id) REFERENCES car_insurance(id)
+);
+
+create TABLE insurance_company(
+	id bigint NOT NULL AUTO_INCREMENT,
+	company_name varchar(255) NOT NULL
+);
+
+create TABLE life_insurance(
+	id bigint NOT NULL AUTO_INCREMENT,
+	person_id bigint,
+	company_id bigint,
+
+	FOREIGN KEY (person_id) REFERENCES person(id),
+  FOREIGN KEY (company_id) REFERENCES insurance_company(id)
+);
+
+create TABLE fiscal_office(
+    id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    name varchar(100),
+    address_id bigint,
+
+    FOREIGN KEY (address_id) REFERENCES real_estate(id),
+);
+
+create TABLE pension_fund(
+   id bigint NOT NULL PRIMARY KEY AUTO_INCREMENT,
+   name varchar(100)
+);
+
+create TABLE mobile_phone(
+  id bigint NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  local_number char(9) NOT NULL,
+  country_prefix varchar(5) NOT NULL
+);
+
+create TABLE mobile_phone_charges(
+  id bigint NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  phone_id bigint NOT NULL,
+
+  FOREIGN KEY (phone_id) REFERENCES mobile_phone(id)
+);
+
+create TABLE currency_exchange_transfers(
+  id bigint NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  from_currency bigint NOT NULL,
+  to_currency bigint NOT NULL,
+  amount real NOT NULL,
+  rate real NOT NULL,
+  transfer_date TIMESTAMP not null,
+
+  FOREIGN KEY (from_currency) REFERENCES currency(id),
+  FOREIGN KEY (to_currency) REFERENCES currency(id)
+);
+
+insert into person (NIN, lastname, name, nationality_id, address_id) values ('PL81072370013', 'Zawadzki', 'Szymon', 10011, 55001);
+insert into person (NIN, lastname, name, nationality_id, address_id) values ('PL55050795518', 'Nowak', 'Marcin', 10011,null);
+insert into person (NIN, lastname, name, nationality_id, address_id) values ('PL92010764410', 'Czech', 'Jakub', 10011,null);
+insert into person (NIN, lastname, name, nationality_id, address_id) values ('PL49072286510', 'Makowski', 'Ryszard', 10011,null);
+insert into person (NIN, lastname, name, nationality_id, address_id) values ('PL63073160301', 'Maniak', 'Alina', 10011,null);
+insert into person (NIN, lastname, name, nationality_id, address_id) values ('PL73090374900', 'Ziemier', 'Maja', 10011,null);
+insert into person (NIN, lastname, name, nationality_id, address_id) values ('US?', 'Drake', 'Jason', 10003,null);
+insert into person (NIN, lastname, name, nationality_id, address_id) values ('US?', 'Johnson', 'Jason', 10003,null);
+insert into person (NIN, lastname, name, nationality_id, address_id) values ('PL93073118905', 'Burska', 'Klara', 10011,null);
+insert into person (NIN, lastname, name, nationality_id, address_id) values ('PL77021263305', 'Gilewicz', 'Katarzyna', 10011,null);
+insert into person (NIN, lastname, name, nationality_id, address_id) values ('PL55010707519', 'Nawrot', 'Zenon', 10011,null);
+insert into person (NIN, lastname, name, nationality_id, address_id) values ('PL99013137715', 'Nowakowski', 'Arkadiusz', 10011,null);
+insert into person (NIN, lastname, name, nationality_id, address_id) values ('US241-19-4855', 'Hood', 'Wilfredo L.', 10003,null);
+insert into person (NIN, lastname, name, nationality_id, address_id) values ('PL93073180113', 'Nawrocki', 'Przemyslaw', 10011,null);
+insert into person (NIN, lastname, name, nationality_id, address_id) values ('PL69111240310', 'Juskiewicz', 'Zbigniew', 10011,null);

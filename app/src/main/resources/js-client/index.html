@@ -31,7 +31,8 @@
                 </div>
             </div>
             <p></p>
-            <div><label for="transfer-amount">Amount: </label><input type="text" value="0.01" id="transfer-amount"></div>
+            <div><label for="transfer-amount">Amount: </label><input type="text" value="0.01" id="transfer-amount">
+            </div>
             <p></p>
             <div id="dest-account-select">To Account:
                 <div class="dropdown">
@@ -42,7 +43,7 @@
                 </div>
             </div>
             <p></p>
-            <button id="book-trade" class="default-button" onclick="createTransfer();">Book</button>
+            <button id="book-trade" class="default-button" onclick="onBookTransferClock();">Book</button>
             <p></p>
             <div>
                 <table id="transfers-table" class="default-table">
@@ -61,12 +62,16 @@
                 </div>
             </div>
             <p></p>
-            <button id="show-bank" class="default-button" onclick="showBank();">Show</button>
-            <div><label for="bank-name">Bank Name:</label><input id="bank-name"/></div>
-            <div><label for="bank-short-name">Short Name:</label><input id="bank-short-name"/></div>
+            <button id="show-bank" class="default-button" onclick="onShowBankClick();">Show</button>
+            <div><label for="bank-name">Bank Name:&nbsp;</label><input id="bank-name"/></div>
+            <div><label for="bank-short-name">Short Name:&nbsp;</label><input id="bank-short-name"/></div>
             <div>Accounts:<br/><textarea id="bank-accounts" readonly></textarea></div>
             <p></p>
-            <button id="bank-save-changes" class="default-button">Save changes</button>
+            <button id="bank-save-changes" class="default-button" onclick="onSaveBankClick();">Save Changes</button>
+            <p></p>
+            <button id="bank-delete" class="default-button" onclick="onDeleteBankClick();">Delete Bank</button>
+            <p></p>
+            <button id="bank-create" class="default-button" onclick="onCreateBankClick();">Create New Bank</button>
         </div>
 
         <div class="tab-pane" id="account">
@@ -78,21 +83,23 @@
                         <a href="#">Accounts not loaded. Is server running?</a>
                     </div>
                 </div>
-                <button id="show-account" class="default-button" onclick="showAccount();">Show</button>
+                <button id="show-account" class="default-button" onclick="onShowAccountClick();">Show</button>
                 <button id="account-details" class="default-button"
                         onclick="window.open('account-details.html');">
                     Account Details
                 </button>
                 <p></p>
-                <div><label for="account-name">Account Name:</label><input id="account-name"/></div>
-                <div><label for="account-shortname">Short Name</label><input id="account-shortname"/></div>
-                <div><label for="account-cash-balance">Cash Balance</label><input
+                <div><label for="account-name">Account Name:&nbsp;</label><input id="account-name"/></div>
+                <div><label for="account-shortname">Short Name:&nbsp;</label><input id="account-shortname"/></div>
+                <div><label for="account-cash-balance">Cash Balance:&nbsp;</label><input
                         id="account-cash-balance"/></div>
             </div>
             <p></p>
-            <button id="account-save-changes" class="default-button">Save changes</button>
+            <button id="account-save-changes" class="default-button" onclick="onSaveAccountClick();">Save Changes
+            </button>
             <p></p>
-            <button id="account-delete" class="default-button" onclick="deleteAccount();">Delete Account</button>
+            <button id="account-delete" class="default-button" onclick="onDeleteAccountClick();">Delete Account</button><p></p>
+            <button id="account-create" class="default-button" onclick="onCreateAccountClick();">Create New Account</button>
         </div>
 
         <div class="tab-pane" id="dev">

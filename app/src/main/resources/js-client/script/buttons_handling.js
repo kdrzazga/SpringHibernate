@@ -1,3 +1,7 @@
+/*
+* PRIVATE
+*/
+
 function readAccount(accountId) {
     var accountName = document.getElementById("account-name");
     var accountShortName = document.getElementById("account-shortname");
@@ -92,18 +96,6 @@ function readBankAccounts(bankId) {
     xhttp.send();
 }
 
-function showAccount() {
-    var id = document.getElementById("account-selected-account").innerText;
-    readAccount(id);
-}
-
-function showBank() {
-
-    var id = document.getElementById("bank-selected-bank").innerText;
-    readBank(id);
-    readBankAccounts(id);
-}
-
 function deleteAccount() {
     var id = document.getElementById("account-selected-account").innerText;
     var xhttp = new XMLHttpRequest();
@@ -133,7 +125,7 @@ function bookInternalTransfer(srcAccountId, destAccountId, units) {
     console.log("Booking internal transfer of " + units + " from " + srcAccountId + " to " + destAccountId);
     var xhttp = new XMLHttpRequest();
 
-    var newTransfer = {"srcAccountId" : srcAccountId};
+    var newTransfer = {"srcAccountId": srcAccountId};//TODO
 
     xhttp.onreadystatechange = function () {
         if (this.readyState === 4) {
@@ -148,6 +140,7 @@ function bookInternalTransfer(srcAccountId, destAccountId, units) {
                 alert(message);
             }
         }
+        else alert("Couldn't book");
     };
 
     var url = "http://localhost:8080/transfer";
@@ -158,11 +151,54 @@ function bookInternalTransfer(srcAccountId, destAccountId, units) {
     xhttp.send(JSON.stringify(newTransfer));
 }
 
-function isTransferInternal(account1, account2){
+function isTransferInternal(account1, account2) {
     return true;//TODO
 }
 
-function createTransfer() {
+function saveBank(id, newBankName, newBankShortName) {
+    console.log("Updateing bank " + id + ", " + newBankName + ", " + newBankShortName);
+
+    var bank = {"id": id, "name": newBankName, "shortname": newBankShortName};
+
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+        if (this.readyState === 4) {
+            if (this.status === 200) {
+                console.log(this.responseText);
+                alert("Bank " + " updated");
+            }
+
+            if (this.status === 404) {
+                var message = "Couldn't save";
+                console.error(message);
+                alert(message);
+            }
+        }
+        else {
+            alert("Couldn't save");
+        }
+    };
+
+    var url = "http://localhost:8080/bank";
+    xhttp.open("PUT", url);
+    xhttp.send(JSON.stringify(bank));
+}
+
+function saveAccount(id, newAccountName, newAccountShortName, newAccountBalance) {
+    console.log("Saving account " + id + ", " + newAccountName + ", " + newAccountShortName + ", " + newAccountBalance);
+    //TODO
+}
+
+function deleteAccount(id) {
+    console.log("Deleting account " + id);
+    //TODO: jQuery required
+}
+
+/*
+* PUBLIC
+*/
+
+function onBookTransferClock() {
     var srcAccountId = document.getElementById("transfer-selected-source-account").innerText;
     var destAccountId = document.getElementById("transfer-selected-dest-account").innerText;
     var units = document.getElementById("transfer-amount").value;
@@ -171,3 +207,52 @@ function createTransfer() {
         bookInternalTransfer(srcAccountId, destAccountId, units);
     }
 }
+
+function onShowAccountClick() {
+    var id = document.getElementById("account-selected-account").innerText;
+    readAccount(id);
+}
+
+function onSaveAccountClick() {
+    var id = document.getElementById("account-selected-account").innerText;
+
+    var newAccountName = document.getElementById("account-name").value;
+    var newAccountShortName = document.getElementById("account-shortname").value;
+    var newAccountBalance = document.getElementById("account-cash-balance").value;
+
+    saveAccount(id, newAccountName, newAccountShortName, newAccountBalance);
+}
+
+function onDeleteAccountClick() {
+    var id = document.getElementById("account-selected-account").innerText;
+
+    deleteAccount(id);
+}
+
+function onCreateAccountClick() {
+    console.log("Not implemented yet");//TODO
+}
+
+function onShowBankClick() {
+
+    var id = document.getElementById("bank-selected-bank").innerText;
+    readBank(id);
+    readBankAccounts(id);
+}
+
+function onSaveBankClick() {
+    var id = document.getElementById("bank-selected-bank").innerText;
+    var newBankName = document.getElementById("bank-name").value;
+    var newBankShortName = document.getElementById("bank-short-name").value;
+
+    saveBank(id, newBankName, newBankShortName);
+}
+
+function onDeleteBankClick() {
+    console.log("Not implemented yet");//TODO
+}
+
+function onCreateBankClick() {
+    console.log("Not implemented yet");//TODO
+}
+

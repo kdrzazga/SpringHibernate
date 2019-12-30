@@ -15,7 +15,7 @@ public class PropertiesReader {
         try {
             config.load(propertiesFilePath);
         } catch (ConfigurationException e) {
-            logger.warn("Could not parse " + propertiesFilePath);
+            logger.warning("Could not parse " + propertiesFilePath);
         }
     }
 
