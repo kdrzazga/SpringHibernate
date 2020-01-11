@@ -4,11 +4,13 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
 import org.kd.main.server.TraderServer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,6 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @SpringBootTest(classes = {TraderServer.class})
 @RunWith(SpringJUnit4ClassRunner.class)
+//@ExtendWith(SpringExtension.class)
 public class AccountDaoRepoTest {
 
     @Autowired
@@ -42,8 +45,8 @@ public class AccountDaoRepoTest {
     public void testGetSingleAccountById() {
         var customer = accountDaoRepo.read(2012L);
 
-        Assert.assertNotNull(customer);
-        assertEquals(Long.valueOf(2012L), customer.getId());
+        assertTrue(customer.isPresent());
+        assertEquals(Long.valueOf(2012L), customer.get().getId());
     }
 
     @Test(expected = EmptyResultDataAccessException.class)

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.util.MimeTypeUtils.TEXT_PLAIN_VALUE;
@@ -57,10 +58,10 @@ class AccountController {
     }
 
     @GetMapping(path = "/account/{id}", produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity<Account> read(@PathVariable long id) {
+    public ResponseEntity<Optional<Account>> read(@PathVariable long id) {
         var account = accountDaoRepo.read(id);
 
-        return (account != null)
+        return (account.isPresent())
                 ?
                 ResponseEntity
                         .status(HttpStatus.OK)

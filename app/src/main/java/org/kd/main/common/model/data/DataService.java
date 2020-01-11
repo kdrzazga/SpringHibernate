@@ -6,6 +6,7 @@ import org.kd.main.common.entities.CorporateAccount;
 import org.kd.main.common.entities.Transfer;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface DataService {
 
@@ -24,7 +25,7 @@ public interface DataService {
 
     void updateBank(Bank bank);
 
-    Account readCustomer(long id);
+    Optional<Account> readCustomer(long id);
 
     void updateCustomer(Account account);
 

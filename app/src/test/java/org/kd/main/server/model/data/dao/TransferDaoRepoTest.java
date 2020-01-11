@@ -4,23 +4,28 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
 import org.kd.main.common.entities.Account;
 import org.kd.main.server.TraderServer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.annotation.Order;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Objects;
 import java.util.function.Predicate;
+
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 @Transactional
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @SpringBootTest(classes = {TraderServer.class})
+//@ExtendWith(value = SpringExtension.class)
 @RunWith(SpringJUnit4ClassRunner.class)
 public class TransferDaoRepoTest {
 
@@ -33,18 +38,26 @@ public class TransferDaoRepoTest {
     @Test
     @Order(value = 1)
     public void testBookInternalTransfer() {
-        var srcAccount = accountDaoRepo.read(2011L);
-        var commonBankId = srcAccount.getBankId();
+        final var accountId = 2011L;
+        var srcAccount = accountDaoRepo.read(accountId);
+        if (srcAccount.isEmpty())
+            fail("Couldn't read account id=" + accountId);
 
-        checkBookingTransfer(srcAccount, account -> Objects.equals(account.getBankId(), commonBankId));
+        var commonBankId = srcAccount.get().getBankId();
+
+        checkBookingTransfer(srcAccount.get(), account -> Objects.equals(account.getBankId(), commonBankId));
     }
 
     @Test
     public void testBookExternalTransfer() {
-        var srcAccount = accountDaoRepo.read(2011L);
-        var commonBankId = srcAccount.getBankId();
+        final var accountId = 2011L;
+        var srcAccount = accountDaoRepo.read(accountId);
+        if (srcAccount.isEmpty())
+            fail("Couldn't read account id=" + accountId);
 
-        checkBookingTransfer(srcAccount, account -> !Objects.equals(account.getBankId(), commonBankId));
+        var commonBankId = srcAccount.get().getBankId();
+
+        checkBookingTransfer(srcAccount.get(), account -> !Objects.equals(account.getBankId(), commonBankId));
     }
 
     @Test
@@ -59,7 +72,7 @@ public class TransferDaoRepoTest {
     @Order(value = 3)
     public void testReadForParticularFund() {
         var tradeForFund2002 = transferDaoRepo.readByDestAccountId(2002L);
-        Assert.assertNotNull(tradeForFund2002);
+        assertNotNull(tradeForFund2002);
         assertThat(tradeForFund2002, hasSize(greaterThan(0)));
     }
 
@@ -68,7 +81,7 @@ public class TransferDaoRepoTest {
     public void testReadAll() {
         var transacts = transferDaoRepo.readAll();
 
-        Assert.assertNotNull(transacts);
+        assertNotNull(transacts);
         assertThat(transacts, hasSize(greaterThan(0)));
         assertThat(transacts, hasSize(greaterThanOrEqualTo(5)));
         assertThat(transacts, hasSize(lessThanOrEqualTo(6)));

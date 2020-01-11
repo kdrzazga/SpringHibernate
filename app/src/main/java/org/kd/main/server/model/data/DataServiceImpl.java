@@ -9,6 +9,7 @@ import org.kd.main.server.model.data.dao.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
+import java.util.Optional;
 
 public class DataServiceImpl implements DataService {
 
@@ -55,7 +56,7 @@ public class DataServiceImpl implements DataService {
     }
 
     @Override
-    public Account readCustomer(long id) {
+    public Optional<Account> readCustomer(long id) {
         return accountDaoRepo.read(id);
     }
 

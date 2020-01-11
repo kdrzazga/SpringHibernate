@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
 import org.kd.main.common.RestUtility;
 import org.kd.main.common.TraderConfig;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpMethod;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -21,9 +23,10 @@ import static org.hamcrest.Matchers.containsString;
 import static org.junit.Assert.assertEquals;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
-@SpringBootTest(classes = {TraderServer.class})
-@RunWith(SpringJUnit4ClassRunner.class)
 @Import(TraderConfig.class)
+@SpringBootTest(classes = {TraderServer.class})
+//@ExtendWith(SpringExtension.class)
+@RunWith(SpringJUnit4ClassRunner.class)
 public class BankEndpointTest {
 
     @Autowired

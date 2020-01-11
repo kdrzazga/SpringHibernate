@@ -2,8 +2,8 @@ package org.kd.main.server.model.data.dao;
 
 import org.hibernate.Session;
 import org.hibernate.query.Query;
-import org.kd.main.common.entities.CorporateAccount;
 import org.kd.main.common.entities.Account;
+import org.kd.main.common.entities.CorporateAccount;
 import org.kd.main.common.entities.IndividualAccount;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +15,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class AccountDaoRepo {
@@ -32,7 +33,7 @@ public class AccountDaoRepo {
     }
 
     @Transactional
-    public Account read(long id) {
+    public Optional<Account> read(long id) {
         return readAccount(id);
     }
 
@@ -68,10 +69,14 @@ public class AccountDaoRepo {
     }
 
     @Transactional
-    public Account delete(long id) {
+    public Optional<Account> delete(long id) {
         var account = readAccount(id);
 
-        deleteAccount(account);
+        if (account.isPresent())
+            deleteAccount(account.get());
+        else
+            log.error("Attempt to delete non-existing account");
+
         return account; //TODO: reconsider this
     }
 
@@ -85,8 +90,9 @@ public class AccountDaoRepo {
     }
 
 
-    private Account readAccount(long id) {
-        return this.entityManager.find(Account.class, id);
+    private Optional<Account> readAccount(long id) {
+        var account = this.entityManager.find(Account.class, id);
+        return Optional.of(account);
     }
 
     @Transactional

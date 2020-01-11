@@ -21,8 +21,8 @@ public class TraderServer {
         getInstance().start();
         getInstance().writeInfo();
         getInstance().createMessageListener();
-        getInstance().startMessageListener();
-        getInstance().startMessageListenerThread();
+        /*getInstance().startMessageListener();
+        getInstance().startMessageListenerThread();*/
     }
 
     public void start() {

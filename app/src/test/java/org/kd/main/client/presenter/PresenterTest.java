@@ -6,6 +6,7 @@ import com.github.tomakehurst.wiremock.WireMockServer;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
 import org.kd.main.client.presenter.config.TestClientConfig;
 import org.kd.main.common.TraderConfig;
@@ -15,6 +16,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.List;
@@ -25,6 +27,7 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.junit.Assert.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
+//@ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {TraderConfig.class, TestClientConfig.class})
 @PropertySource("classpath:application.properties")
 //@Ignore
