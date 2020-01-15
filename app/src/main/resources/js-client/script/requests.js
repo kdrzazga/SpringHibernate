@@ -88,7 +88,10 @@ function readBanks() {
     xhttp.send();
 }
 
-function createTransfersTable(transferList, table) {
+function createTransfersTable(transferList) {
+
+    var table = "";
+
     for (var i = 0; i < transferList.length; i++) {
         var id = transferList[i].id;
         var units = transferList[i].units;
@@ -110,11 +113,8 @@ function readTransfers() {
             if (this.status === 200) {
                 console.log("Read transfers " + this.responseText);
 
-                var table = "<thead><td class='table-td'>id</td><td class='table-td'>from</td><td class='table-td'>to</td>" +
-                    "<td class='table-td'>units</td><td class='table-td'>internal</td></thead>";
-
                 var transferList = JSON.parse(this.responseText);
-                document.getElementById("transfers-table").innerHTML = createTransfersTable(transferList, table);
+                document.getElementById("transfers-table").innerHTML = createTransfersTable(transferList);
 
             }
             if (this.status === 404) {

@@ -13,7 +13,7 @@
         <tr>
             <td class="active"><a href="#transfer">Transfer</a></td>
             <td><a href="#bank">Bank</a></td>
-            <td><a href="#account">Account</a></td>
+            <td><a class="lang" key="account" href="#account">Account</a></td>
             <td><a href="#dev">DEV</a></td>
         </tr>
     </table>
@@ -21,32 +21,51 @@
     <!-- Tab panes -->
     <div class="tab-content">
         <div class="tab-pane active" id="transfer">
-            <h4>Transfer Input</h4>
-            <div id="src-account-select">From Account:
+            <h4 class="lang" key="transfer-input">Transfer Input</h4>
+            <div id="src-account-select">
+                <label for="dest-account-select" class="lang" key="from-account">From Account:</label>
                 <div class="dropdown">
-                    <button id="transfer-selected-source-account" class="dropbtn">Source</button>
+                    <button id="transfer-selected-source-account" class="dropbtn">
+                        <label class="lang" key="source">Source</label>
+                    </button>
                     <div id="src-accounts-list" class="dropdown-content">
                         <a href="#">Accounts not loaded. Is server running?</a>
                     </div>
                 </div>
             </div>
             <p></p>
-            <div><label for="transfer-amount">Amount: </label><input type="text" value="0.01" id="transfer-amount">
+            <div>
+                <label class="lang" key="amount">Amount: </label>
+                <input type="text" value="0.01" id="transfer-amount">
             </div>
             <p></p>
-            <div id="dest-account-select">To Account:
+            <div id="dest-account-select">
+                <label class="lang" key="to-account">To Account:</label>
                 <div class="dropdown">
-                    <button id="transfer-selected-dest-account" class="dropbtn">Destination</button>
+                    <button id="transfer-selected-dest-account" class="dropbtn">
+                        <label class="lang" key="destination">Destination</label>
+                    </button>
                     <div id="dest-accounts-list" class="dropdown-content">
-                        <a href="#">Accounts not loaded. Is server running?</a>
+                        <a href="#" class="lang" key="load-error">Accounts not loaded. Is server running?</a>
                     </div>
                 </div>
             </div>
             <p></p>
-            <button id="book-trade" class="default-button" onclick="onBookTransferClock();">Book</button>
+            <button id="book-trade" class="default-button" onclick="onBookTransferClock();">
+                <label for="book-trade" class="lang" key="book">Book</label>
+            </button>
             <p></p>
             <div>
-                <table id="transfers-table" class="default-table">
+                <table class="default-table">
+                    <thead>
+                    <td class='table-td'><label>id</label></td>
+                    <td class='table-td'><label class="lang" key="from">From</label></td>
+                    <td class='table-td'><label class="lang" key="to">To</label></td>
+                    <td class='table-td'><label class="lang" key="amount">Amount</label></td>
+                    <td class='table-td'><label class="lang" key="table-internal">Internal</label></td>
+                    </thead>
+                    <tbody id="transfers-table">
+                    </tbody>
                 </table>
             </div>
         </div>
@@ -62,58 +81,102 @@
                 </div>
             </div>
             <p></p>
-            <button id="show-bank" class="default-button" onclick="onShowBankClick();">Show</button>
-            <div><label for="bank-name">Bank Name:&nbsp;</label><input id="bank-name"/></div>
-            <div><label for="bank-short-name">Short Name:&nbsp;</label><input id="bank-short-name"/></div>
-            <div>Accounts:<br/><textarea id="bank-accounts" readonly></textarea></div>
+            <button id="show-bank" class="default-button" onclick="onShowBankClick();">
+                <label class="land" key="show">Show</label>
+            </button>
+            <div>
+                <label for="bank-name" class="lang" key="bank-name">Bank Name:&nbsp;</label>
+                <input id="bank-name"/>
+            </div>
+            <div>
+                <label for="bank-short-name" class="lang" key="short-name">Short Name:&nbsp;</label>
+                <input id="bank-short-name"/>
+            </div>
+            <div>
+                <label class="lang" key="accounts">Accounts:</label><br/>
+                <textarea id="bank-accounts" readonly></textarea>
+            </div>
             <p></p>
-            <button id="bank-save-changes" class="default-button" onclick="onSaveBankClick();">Save Changes</button>
+            <button id="bank-save-changes" class="default-button" onclick="onSaveBankClick();">
+                <label class="lang" key="save-changes">Save Changes</label>
+            </button>
             <p></p>
-            <button id="bank-delete" class="default-button" onclick="onDeleteBankClick();">Delete Bank</button>
+            <button id="bank-delete" class="default-button" onclick="onDeleteBankClick();">
+                <label class="lang" key="delete-bank">Delete Bank</label>
+            </button>
             <p></p>
-            <button id="bank-create" class="default-button" onclick="onCreateBankClick();">Create New Bank</button>
+            <button id="bank-create" class="default-button" onclick="onCreateBankClick();">
+                <label class="lang" key="create-bank">Create New Bank</label>
+            </button>
         </div>
 
         <div class="tab-pane" id="account">
-            <h4>Account Info</h4>
-            <div id="account-id-select">Account Id:
+            <h4 class="lang" key="account-info">Account Info</h4>
+            <div id="account-id-select">
+                <label class="lang" key="account-id">Account Id:</label>
                 <div class="dropdown">
-                    <button id="account-selected-account" class="dropbtn">Account</button>
+                    <button id="account-selected-account" class="dropbtn">
+                        <label class="lang" key="account">Account</label>
+                    </button>
                     <div id="accounts-list" class="dropdown-content">
-                        <a href="#">Accounts not loaded. Is server running?</a>
+                        <a href="#" class="lang">Accounts not loaded. Is server running?</a>
                     </div>
                 </div>
-                <button id="show-account" class="default-button" onclick="onShowAccountClick();">Show</button>
+                <button id="show-account" class="default-button" onclick="onShowAccountClick();">
+                    <label class="land" key="show">Show</label>
+                </button>
                 <button id="account-details" class="default-button"
                         onclick="window.open('account-details.html');">
-                    Account Details
+                    <label class="lang" key="account-details">Account Details</label>
                 </button>
                 <p></p>
-                <div><label for="account-name">Account Name:&nbsp;</label><input id="account-name"/></div>
-                <div><label for="account-shortname">Short Name:&nbsp;</label><input id="account-shortname"/></div>
-                <div><label for="account-cash-balance">Cash Balance:&nbsp;</label><input
-                        id="account-cash-balance"/></div>
+                <div><label class="lang" key="account-name">Account Name:</label>&nbsp;<input
+                        id="account-name"/></div>
+                <div><label class="lang" key="short-name">Short Name:&nbsp;</label><input
+                        id="account-shortname"/></div>
+                <div><label class="lang" key="cash-balance">Cash Balance:</label>&nbsp;
+                    <input id="account-cash-balance"/></div>
             </div>
             <p></p>
-            <button id="account-save-changes" class="default-button" onclick="onSaveAccountClick();">Save Changes
+            <button id="account-save-changes" class="default-button" onclick="onSaveAccountClick();">
+                <label class="lang" key="save-account">Save Changes</label>
             </button>
             <p></p>
-            <button id="account-delete" class="default-button" onclick="onDeleteAccountClick();">Delete Account</button><p></p>
-            <button id="account-create" class="default-button" onclick="onCreateAccountClick();">Create New Account</button>
+            <button id="account-delete" class="default-button" onclick="onDeleteAccountClick();">
+                <label class="lang" key="delete-account">Delete Account</label>
+            </button>
+            <p></p>
+            <button id="account-create" class="default-button" onclick="onCreateAccountClick();">
+                <label class="lang" key="create-account">Create New Account</label>
+            </button>
         </div>
 
         <div class="tab-pane" id="dev">
-            <h4>Developer's Panel</h4>
+            <h4 class="lang" key="developer-panel">Developer's Panel</h4>
             <div><a href="http://localhost:8080/h2-console" target="_blank">DB link</a></div>
             <p></p>
-            <div><a href="#" onclick="stopApplication()">Stop</a></div>
+            <div>
+                <a href="#" onclick="stopApplication()">
+                    <label class="lang" key="stop">Stop</label>
+                </a>
+            </div>
         </div>
     </div>
 </div>
 
-<script src="script/buttons_handling.js"></script>
-<script src="script/libs.js"></script>
-<script src="script/tabs.js"></script>
-<script src="script/requests.js"></script>
+<div>&nbsp</div>
+
+<div id="footer" class="footer">
+    <button class="translate" id="en">English</button>
+    <button class="translate" id="de">German</button>
+</div>
+
+<script type="text/javascript" src="script/buttons_handling.js"></script>
+<script type="text/javascript" src="script/libs.js"></script>
+<script type="text/javascript" src="script/tabs.js"></script>
+<script type="text/javascript" src="script/requests.js"></script>
+<script type="text/javascript" src="script/jquery-3.4.1.js"></script>
+<script type="text/javascript" src="script/language_select.js"></script>
+
 </body>
 </html>
