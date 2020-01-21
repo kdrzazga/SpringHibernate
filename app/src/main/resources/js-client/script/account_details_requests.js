@@ -1,12 +1,12 @@
 function initAccountDetails() {
-    var id = sessionStorage.getItem("accountId");
-    document.getElementById("account-id").innerText = "" + id + "";
+    var id = readSelectedAccount();
 
     console.log("Loading debit-, credit-cards, and credits for account " + id);
-
     loadDebitCards(id);
     loadCreditCards(id);
     loadCredits(id);
+
+    setLanguage();
 }
 
 function createDebitCardsTable() {
@@ -147,3 +147,17 @@ function loadCredits(id) {
     xhttp.open("GET", "http://localhost:8080/credits/" + id, true);
     xhttp.send();
 }
+
+function readSelectedAccount() {
+    var id = sessionStorage.getItem("accountId");
+    document.getElementById("account-id").innerText = "" + id + "";
+    return id;
+}
+
+function setLanguage() {
+    console.log("Retrieving which language was set on the main page");
+    var lang = localStorage.getItem("language")
+    console.log("Chosen language is " + lang);
+    translateNodes(lang);
+}
+

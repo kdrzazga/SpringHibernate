@@ -1,3 +1,7 @@
+function init(){
+    localStorage.setItem("language", "en");
+}
+
 function stopApplication() {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {

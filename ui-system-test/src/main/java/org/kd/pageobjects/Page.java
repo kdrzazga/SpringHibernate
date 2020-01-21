@@ -1,7 +1,7 @@
 package org.kd.pageobjects;
 
 import org.apache.commons.io.FileUtils;
-import org.kd.WindowUtils;
+import org.kd.utils.WindowUtils;
 import org.kd.exceptions.SiteNotOpenedException;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedCondition;

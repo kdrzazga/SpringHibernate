@@ -153,7 +153,7 @@ class AccountController {
         String resultMessage;
         ResponseEntity<String> result;
 
-        if (deletedAccount != null) {
+        if (deletedAccount.isPresent()) {
             resultMessage = "Account " + id + " deleted.";
 
             result = ResponseEntity

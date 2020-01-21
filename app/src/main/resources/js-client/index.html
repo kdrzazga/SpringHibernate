@@ -1,20 +1,20 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Banque</title>
-    <link rel="stylesheet" href="style/general_styles.css"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
+    <title class="lang" key="title">Banque</title>
     <link rel="stylesheet" href="style/padstyle.css"/>
+    <link rel="stylesheet" href="style/general_styles.css"/>
 </head>
-<body class="default-background" onload="readAccounts(); readBanks(); readTransfers();">
+<body class="default-background" onload="init(); readAccounts(); readBanks(); readTransfers();">
 <div class="container">
     <!-- Tabs -->
     <table id="nav-tab" class="nav">
         <tr>
-            <td class="active"><a href="#transfer">Transfer</a></td>
-            <td><a href="#bank">Bank</a></td>
-            <td><a class="lang" key="account" href="#account">Account</a></td>
-            <td><a href="#dev">DEV</a></td>
+            <td class="active"><a href="#transfer" class="lang" key="transfer">Transfer</a></td>
+            <td><a href="#bank" class="lang" key="bank">Bank</a></td>
+            <td><a href="#account" class="lang" key="account">Account</a></td>
+            <td><a href="#dev" class="lang" key="dev">DEV</a></td>
         </tr>
     </table>
 
@@ -29,7 +29,7 @@
                         <label class="lang" key="source">Source</label>
                     </button>
                     <div id="src-accounts-list" class="dropdown-content">
-                        <a href="#">Accounts not loaded. Is server running?</a>
+                        <a href="#" class="lang" key="accounts-load-error">Accounts not loaded. Is server running?</a>
                     </div>
                 </div>
             </div>
@@ -46,7 +46,7 @@
                         <label class="lang" key="destination">Destination</label>
                     </button>
                     <div id="dest-accounts-list" class="dropdown-content">
-                        <a href="#" class="lang" key="load-error">Accounts not loaded. Is server running?</a>
+                        <a href="#" class="lang" key="accounts-load-error">Accounts not loaded. Is server running?</a>
                     </div>
                 </div>
             </div>
@@ -72,17 +72,19 @@
 
         <div class="tab-pane" id="bank">
             <h4>Bank Info</h4>
-            <div id="bank-id-select">Bank Id:
+            <div id="bank-id-select" class="lang" key="bank-id">Bank Id:
                 <div class="dropdown">
-                    <button id="bank-selected-bank" class="dropbtn">Bank</button>
+                    <button id="bank-selected-bank" class="dropbtn">
+                        <label class="lang" key="bank">Bank</label>
+                    </button>
                     <div id="banks-list" class="dropdown-content">
-                        <a href="#">Banks not loaded. Is server running?</a>
+                        <a href="#" class="lang" key="banks-load-error">Banks not loaded. Is server running?</a>
                     </div>
                 </div>
             </div>
             <p></p>
-            <button id="show-bank" class="default-button" onclick="onShowBankClick();">
-                <label class="land" key="show">Show</label>
+            <button id="show-bank" class="btn-info" onclick="onShowBankClick();">
+                <label class="lang" key="show">Show</label>
             </button>
             <div>
                 <label for="bank-name" class="lang" key="bank-name">Bank Name:&nbsp;</label>
@@ -123,17 +125,17 @@
                     </div>
                 </div>
                 <button id="show-account" class="default-button" onclick="onShowAccountClick();">
-                    <label class="land" key="show">Show</label>
+                    <label class="lang" key="show">Show</label>
                 </button>
                 <button id="account-details" class="default-button"
                         onclick="window.open('account-details.html');">
                     <label class="lang" key="account-details">Account Details</label>
                 </button>
                 <p></p>
-                <div><label class="lang" key="account-name">Account Name:</label>&nbsp;<input
-                        id="account-name"/></div>
-                <div><label class="lang" key="short-name">Short Name:&nbsp;</label><input
-                        id="account-shortname"/></div>
+                <div><label class="lang" key="account-name">Account Name:</label>&nbsp;
+                    <input id="account-name"/></div>
+                <div><label class="lang" key="short-name">Short Name:&nbsp;</label>
+                    <input id="account-shortname"/></div>
                 <div><label class="lang" key="cash-balance">Cash Balance:</label>&nbsp;
                     <input id="account-cash-balance"/></div>
             </div>
@@ -167,8 +169,8 @@
 <div>&nbsp</div>
 
 <div id="footer" class="footer">
-    <button class="translate" id="en">English</button>
-    <button class="translate" id="de">German</button>
+    <button class="translate" id="en"><label class="lang" key="english">English</label></button>
+    <button class="translate" id="de"><label class="lang" key="german">Deutsch</label></button>
 </div>
 
 <script type="text/javascript" src="script/buttons_handling.js"></script>
@@ -176,6 +178,7 @@
 <script type="text/javascript" src="script/tabs.js"></script>
 <script type="text/javascript" src="script/requests.js"></script>
 <script type="text/javascript" src="script/jquery-3.4.1.js"></script>
+<script type="text/javascript" src="script/converters.js"></script>
 <script type="text/javascript" src="script/language_select.js"></script>
 
 </body>

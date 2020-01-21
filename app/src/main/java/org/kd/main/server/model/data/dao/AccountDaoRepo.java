@@ -23,7 +23,7 @@ public class AccountDaoRepo {
     @PersistenceContext
     private EntityManager entityManager;
 
-    private Logger log = LoggerFactory.getLogger(AccountDaoRepo.class);
+    private final Logger log = LoggerFactory.getLogger(AccountDaoRepo.class);
 
     @Transactional
     public Account create(Account account) {

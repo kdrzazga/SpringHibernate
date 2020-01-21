@@ -3,6 +3,7 @@ package org.kd.main.client.viewfx;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
@@ -14,13 +15,16 @@ import org.kd.main.common.entities.Bank;
 import org.kd.main.common.entities.CorporateAccount;
 import org.kd.main.common.entities.Transfer;
 
+import java.net.URL;
+import java.util.Locale;
 import java.util.Optional;
+import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
 import static org.kd.main.client.viewfx.AlertHelper.showErrorAlert;
 import static org.kd.main.client.viewfx.AlertHelper.showInfoAlert;
 
-public class TraderViewController {
+public class TraderViewController implements Initializable {
 
     private static PresenterHandler handler;
 
@@ -71,6 +75,14 @@ public class TraderViewController {
 
     @FXML
     private TextField messageTextBox;
+
+    @FXML
+    private ChoiceBox<String> languageChoiceBox;
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+
+    }
 
     @FXML
     public void initialize() {
@@ -224,6 +236,11 @@ public class TraderViewController {
         handler.stopServer();
     }
 
+    @FXML
+    protected void chooseLanguage(){
+        loadLang(readChosenLanguage());
+    }
+
     public void loadBanks() {
 
         var list = FXCollections.observableArrayList(
@@ -300,6 +317,10 @@ public class TraderViewController {
         return Optional.ofNullable(this.accountNameField.getText())
                 .orElse("");
     }
+    private String readChosenLanguage() {
+        return Optional.ofNullable(this.languageChoiceBox.getValue())
+                .orElse("de");
+    }
 
     private Long readBankId() {
 
@@ -342,5 +363,11 @@ public class TraderViewController {
             this.messageTextBox.setText(accountId.get().toString());
             AccountDetailsPanelController.setAccountId(accountId.get());
         }
+    }
+
+    private void loadLang(String lang) {
+        Locale locale = new Locale(lang);
+        ResourceBundle bundle = ResourceBundle.getBundle("org.kd.main.client.viewfx.lang", locale);
+        showBankButton.setText(bundle.getString("show"));
     }
 }
