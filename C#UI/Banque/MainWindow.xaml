@@ -1,0 +1,56 @@
+﻿<Window x:Class="Banque.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Banque"
+        mc:Ignorable="d"
+        Title="Banque" Height="550.8" Width="500">
+    <Grid Margin="0,0,0.6,-0.4">
+        <TabControl HorizontalAlignment="Left" Height="482" VerticalAlignment="Top" Width="491">
+            <TabItem Header="Transfer" HorizontalAlignment="Left" Width="60">
+                <Grid Background="#FFE5E5E5" RenderTransformOrigin="0.558,0.507">
+                    <Label Content="Transfer Input" HorizontalAlignment="Center" Margin="90.379,42,195.6,0" VerticalAlignment="Top" Width="121" FontWeight="Bold" FontSize="15" Grid.Column="1"/>
+                    <Label Content="From Account" HorizontalAlignment="Center" Margin="16,78,355.6,0" VerticalAlignment="Top" Width="110
+                           " FontSize="15" Grid.ColumnSpan="2"/>
+                    <Label Content="Amount:" HorizontalAlignment="Center" Margin="22,130,362.6,0" VerticalAlignment="Top" Width="97" FontSize="15" Grid.ColumnSpan="2"/>
+                    <Label Content="To Account" HorizontalAlignment="Center" Margin="22,189,362.6,0" VerticalAlignment="Top" Width="97" FontSize="15" Grid.ColumnSpan="2"/>
+                    <ComboBox HorizontalAlignment="Left" Margin="211,86,0,0" VerticalAlignment="Top" Width="120"/>
+                    <ComboBox HorizontalAlignment="Left" Margin="211,189,0,0" VerticalAlignment="Top" Width="120"/>
+                    <TextBox HorizontalAlignment="Left" Height="23" Margin="211,136,0,0" TextWrapping="NoWrap" Text="0.1" VerticalAlignment="Top" Width="120"/>
+                    <ListView HorizontalAlignment="Left" Height="174" Margin="0,266,0,0" VerticalAlignment="Top" Width="472">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn x:Name="Id">Id</GridViewColumn>
+                                <GridViewColumn x:Name="Units">Units</GridViewColumn>
+                                <GridViewColumn x:Name="From">From</GridViewColumn>
+                                <GridViewColumn x:Name="To">To</GridViewColumn>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                    <Button Content="Book" HorizontalAlignment="Left" Margin="164,216,0,0" VerticalAlignment="Top" Width="115" Height="28" Click="BookTrade_Click"/>
+
+                </Grid>
+            </TabItem>
+            <TabItem Header="Bank">
+                <TextBlock>
+                <Label HorizontalAlignment="Center" Margin="165,42,195.6,0" VerticalAlignment="Top" Width="121" FontWeight="Bold" FontSize="15">Bank Info</Label>
+                </TextBlock>
+            </TabItem>           
+            <TabItem Header="Account">
+                <Label Content="Account Info" HorizontalAlignment="Center" Margin="165,42,195.6,0" VerticalAlignment="Top" Width="121" FontWeight="Bold" FontSize="15"/>
+            </TabItem>
+            <TabItem Header="DEV">
+                <Grid Background="#FFE5E5E5">
+                    <TextBlock  Margin="40,42,195.6,0">
+                            <Hyperlink NavigateUri="http://localhost:8081/h2-console">DB Link</Hyperlink>
+                    </TextBlock>
+                    <TextBlock  Margin="40,72,195.6,0">
+                            <Hyperlink NavigateUri="http://localhost:8081/stop">Stop</Hyperlink>
+                    </TextBlock>
+                </Grid>
+            </TabItem>
+        </TabControl>
+        <TextBox HorizontalAlignment="Left" Height="31" Margin="-3,482,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="486" IsReadOnly="True" />
+    </Grid>
+</Window>

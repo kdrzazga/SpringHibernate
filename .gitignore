@@ -3,3 +3,6 @@ target
 activemq-data
 *.iml
 newlog*.txt
+*bin/Debug/*
+*obj/Debug/*
+*.vs/Banque/*

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>JS Tests</title>
+</head>
+<body>
+<div>
+    <input type="text" value="/Trader/app/src/main/lang_de.properties" id="filepath" style="width: 70%">
+</div>
+<p/>
+<div>
+    <p>
+        <button onclick="testReadSingleFile()">test read single file</button>
+    </p>
+    <p>
+        <button onclick="testReadPropertiesFile()">test read file and format as JSON</button>
+    </p>
+    <p>
+        <textarea id="output"></textarea>
+    </p>
+</div>
+<script type="text/javascript" src="/Trader/app/src/main/resources/js-client/script/converters.js"></script>
+<script type="text/javascript" src="test_procedures.js"></script>
+</body>
+</html>
