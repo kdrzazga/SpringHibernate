@@ -4,9 +4,9 @@ namespace Banque.Common.Entities
 {
     public class Currency
     {
-        private long Id;
-        private String Name;
-        private String Shortname;
+        public long Id { get; set; }
+        public String Name { get; set; }
+        public String Shortname { get; set; }
 
         public Currency()
         {

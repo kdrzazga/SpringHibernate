@@ -55,7 +55,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="MainWindow.xaml">
+    <Page Include="Client\View\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -63,18 +63,21 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Client\Presenter\StubGenerator.cs" />
     <Compile Include="Client\Presenter\TraderPresenter.cs" />
+    <Compile Include="Client\View\RestHelper.cs" />
     <Compile Include="Common\Entities\Account.cs" />
     <Compile Include="Common\Entities\Bank.cs" />
     <Compile Include="Common\Entities\Card.cs" />
     <Compile Include="Common\Entities\Currency.cs" />
-    <Compile Include="MainWindow.xaml.cs">
+    <Compile Include="Client\View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Client\Presenter\PresenterHandler.cs" />
+    <Compile Include="Client\Presenter\IPresenterHandler.cs" />
+    <Compile Include="Common\Entities\Transfer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

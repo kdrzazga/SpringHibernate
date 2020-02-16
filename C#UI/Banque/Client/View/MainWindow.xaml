@@ -35,9 +35,9 @@
                     <Label Grid.Row="3" Content="From Account" VerticalAlignment="Top" Width="110" FontSize="15" Grid.ColumnSpan="2"/>
                     <Label Grid.Row="5" Content="Amount:" HorizontalAlignment="Center" VerticalAlignment="Top" Width="97" FontSize="15" Grid.ColumnSpan="2"/>
                     <Label Grid.Row="7" Content="To Account" HorizontalAlignment="Center" VerticalAlignment="Top" Width="97" FontSize="15" Grid.ColumnSpan="2"/>
-                    <ComboBox Grid.Row="3" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120"/>
-                    <ComboBox Grid.Row="7" Grid.Column="2" HorizontalAlignment="Left" Width="120"/>
-                    <TextBox Grid.Row="5" Grid.Column="2" HorizontalAlignment="Left" Height="23" TextWrapping="NoWrap" Text="0.1" VerticalAlignment="Top" Width="120"/>
+                    <ComboBox x:Name="fromAccounts" Grid.Row="3" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120"/>
+                    <ComboBox x:Name="toAccounts" Grid.Row="7" Grid.Column="2" HorizontalAlignment="Left" Width="120"/>
+                    <TextBox x:Name="amount" Grid.Row="5" Grid.Column="2" HorizontalAlignment="Left" Height="23" TextWrapping="NoWrap" Text="0.1" VerticalAlignment="Top" Width="120"/>
                     <ListView Grid.Row="9" Grid.ColumnSpan="3" Height="174" VerticalAlignment="Top" Width="472">
                         <ListView.View>
                             <GridView>
@@ -77,17 +77,17 @@
 
                         <Label Grid.Column="1" Content="Bank Info" FontWeight="Bold" FontSize="15" HorizontalAlignment="Center"/>
                         <Label Grid.Row="2" Content="Bank Id:"/>
-                        <ComboBox Grid.Row="2" Grid.Column="2" Margin="5 0 5 0"/>
-                        <Button Grid.Row="4" Grid.Column="1" Content="Show" HorizontalAlignment="Center" Margin="0 1 0 1" Width="115"/>
+                        <ComboBox x:Name="bankId" Grid.Row="2" Grid.Column="2" Margin="5 0 5 0"/>
+                        <Button Grid.Row="4" Grid.Column="1" Content="Show" HorizontalAlignment="Center" Margin="0 1 0 1" Width="115" Click="ShowBank_Click"/>
                         <Label Grid.Row="5" Content="Bank Name:"/>
-                        <TextBox Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" Margin="12 1 12 1"/>
+                        <TextBox x:Name="bankName" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" Margin="12 1 12 1"/>
                         <Label Grid.Row="6" Content="Short Name:"/>
-                        <TextBox Grid.Row="6" Grid.Column="1" Margin="12 1 12 1"/>
+                        <TextBox x:Name="bankShortName" Grid.Row="6" Grid.Column="1" Margin="12 1 12 1"/>
                         <Label Grid.Row="7" Content="Accounts:" VerticalAlignment="Center"/>
-                        <TextBox Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="2" Margin="12 1 12 1"/>
-                        <Button Grid.Row="8" Grid.Column="1" Content="Save Changes" HorizontalAlignment="Center" Margin="0 1 0 1" Width="115"/>
-                        <Button Grid.Row="9" Grid.Column="1" Content="Delete Bank" HorizontalAlignment="Center" Margin="0 1 0 1" Width="115"/>
-                        <Button Grid.Row="10" Grid.Column="1" Content="Create New Bank" HorizontalAlignment="Center" Margin="0 1 0 1" Width="115"/>
+                        <TextBox x:Name="bankAccounts" Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="2" Margin="12 1 12 1"/>
+                        <Button Grid.Row="8" Grid.Column="1" Content="Save Changes" HorizontalAlignment="Center" Margin="0 1 0 1" Width="115" Click="SaveBank_Click"/>
+                        <Button Grid.Row="9" Grid.Column="1" Content="Delete Bank" HorizontalAlignment="Center" Margin="0 1 0 1" Width="115" Click="DeleteBank_Click"/>
+                        <Button Grid.Row="10" Grid.Column="1" Content="Create New Bank" HorizontalAlignment="Center" Margin="0 1 0 1" Width="115" Click="CreateBank_Click"/>
                     </Grid>
                 </Border>
             </TabItem>           
@@ -112,32 +112,33 @@
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="*"/>
+                            <RowDefinition Height="2*"/>
                         </Grid.RowDefinitions>
 
                         <Label Grid.Column="1" Content="Account Info" FontWeight="Bold" FontSize="15" HorizontalAlignment="Center"/>
                         <Label Grid.Row="2" Content="Account Id:"/>
-                        <ComboBox Grid.Row="2" Grid.Column="2" Margin="5 0 5 0"/>
-                        <Button Grid.Row="4" Grid.Column="1" Content="Show" HorizontalAlignment="Center" Margin="0 1 0 1" Width="115"/>
-                        <Button Grid.Row="4" Grid.Column="2" Content="DETAILS" HorizontalAlignment="Center" Margin="0 1 0 1" Width="115"/>
+                        <ComboBox x:Name="accounts" Grid.Row="2" Grid.Column="2" Margin="5 0 5 0"/>
+                        <Button Grid.Row="4" Grid.Column="1" Content="Show" HorizontalAlignment="Center" Margin="0 1 0 1" Width="115" Click="ShowAccount_Click"/>
+                        <Button Grid.Row="4" Grid.Column="2" Content="DETAILS" HorizontalAlignment="Center" Margin="0 1 0 1" Width="115" Click="ShowAccountDetails_Click"/>
                         <Label Grid.Row="5" Content="Account Name:"/>
-                        <TextBox Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" Margin="12 1 12 1"/>
+                        <TextBox x:Name="accountName" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" Margin="12 1 12 1"/>
                         <Label Grid.Row="6" Content="Short Name:"/>
-                        <TextBox Grid.Row="6" Grid.Column="1" Margin="12 1 12 1"/>
+                        <TextBox x:Name="accountShortName" Grid.Row="6" Grid.Column="1" Margin="12 1 12 1"/>
                         <Label Grid.Row="7" Content="Cash Balance:" VerticalAlignment="Center"/>
-                        <TextBox Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="2" Margin="12 1 12 1"/>
-                        <Button Grid.Row="8" Grid.Column="1" Content="Save Changes" HorizontalAlignment="Center" Margin="0 1 0 1" Width="115"/>
-                        <Button Grid.Row="9" Grid.Column="1" Content="Delete Account" HorizontalAlignment="Center" Margin="0 1 0 1" Width="115"/>
-                        <Button Grid.Row="10" Grid.Column="1" Content="Create New Account" HorizontalAlignment="Center" Margin="0 1 0 1" Width="115"/>
+                        <TextBox x:Name="accountBalance" Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="2" Margin="12 1 12 1"/>
+                        <Button Grid.Row="9" Grid.Column="1" Content="Save Changes" HorizontalAlignment="Center" Margin="0 1 0 1" Width="115" Click="SaveAccount_Click"/>
+                        <Button Grid.Row="10" Grid.Column="1" Content="Delete Account" HorizontalAlignment="Center" Margin="0 1 0 1" Width="115" Click="DeleteAccount_Click"/>
+                        <Button Grid.Row="11" Grid.Column="1" Content="Create New Account" HorizontalAlignment="Center" Margin="0 1 0 1" Width="115" Click="CreateAccount_Click"/>
                     </Grid>
                 </Border>
             </TabItem>
             <TabItem Header="DEV">
                 <Grid Background="#FFE5E5E5">
                     <TextBlock  Margin="40,42,195.6,0">
-                            <Hyperlink NavigateUri="http://localhost:8081/h2-console">DB Link</Hyperlink>
+                            <Hyperlink NavigateUri="http://localhost:8081/h2-console" Click="DbLink_Clicked">DB Link</Hyperlink>
                     </TextBlock>
                     <TextBlock  Margin="40,72,195.6,0">
-                            <Hyperlink NavigateUri="http://localhost:8081/stop">Stop</Hyperlink>
+                            <Hyperlink NavigateUri="http://localhost:8081/stop" Click="Stop_Clicked">Stop</Hyperlink>
                     </TextBlock>
                 </Grid>
             </TabItem>

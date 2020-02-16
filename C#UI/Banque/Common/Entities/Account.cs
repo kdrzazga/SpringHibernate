@@ -4,31 +4,41 @@ namespace Banque.Common.Entities
 {
     public class Account 
     {
-        private long id;
-        private Boolean corporate;
-        private String shortname;
-        private String name;
-        private Double balance;
+        public long Id { get; set; }
+        public Boolean Corporate { get; set; }
+        public String Shortname { get; set; }
+        public String Name { get; set; }
+        public Double Balance { get; set; }
 
-        private long bankId;
+        private long BankId { get; set; }
 
         public Account()
         {      
         }
 
+        public Account(long id, Boolean corporate, String shortname, String name, Double units, long bankId)
+        {
+            this.Id = id;
+            this.Corporate = corporate;
+            this.Shortname = shortname;
+            this.Name = name;
+            this.Balance = units;
+            this.BankId = bankId;
+        }
+
         public Account(Boolean corporate, String shortname, String name, Double units, long bankId)
         {
-            this.corporate = corporate;
-            this.shortname = shortname;
-            this.name = name;
-            this.balance = units;
-            this.bankId = bankId;
+            this.Corporate = corporate;
+            this.Shortname = shortname;
+            this.Name = name;
+            this.Balance = units;
+            this.BankId = bankId;
         }
 
         override
         public String ToString()
         {
-            return this.shortname;
+            return this.Shortname;
         }
     }
 }
