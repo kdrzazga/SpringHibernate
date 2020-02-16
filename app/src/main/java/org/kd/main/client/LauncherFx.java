@@ -1,6 +1,5 @@
 package org.kd.main.client;
 
-
 import org.kd.main.client.viewfx.Trader;
 
 class LauncherFx {

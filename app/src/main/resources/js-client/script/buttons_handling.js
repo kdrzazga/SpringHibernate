@@ -156,32 +156,25 @@ function isTransferInternal(account1, account2) {
 }
 
 function saveBank(id, newBankName, newBankShortName) {
-    console.log("Updateing bank " + id + ", " + newBankName + ", " + newBankShortName);
+    /*TODO*/
+    console.log("Updating bank " + id + ", " + newBankName + ", " + newBankShortName)
+    var requestUrl = "http://localhost:8080/bank";
 
-    var bank = {"id": id, "name": newBankName, "shortname": newBankShortName};
-
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function () {
-        if (this.readyState === 4) {
-            if (this.status === 200) {
-                console.log(this.responseText);
-                alert("Bank " + " updated");
-            }
-
-            if (this.status === 404) {
-                var message = "Couldn't save";
-                console.error(message);
-                alert(message);
-            }
+    $.ajax({
+        url: requestUrl,    //Your api requestUrl
+        type: 'PUT',   //type is any HTTP method
+        data: {
+            "id": id,
+            "name": newBankName,
+            "shortname": newBankShortName
+        },      //Data as js object
+        success: function () {
+            console.log("Bank " + id + " updated successfully");
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+            alert("Status: " + textStatus); alert("Error: " + errorThrown);
         }
-        else {
-            alert("Couldn't save");
-        }
-    };
-
-    var url = "http://localhost:8080/bank";
-    xhttp.open("PUT", url);
-    xhttp.send(JSON.stringify(bank));
+    });
 }
 
 function saveAccount(id, newAccountName, newAccountShortName, newAccountBalance) {

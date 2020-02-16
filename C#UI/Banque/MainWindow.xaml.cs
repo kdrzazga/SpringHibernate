@@ -26,8 +26,9 @@ namespace Banque
         public MainWindow()
         {
             InitializeComponent();
+
             handler.initApplication();
-                
+                                      
         }
 
         public void BookTrade_Click(object sender, EventArgs e)

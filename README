@@ -3,9 +3,12 @@
 1. Server in Java, based on Hibernate and Spring.
     Run org.kd.main.server.TraderServer
 
-2. Client in 2 versions:
+2. Client in 3 versions:
     2.1 JavaFx
     Run org.kd.main.client.LauncherFx
 
     2.2 Html + JS
     Open \app\src\main\resources\js\index.html in any browser
+
+    2.3 C# for Windows
+    Open C#UI\Banque

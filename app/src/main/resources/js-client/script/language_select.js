@@ -103,7 +103,7 @@ var dictionary = {
     };
 
 function readEnglishProperties() {
-
+//TODO
 }
 
 function translateNodes(lang) {

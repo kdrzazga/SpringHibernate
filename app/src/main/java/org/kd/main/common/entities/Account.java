@@ -26,8 +26,6 @@ public class Account implements Serializable {
     private String shortname;
     private String name;
     private Double balance;
-
-    @Column(name = "bankId")
     private Long bankId;
 
     public Account(Boolean corporate, String shortname, String name, Double units, Long bankId) {
