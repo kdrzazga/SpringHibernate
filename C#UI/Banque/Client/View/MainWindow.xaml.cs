@@ -1,11 +1,6 @@
 ﻿using Banque.Client.Presenter;
-using Banque.Client.View;
 using Banque.Common.Entities;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace Banque
@@ -37,47 +32,58 @@ namespace Banque
 
             foreach(Transfer transfer in handler.ReadTransfers())
             {
-                /*TODO*/
+               
             }
         }
 
         public void BookTrade_Click(object sender, EventArgs e)
         {            
             Console.Out.WriteLine("Booking Trade for " + amount.Text);            
+            
         }
         
         public void ShowBank_Click(object sender, EventArgs e)
         {
-            var id = bankId.SelectedItem;
+            var id = long.Parse(bankId.SelectedItem.ToString());
             Console.Out.WriteLine("Reading Bank " + id);
+            var bank = handler.ReadBank(id);
+            bankName.Text = bank.Name;
+            bankShortName.Text = bank.Shortname;
+            //TODO bankAccounts.Text = bank.
         }
 
         public void SaveBank_Click(object sender, EventArgs e)
         {
-            var id = bankId.SelectedItem;
+            var id = long.Parse(bankId.SelectedItem.ToString());
             var name = bankName.Text;
             var shortName = bankShortName.Text; 
             Console.Out.WriteLine("Saving Bank (" + id +", " + name + ", " + shortName + ")");
+            handler.UpdateBank(new Bank(id, name, shortName));
         }
 
         public void DeleteBank_Click(object sender, EventArgs e)
         {
-            var id = bankId.SelectedItem;
+            var id = long.Parse(bankId.SelectedItem.ToString());
             Console.Out.WriteLine("Deleting Bank " + id);
+            handler.DeleteBank(id);
         }
 
         public void CreateBank_Click(object sender, EventArgs e)
         {
-            var id = bankId.SelectedItem;
             var name = bankName.Text;
             var shortName = bankShortName.Text;
-            Console.Out.WriteLine("Creating new bank (" + id + ", " + name + ", " + shortName + ")");
+            Console.Out.WriteLine("Creating new bank (" + name + ", " + shortName + ")");
+            handler.CreateBank(name, shortName);
         }
 
         public void ShowAccount_Click(object sender, EventArgs e)
         {
-            var id = accounts.SelectedItem;
+            var id = long.Parse(bankId.SelectedItem.ToString());
             Console.Out.WriteLine("Reading Account " + id);
+            var account = handler.ReadAccount(id);
+            accountName.Text = account.Name;
+            accountShortName.Text = account.Shortname;
+            accountBalance.Text = account.Balance.ToString();
         }
 
         public void ShowAccountDetails_Click(object sender, EventArgs e)
@@ -88,26 +94,32 @@ namespace Banque
 
         public void SaveAccount_Click(object sender, EventArgs e)
         {
+            var id = long.Parse(accounts.SelectedItem.ToString());
             var name = accountName.Text;
             var shortName = accountShortName.Text;
-            var balance = accountBalance.Text;
+            var balance = double.Parse(accountBalance.Text);
             Console.Out.WriteLine("Saving Account ("+name + ", " + shortName + ", balance=" + balance + ")");
+            
+            long bank = long.Parse(bankId.Text);
+            handler.UpdateAccount(new Account(id, false, shortName, name, balance, bank));
         }
 
         public void DeleteAccount_Click(object sender, EventArgs e)
         {
-            var id = accounts.SelectedItem;
+            var id = long.Parse(accounts.SelectedItem.ToString());
             Console.Out.WriteLine("Deleting Account " + id);
+            handler.DeleteAccount(id);
         }
 
         public void CreateAccount_Click(object sender, EventArgs e)
         {
-            var id = accounts.SelectedItem;
             var name = accountName.Text;
             var shortName = accountShortName.Text;
             var balance = accountBalance.Text;
-            Console.Out.WriteLine("Creating new Account (" + id + ", " + name + ", " 
+            var bank = long.Parse(bankId.SelectedIndex.ToString());
+            Console.Out.WriteLine("Creating new Account (" + name + ", " 
                 + shortName + ", balance=" + balance + ")");
+            handler.CreateAccount(name, shortName, double.Parse(balance), bank);
         }
         
         public void DbLink_Clicked(object sender, EventArgs e)

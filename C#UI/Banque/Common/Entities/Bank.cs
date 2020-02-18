@@ -6,8 +6,12 @@ namespace Banque.Common.Entities
     {
         public long Id { get; set; }
 
-        private String Name { get; set; }
-        private String Shortname { get; set; }
+        public String Name { get; set; }
+        public String Shortname { get; set; }
+
+        public Bank()
+        {
+        }
 
         public Bank(long id, String name, String shortname)
         {

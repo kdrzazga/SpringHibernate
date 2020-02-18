@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,18 +11,22 @@ namespace Banque.Client.View
 {
     class RestHelper
     {
-        public string sendRequest(String baseUrl, String endpoint, String method, byte[] data)
+        public string sendRequest(String baseUrl, String endpoint, HttpMethod method)
+        { return sendRequest(baseUrl, endpoint, method, ""); }
+
+        public string sendRequest(String baseUrl, String endpoint, HttpMethod method, string dollarString)
         {
-            //byte[] data = Encoding.ASCII.GetBytes($"username=user&password=password");
+            //dollarString = "$"username=user&password=password""
+            byte[] data = Encoding.ASCII.GetBytes(dollarString);
             var responseContent = "";
             try
             {
                 var request = WebRequest.Create(baseUrl + endpoint);
-                request.Method = method;
+                request.Method = method.ToString();
                 request.ContentType = "application/x-www-form-urlencoded";
                 request.ContentLength = data.Length;
 
-                if (!"GET".Equals(method))
+                if (data.Length > 0)
                 using (Stream stream = request.GetRequestStream())
                 {
                     stream.Write(data, 0, data.Length);

@@ -162,7 +162,7 @@
                 <version>${spring-boot.version}</version>
                 <configuration>
                     <fork>true</fork>
-                    <mainClass>${start-class-server}</mainClass>
+                    <!--<mainClass>${start-class-server}</mainClass>-->
                     <!--<mainClass>${start-class-client}</mainClass>-->
                 </configuration>
                 <executions>

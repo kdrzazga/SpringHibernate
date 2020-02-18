@@ -7,8 +7,7 @@
         xml:lang="en"
         mc:Ignorable="d"
         Title="Banque" Height="550.8" Width="500">
-    <Grid>
-        
+    <Grid>        
         <TabControl HorizontalAlignment="Left" Height="482" VerticalAlignment="Top" Width="491">
             <TabItem Header="Transfer" HorizontalAlignment="Left" Width="60">                
                 <Grid Background="#FFE5E5E5" RenderTransformOrigin="0.558,0.507">
@@ -38,7 +37,7 @@
                     <ComboBox x:Name="fromAccounts" Grid.Row="3" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Top" Width="120"/>
                     <ComboBox x:Name="toAccounts" Grid.Row="7" Grid.Column="2" HorizontalAlignment="Left" Width="120"/>
                     <TextBox x:Name="amount" Grid.Row="5" Grid.Column="2" HorizontalAlignment="Left" Height="23" TextWrapping="NoWrap" Text="0.1" VerticalAlignment="Top" Width="120"/>
-                    <ListView Grid.Row="9" Grid.ColumnSpan="3" Height="174" VerticalAlignment="Top" Width="472">
+                    <ListView x:Name="transferList" Grid.Row="9" Grid.ColumnSpan="3" Height="174" VerticalAlignment="Top" Width="472">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn x:Name="Id">Id</GridViewColumn>

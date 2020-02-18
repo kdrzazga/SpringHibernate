@@ -20,7 +20,7 @@ public class TraderServer {
     public static void main(String[] args) {
         getInstance().start();
         getInstance().writeInfo();
-        getInstance().createMessageListener();
+       /* getInstance().createMessageListener();*/
         /*getInstance().startMessageListener();
         getInstance().startMessageListenerThread();*/
     }

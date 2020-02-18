@@ -10,6 +10,8 @@ namespace Banque.Client.Presenter
 
         IList<Bank> ReadBanks();
 
+        Bank ReadBank(long id);
+
         Boolean UpdateBank(Bank bank);
 
         Boolean DeleteBank(long id);
@@ -18,11 +20,15 @@ namespace Banque.Client.Presenter
 
         IList<Account> ReadAccounts();
 
+        Account ReadAccount(long id);
+
         IList<Transfer> ReadTransfers();
 
         Boolean UpdateAccount(Account account);
 
         Boolean DeleteAccount(long id);
+
+        Boolean BookTransfer(long fromAccountId, long toAccountId, double amount);
 
         void InitApplication();
 

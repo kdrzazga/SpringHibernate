@@ -3,16 +3,14 @@ using System.Collections.Generic;
 using System.Net.Http;
 using Banque.Client.View;
 using Banque.Common.Entities;
+using Newtonsoft.Json;
 
 namespace Banque.Client.Presenter
 {
     class TraderPresenter : IPresenterHandler
     {
         private const String Port = "8080";
-        private String ServiceAddress = "http://localhost:" + Port;
-        private HttpMethod RequestType;
-        private String RequestAsString;
-        private String RequestUrl;
+        private readonly string ServiceAddress = "http://localhost:" + Port;
 
         public bool CreateAccount(string name, string shortname, double units, long bankId)
         {
@@ -45,25 +43,49 @@ namespace Banque.Client.Presenter
 
         public IList<Account> ReadAccounts()
         {
-            var corpAccountsJson = new RestHelper().sendRequest(this.ServiceAddress, "/corporate-accounts", "GET", new byte[0]);
-            var indivAccountsJson = new RestHelper().sendRequest(this.ServiceAddress, "/individual-accounts", "GET", new byte[0]);
+            IList<Account> accounts;
+
+            var corpAccountsJson = new RestHelper().sendRequest(this.ServiceAddress, "/corporate-accounts", HttpMethod.Get);
+            var indivAccountsJson = new RestHelper().sendRequest(this.ServiceAddress, "/individual-accounts", HttpMethod.Get);
             Console.Out.WriteLine("Read accounts:\n" + corpAccountsJson );
             Console.Out.WriteLine(indivAccountsJson );
-            /*TODO convert JSON to list and remove stub*/
-            return new StubGenerator().GenerateStubAccounts();
+            try
+            {
+                accounts = JsonConvert.DeserializeObject<List<Account>>(corpAccountsJson);
+                foreach (Account individualAccount in JsonConvert.DeserializeObject<List<Account>>(corpAccountsJson))
+                {
+                    accounts.Add(individualAccount);
+                }
+            }
+            catch (Exception e)
+            {
+                accounts = new StubGenerator().GenerateStubAccounts();
+            }
+
+            return accounts;
         }
 
         public IList<Bank> ReadBanks()
         {
-            var banksJson = new RestHelper().sendRequest(this.ServiceAddress, "/banks", "GET", new byte[0]);
+            var banksJson = new RestHelper().sendRequest(this.ServiceAddress, "/banks", HttpMethod.Get);
             Console.Out.WriteLine("Read banks:\n" + banksJson);
-            /*TODO convert JSON to list of banks and remove stub*/
-            return new StubGenerator().GenerateStubBanks();
+            IList<Bank> banks;
+
+            try
+            {
+                banks = JsonConvert.DeserializeObject<List<Bank>>(banksJson);
+            }
+            catch (Exception e)
+            {
+                banks = new StubGenerator().GenerateStubBanks(); 
+            }
+
+            return banks;
         }
 
         public IList<Transfer> ReadTransfers()
         {
-            var transfersJson = new RestHelper().sendRequest(this.ServiceAddress, "/transfers", "GET", new byte[0]);
+            var transfersJson = new RestHelper().sendRequest(this.ServiceAddress, "/transfers", HttpMethod.Get);
             Console.Out.WriteLine("Read transfers:\n" + transfersJson);
             /*TODO convert JSON to list of banks and remove stub*/
             return new StubGenerator().GenerateStubTransfers();
@@ -82,8 +104,7 @@ namespace Banque.Client.Presenter
 
         public void StopServer()
         {
-            new RestHelper().sendRequest(this.ServiceAddress, "/stop", "POST", new byte[0]);
-            //throw new NotImplementedException();
+            new RestHelper().sendRequest(this.ServiceAddress, "/stop", HttpMethod.Post);
         }
 
         public bool UpdateAccount(Account account)
@@ -99,6 +120,70 @@ namespace Banque.Client.Presenter
         public String GetServiceAddress()
         {
             return this.ServiceAddress;
+        }
+
+        public Bank ReadBank(long id)
+        {
+            var bankJson = new RestHelper().sendRequest(this.ServiceAddress, "/bank/" + id, HttpMethod.Get);
+            Bank bank;               
+
+            try
+            {
+                bank = JsonConvert.DeserializeObject<Bank>(bankJson);
+            }
+            catch (Exception e)
+            {
+                bank = null;//TODO
+            }
+
+            return bank;
+        }
+
+        public Account ReadAccount(long id)
+        {
+            var bankJson = new RestHelper().sendRequest(this.ServiceAddress, "/account/" + id, HttpMethod.Get);
+            Account account;
+
+            try
+            {
+                account = JsonConvert.DeserializeObject<Account>(bankJson);
+            }
+            catch (Exception e)
+            {
+                account = null;//TODO
+            }
+
+            return account;
+        }
+
+        public bool BookTransfer(long fromAccountId, long toAccountId, double amount)
+        {
+            var transferJson = "";
+            /*
+            {
+            "srcAccount": {
+                "id": 2003,
+                "corporate": true,
+                "shortname": "RAMP",
+                "name": "Liveramp Holdings Inc.",
+                "balance": 38.35,
+                "bankId": 1011
+                },
+            "destAccount": {
+                "id": 2004,
+                "corporate": true,
+                "shortname": "RBA",
+                "name": "Ritchie Bros. Auctioneers Inc",
+                "balance": 31.33,
+                "bankId": 1011
+                },
+            "units": 10,
+            "internal": true
+            }*/
+
+            new RestHelper().sendRequest(this.ServiceAddress, "/transfer", HttpMethod.Post, transferJson);
+
+            return false;//TODO:  
         }
     }
 }
