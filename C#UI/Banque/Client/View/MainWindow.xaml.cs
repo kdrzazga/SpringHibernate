@@ -32,7 +32,7 @@ namespace Banque
 
             foreach(Transfer transfer in handler.ReadTransfers())
             {
-               
+                               
             }
         }
 

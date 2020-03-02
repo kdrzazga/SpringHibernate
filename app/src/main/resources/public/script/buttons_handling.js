@@ -158,16 +158,27 @@ function isTransferInternal(account1, account2) {
 function saveBank(id, newBankName, newBankShortName) {
     /*TODO*/
     console.log("Updating bank " + id + ", " + newBankName + ", " + newBankShortName)
-    var requestUrl = "http://localhost:8080/bank";
+    var requestUrl = "bank";
 
     $.ajax({
+        cors:true,
+        secure : true,
+        // headers : {
+        //     'Access-Control-Allow-Origin' : '*'
+        // },
+        // headers: {
+        //     'Accept': 'application/json',
+        //     'Content-Type': 'text/plain'
+        // },
         url: requestUrl,    //Your api requestUrl
         type: 'PUT',   //type is any HTTP method
-        data: {
+
+        data: JSON.stringify({
             "id": id,
             "name": newBankName,
             "shortname": newBankShortName
-        },      //Data as js object
+        }),      //Data as js object
+        contentType : 'application/json',
         success: function () {
             console.log("Bank " + id + " updated successfully");
         },

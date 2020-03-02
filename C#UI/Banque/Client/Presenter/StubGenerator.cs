@@ -34,10 +34,19 @@ namespace Banque.Client.Presenter
                 new Currency(3L, "Euro", "EUR")
             };
         }
+
         public IList<Transfer> GenerateStubTransfers()
         {
+            var accountsIterator = GenerateStubAccounts().GetEnumerator();
+
+            var srcAccount = accountsIterator.Current;
+            accountsIterator.MoveNext();
+            var destAccount = accountsIterator.Current;
+
             return new List<Transfer>
-            { new Transfer() };
+            {
+                new Transfer(srcAccount, destAccount, 1, true)
+            };
         }
     }
 }
